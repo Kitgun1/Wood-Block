@@ -5,12 +5,12 @@ using UnityEngine.InputSystem;
 
 namespace WoodBlock
 {
-    [RequireComponent(typeof(Collider2D))]
     public class DragBlock : MonoBehaviour, IBlock, IDraggable, IDroppable
     {
+        [SerializeField] private Collider2D _collider;
+        
         private Vector3 _position;
         private Vector3 _homePosition;
-        private Collider2D _collider;
         private bool _inCell;
 
         public Transform Transform { get; private set; }
@@ -19,7 +19,6 @@ namespace WoodBlock
         {
             Transform = transform;
             _homePosition = Transform.position;
-            _collider = GetComponent<Collider2D>();
         }
 
         public void OnPointerDown(PointerEventData eventData)
@@ -32,7 +31,7 @@ namespace WoodBlock
 
         public void Drop()
         {
-            if (!Grid.Cell.TryInsert(this))
+            if (Grid.Cell == null || !Grid.Cell.TryInsert(this))
             {
                 transform.position = _homePosition;
                 return;
