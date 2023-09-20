@@ -9,12 +9,21 @@ namespace WoodBlock
 {
     public class Grid : MonoBehaviour
     {
+        [SerializeField] private bool _generateOnAwake;
+        
         [SerializeField] private Cell _cellTemplate;
         [SerializeField] private List<LevelMap> _maps = new();
 
         private readonly List<Cell> _spawnedCells = new();
 
         private Cell[,] _cellMatrix;
+
+        public static Cell Cell;
+
+        private void Start()
+        {
+            if(_generateOnAwake) GenerateGrid();
+        }
 
         [Button(nameof(GenerateGrid))]
         private void GenerateGrid()

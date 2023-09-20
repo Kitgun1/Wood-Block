@@ -1,6 +1,6 @@
 ﻿using UnityEngine.EventSystems;
 
-namespace Wood_Block.Scripts.DragAndDrop
+namespace WoodBlock
 {
-    public interface IDraggable : IPointerDownHandler, IPointerUpHandler, IPointerMoveHandler { }
+    public interface IDraggable : IPointerDownHandler { }
 }
