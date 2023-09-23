@@ -17,8 +17,6 @@ namespace WoodBlock
         [Button(nameof(Generate))]
         private void Generate()
         {
-            _tilemap.RefreshAllTiles();
-            _tilemap.ResizeBounds();
             var worldPositions = new List<Vector2Int>();
 
             BoundsInt bounds = _tilemap.cellBounds;

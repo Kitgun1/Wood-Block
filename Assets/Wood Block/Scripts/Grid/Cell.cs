@@ -3,33 +3,28 @@ using UnityEngine.EventSystems;
 
 namespace WoodBlock
 {
-    public class Cell : MonoBehaviour, ICell, IPointerEnterHandler, IPointerExitHandler
+    public class Cell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField] private SpriteRenderer _container;
 
-        private IBlock _block;
+        private CellInBlock _block;
 
-        public bool TryInsert(IBlock block)
-        {
-            if (_block != null) return false;
-
-            _block = block;
-            _block.Transform.position = transform.position + Vector3.back * 0.1f;
-            return true;
-        }
-
-        public void Remove()
-        {
-        }
+        public bool IsAvailable => _block == null;
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            Grid.Cell = this;
+            Grid.Instance.PointerCell = this;
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            if (Grid.Cell == this) Grid.Cell = null;
+            if (Grid.Instance.PointerCell == this) Grid.Instance.PointerCell = null;
+        }
+
+        public void SetBlock(CellInBlock block)
+        {
+            _block = block;
+            _block.Transform.position = transform.position + Vector3.back * 0.5f;
         }
     }
 }

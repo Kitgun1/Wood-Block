@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace WoodBlock
 {
-    [CreateAssetMenu(fileName = "Map", menuName = "WoodenBlock", order = 0)]
+    [CreateAssetMenu(fileName = "Map", menuName = "WoodBlock/Map", order = 0)]
     public class LevelMap : ScriptableObject
     {
         [SerializeField] private List<Vector2Int> _cells = new();
