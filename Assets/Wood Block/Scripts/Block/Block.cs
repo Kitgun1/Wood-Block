@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using KiUtility;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 namespace WoodBlock
@@ -15,13 +13,14 @@ namespace WoodBlock
         private Vector3 _offsetPosition;
         private CellInBlock _selectedCell;
         private bool _inCell;
-        
-        public Vector3 HomePosition { get; private set; }
+        private Vector3 _homePosition;
 
+        public event Action Dropped;
+        
         private void Start()
         {
             _blocks = GetComponent<BlockGenerator>().GetCells();
-            HomePosition = transform.position;
+            _homePosition = transform.position;
 
             foreach ((Vector2 _, CellInBlock block) in _blocks)
             {
@@ -63,10 +62,11 @@ namespace WoodBlock
             if (GridMap.Instance.TrySetBlockInCells(_blocks, _selectedCell))
             {
                 _inCell = true;
+                Dropped?.Invoke();
             }
             else
             {
-                transform.position = HomePosition;
+                transform.position = _homePosition;
                 foreach (var pair in _blocks)
                 {
                     pair.Value.EnableCollider();

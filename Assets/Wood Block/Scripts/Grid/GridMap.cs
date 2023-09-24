@@ -88,7 +88,6 @@ namespace WoodBlock
         {
             List<Cell> filledCells = new(128);
 
-            string map = "";
             foreach (Vector2Int updatedCell in updatedCells)
             {
                 bool yLineFilled = true;
@@ -96,8 +95,7 @@ namespace WoodBlock
 
                 bool xLineFilled = true;
                 List<Cell> xFilledCells = new(64);
-
-
+                
                 for (int y = updatedCell.y; y < _cellMatrix.GetLength(1); y++)
                 {
                     if (_cellMatrix[updatedCell.x, y] == null) break;
@@ -146,17 +144,16 @@ namespace WoodBlock
                     xFilledCells.Add(_cellMatrix[x, updatedCell.y]);
                 }
 
-
                 if (yLineFilled) filledCells.AddRange(yFilledCells);
                 if (xLineFilled) filledCells.AddRange(xFilledCells);
             }
 
-            foreach (Cell cell in filledCells)
+            var filled = new HashSet<Cell>(filledCells);
+            foreach (Cell cell in filled)
             {
                 cell.TryRemoveBlock();
             }
         }
-
 
         public bool TrySetBlockInCells(DictionaryVector2CellInBlock cellsInBlock, CellInBlock origin)
         {
