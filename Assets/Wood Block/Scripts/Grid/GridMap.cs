@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 
 namespace WoodBlock
 {
-    public class Grid : MonoBehaviour
+    public class GridMap : MonoBehaviour
     {
         [SerializeField] private bool _generateOnAwake;
 
@@ -19,9 +19,9 @@ namespace WoodBlock
 
         public Cell PointerCell;
 
-        private static Grid _instance;
+        private static GridMap _instance;
 
-        public static Grid Instance
+        public static GridMap Instance
         {
             get => _instance;
             private set => _instance = value;
@@ -86,8 +86,77 @@ namespace WoodBlock
 
         private void UpdateGrid(List<Vector2Int> updatedCells)
         {
-            
+            List<Cell> filledCells = new(128);
+
+            string map = "";
+            foreach (Vector2Int updatedCell in updatedCells)
+            {
+                bool yLineFilled = true;
+                List<Cell> yFilledCells = new(64);
+
+                bool xLineFilled = true;
+                List<Cell> xFilledCells = new(64);
+
+
+                for (int y = updatedCell.y; y < _cellMatrix.GetLength(1); y++)
+                {
+                    if (_cellMatrix[updatedCell.x, y] == null) break;
+                    if (_cellMatrix[updatedCell.x, y].IsAvailable)
+                    {
+                        yLineFilled = false;
+                        break;
+                    }
+
+                    yFilledCells.Add(_cellMatrix[updatedCell.x, y]);
+                }
+
+                for (int y = updatedCell.y; y >= 0; y--)
+                {
+                    if (_cellMatrix[updatedCell.x, y] == null) break;
+                    if (_cellMatrix[updatedCell.x, y].IsAvailable)
+                    {
+                        yLineFilled = false;
+                        break;
+                    }
+
+                    yFilledCells.Add(_cellMatrix[updatedCell.x, y]);
+                }
+
+                for (int x = updatedCell.x; x < _cellMatrix.GetLength(0); x++)
+                {
+                    if (_cellMatrix[x, updatedCell.y] == null) break;
+                    if (_cellMatrix[x, updatedCell.y].IsAvailable)
+                    {
+                        xLineFilled = false;
+                        break;
+                    }
+
+                    xFilledCells.Add(_cellMatrix[x, updatedCell.y]);
+                }
+
+                for (int x = updatedCell.x; x >= 0; x--)
+                {
+                    if (_cellMatrix[x, updatedCell.y] == null) break;
+                    if (_cellMatrix[x, updatedCell.y].IsAvailable)
+                    {
+                        xLineFilled = false;
+                        break;
+                    }
+
+                    xFilledCells.Add(_cellMatrix[x, updatedCell.y]);
+                }
+
+
+                if (yLineFilled) filledCells.AddRange(yFilledCells);
+                if (xLineFilled) filledCells.AddRange(xFilledCells);
+            }
+
+            foreach (Cell cell in filledCells)
+            {
+                cell.TryRemoveBlock();
+            }
         }
+
 
         public bool TrySetBlockInCells(DictionaryVector2CellInBlock cellsInBlock, CellInBlock origin)
         {
@@ -122,7 +191,7 @@ namespace WoodBlock
                     _cellMatrix[pos.x, pos.y].SetBlock(cellInBlock);
                     updatedCells.Add(pos);
                 }
-                
+
                 UpdateGrid(updatedCells);
 
                 return true;

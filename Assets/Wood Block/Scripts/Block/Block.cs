@@ -60,7 +60,7 @@ namespace WoodBlock
 
         public void Drop()
         {
-            if (Grid.Instance.TrySetBlockInCells(_blocks, _selectedCell))
+            if (GridMap.Instance.TrySetBlockInCells(_blocks, _selectedCell))
             {
                 _inCell = true;
             }
