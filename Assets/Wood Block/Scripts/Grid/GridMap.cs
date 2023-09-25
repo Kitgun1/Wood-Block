@@ -10,14 +10,14 @@ namespace WoodBlock
     public class GridMap : MonoBehaviour
     {
         [SerializeField] private bool _generateOnAwake;
+        [SerializeField] private float _offsetY;
 
         [SerializeField] private Cell _cellTemplate;
         [SerializeField] private List<LevelMap> _maps = new();
 
+
         private readonly List<Cell> _spawnedCells = new();
         private Cell[,] _cellMatrix;
-
-        public Cell PointerCell;
 
         private static GridMap _instance;
 
@@ -26,6 +26,8 @@ namespace WoodBlock
             get => _instance;
             private set => _instance = value;
         }
+
+        [ReadOnly] public Cell PointerCell;
 
         private void Start()
         {
@@ -52,9 +54,10 @@ namespace WoodBlock
 
             transform.position = new Vector3(0, 0);
             SpawnCells(selectedMap, startPosition, minX, minY);
-            transform.position = new Vector3(-maxX, -maxY);
+            transform.position = new Vector3(-maxX, -maxY + _offsetY);
 
-            /*for (int y = _cellMatrix.GetLength(1) - 1; y >= 0; y--)
+            /* Перебрать весь массив:
+            for (int y = _cellMatrix.GetLength(1) - 1; y >= 0; y--)
             {
                 for (int x = 0; x < _cellMatrix.GetLength(0); x++)
                 {
@@ -95,7 +98,7 @@ namespace WoodBlock
 
                 bool xLineFilled = true;
                 List<Cell> xFilledCells = new(64);
-                
+
                 for (int y = updatedCell.y; y < _cellMatrix.GetLength(1); y++)
                 {
                     if (_cellMatrix[updatedCell.x, y] == null) break;

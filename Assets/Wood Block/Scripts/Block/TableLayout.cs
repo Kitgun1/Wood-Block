@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using KiUtility;
 using NaughtyAttributes;
 using UnityEngine;
 
@@ -58,6 +56,7 @@ namespace WoodBlock
             _point2.position = new Vector3(bounds.XMax, bounds.YMax);
 
             CalculateSprite();
+            UpdateContainerPoints();
         }
 
         [Button]
