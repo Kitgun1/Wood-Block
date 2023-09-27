@@ -10,6 +10,7 @@ namespace WoodBlock
         public UnityEvent DroppedBlock;
 
         public bool IsAvailable { get; private set; } = true;
+        public DictionaryVector2CellInBlock CellsInBlock => _block.CellsInBlock;
 
         private void OnDestroy() => DroppedBlock.RemoveAllListeners();
 

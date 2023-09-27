@@ -30,9 +30,11 @@ namespace WoodBlock
         private const float ScaleX3 = 0.7f;
         private const float ScaleX4 = 0.5f;
 
+        public DictionaryVector2CellInBlock CellsInBlock => _blocks;
+
         public event Action Dropped;
 
-        private void Start()
+        private void Awake()
         {
             _homePosition = transform.position;
             _targetPosition = _homePosition;

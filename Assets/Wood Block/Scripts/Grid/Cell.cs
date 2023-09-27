@@ -7,6 +7,8 @@ namespace WoodBlock
 {
     public class Cell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
+        [SerializeField] private CellInBlock _defaultBlockTemplate;
+
         private CellInBlock _block;
         private KiCoroutine _routine = new();
 
@@ -27,7 +29,13 @@ namespace WoodBlock
             _block = block;
             _block.Transform.parent = transform;
             _block.Transform.DOMove(transform.position + Vector3.back * 0.5f, 0.2f);
-            //_block.Transform.position = transform.position + Vector3.back * 0.5f;
+        }
+
+        public void SetBlock()
+        {
+            Vector3 spawnPos = transform.position + (Vector3.up + Vector3.right) / 2;
+            _block = Instantiate(_defaultBlockTemplate, spawnPos, Quaternion.identity, transform);
+            _block.Transform.DOMove(transform.position + Vector3.back * 0.5f, 0.2f);
         }
 
         public bool TryRemoveBlock()

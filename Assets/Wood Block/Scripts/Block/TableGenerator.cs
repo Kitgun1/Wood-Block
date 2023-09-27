@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using KiUtility;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace WoodBlock
 {
@@ -9,7 +9,7 @@ namespace WoodBlock
     public class TableGenerator : MonoBehaviour
     {
         [SerializeField] private bool _fillOnAwake = true;
-        [SerializeField] private List<Block> _blockTemplates = new();
+        [SerializeField] private List<ObjectChance<Block>> _blockTemplates = new();
 
         private TableLayout _tableLayout;
 
@@ -21,24 +21,39 @@ namespace WoodBlock
             foreach (TablePoint point in _tableLayout.Points)
                 point.DroppedBlock.AddListener(OnDroppedBlock);
 
-            if (_fillOnAwake) FillPoints();
+            if (_fillOnAwake) TryFillPoints();
         }
 
         private void OnDroppedBlock()
         {
-            FillPoints();
+            TryFillPoints();
+            if (_tableLayout.Points.Any()) CheckForLose();
         }
 
-        public void FillPoints()
+        private void CheckForLose()
         {
-            if (_tableLayout.Points.Where(p => p.IsAvailable).ToArray().Length == _tableLayout.AmountPoints)
+            var remainingDictionary = _tableLayout.Points
+                .Where(point => point is { IsAvailable: false })
+                .ToDictionary(point => point.CellsInBlock, point => point.CellsInBlock.First().Value);
+
+            if (GridMap.Instance.TryLoss(remainingDictionary))
             {
-                foreach (TablePoint tablePoint in _tableLayout.Points)
-                {
-                    tablePoint.CreateBlock(_blockTemplates[Random.Range(0, _blockTemplates.Count)]);
-                    
-                }
+                
             }
         }
+
+        public bool TryFillPoints()
+        {
+            if (_tableLayout.Points.Where(p => p.IsAvailable).ToArray().Length != _tableLayout.AmountPoints)
+                return false;
+            foreach (TablePoint tablePoint in _tableLayout.Points)
+            {
+                tablePoint.CreateBlock(_blockTemplates.RandomWithChance()[0]);
+            }
+
+            return true;
+        }
     }
+    
+    
 }

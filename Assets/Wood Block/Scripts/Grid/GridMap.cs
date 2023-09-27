@@ -15,9 +15,12 @@ namespace WoodBlock
         [SerializeField] private Cell _cellTemplate;
         [SerializeField] private List<LevelMap> _maps = new();
 
-
         private readonly List<Cell> _spawnedCells = new();
+        private readonly List<bool?[,]> _historyMap = new();
+
         private Cell[,] _cellMatrix;
+
+        [ReadOnly] public Cell PointerCell;
 
         private static GridMap _instance;
 
@@ -26,8 +29,6 @@ namespace WoodBlock
             get => _instance;
             private set => _instance = value;
         }
-
-        [ReadOnly] public Cell PointerCell;
 
         private void Start()
         {
@@ -55,16 +56,17 @@ namespace WoodBlock
             transform.position = new Vector3(0, 0);
             SpawnCells(selectedMap, startPosition, minX, minY);
             transform.position = new Vector3(-maxX, -maxY + _offsetY);
-
-            /* Перебрать весь массив:
-            for (int y = _cellMatrix.GetLength(1) - 1; y >= 0; y--)
-            {
-                for (int x = 0; x < _cellMatrix.GetLength(0); x++)
-                {
-                    if (_cellMatrix[x, y] == null) continue;
-                }
-            }*/
         }
+
+        /* Перебрать весь массив:
+        for (int y = _cellMatrix.GetLength(1) - 1; y >= 0; y--)
+        {
+            for (int x = 0; x < _cellMatrix.GetLength(0); x++)
+            {
+                if (_cellMatrix[x, y] == null) continue;
+            }
+        }
+        */
 
         private void ClearGrid()
         {
@@ -158,6 +160,59 @@ namespace WoodBlock
             }
         }
 
+        private void AddMapInHistory()
+        {
+            int maxX = _cellMatrix.GetLength(0);
+            int maxY = _cellMatrix.GetLength(1);
+            bool?[,] map = new bool?[maxX, maxY];
+            for (int y = _cellMatrix.GetLength(1) - 1; y >= 0; y--)
+            {
+                for (int x = 0; x < _cellMatrix.GetLength(0); x++)
+                {
+                    if (_cellMatrix[x, y] == null)
+                    {
+                        map[x, y] = null;
+                        continue;
+                    }
+
+                    map[x, y] = !_cellMatrix[x, y].IsAvailable;
+                }
+            }
+
+            _historyMap.Insert(0, map);
+            if (_historyMap.Count > 50) _historyMap.RemoveRange(50, _historyMap.Count - 50);
+        }
+
+        private bool CheckPastBlockInCells(DictionaryVector2CellInBlock cellsInBlock, CellInBlock origin)
+        {
+            Vector2 originPosition = cellsInBlock.FirstOrDefault(pair => pair.Value == origin).Key;
+
+            for (int ySelect = _cellMatrix.GetLength(1) - 1; ySelect >= 0; ySelect--)
+            {
+                for (int xSelect = 0; xSelect < _cellMatrix.GetLength(0); xSelect++)
+                {
+                    if (_cellMatrix[xSelect, ySelect] == null) continue;
+                    int availableBlock = 0;
+
+                    foreach ((Vector2 pos, CellInBlock cell) in cellsInBlock)
+                    {
+                        Vector2 offsetOnOrigin = pos - originPosition;
+                        int x = xSelect + (int)offsetOnOrigin.x;
+                        int y = ySelect + (int)offsetOnOrigin.y;
+
+                        if (x >= _cellMatrix.GetLength(0) || x < 0 ||
+                            y >= _cellMatrix.GetLength(1) || y < 0) continue;
+                        if (_cellMatrix[x, y] == null || !_cellMatrix[x, y].IsAvailable) continue;
+                        availableBlock++;
+                    }
+
+                    if (availableBlock >= cellsInBlock.Count) return true;
+                }
+            }
+
+            return false;
+        }
+
         public bool TrySetBlockInCells(DictionaryVector2CellInBlock cellsInBlock, CellInBlock origin)
         {
             Dictionary<Vector2Int, CellInBlock> availableBlock = new();
@@ -194,10 +249,49 @@ namespace WoodBlock
 
                 UpdateGrid(updatedCells);
 
+                AddMapInHistory();
+
                 return true;
             }
 
             return false;
+        }
+
+        public void UndoStepsInHistory(int amount)
+        {
+            int availableAmount = Mathf.Clamp(amount, 1, _historyMap.Count);
+            for (int y = _historyMap[availableAmount].GetLength(1) - 1; y >= 0; y--)
+            {
+                for (int x = 0; x < _historyMap[availableAmount].GetLength(0); x++)
+                {
+                    if (_historyMap[availableAmount][x, y] == null) continue;
+                    if (_historyMap[availableAmount][x, y].Value)
+                    {
+                        _cellMatrix[x, y].SetBlock();
+                    }
+                    else
+                    {
+                        _cellMatrix[x, y].TryRemoveBlock();
+                    }
+                }
+            }
+
+            _historyMap.RemoveRange(0, availableAmount - 1);
+        }
+
+        public bool TryLoss(Dictionary<DictionaryVector2CellInBlock, CellInBlock> remainingBlocks)
+        {
+            bool loss = true;
+            foreach (var pair in remainingBlocks)
+            {
+                if (CheckPastBlockInCells(pair.Key, pair.Value))
+                {
+                    loss = false;
+                    break;
+                }
+            }
+
+            return loss;
         }
     }
 }

@@ -7,7 +7,14 @@ namespace WoodBlock
         private static bool _initialized;
 
         private static PlayerInputAction _input;
-        public static PlayerInputAction.PlayerActions PlayerActions => _input.Player;
+        public static PlayerInputAction.PlayerActions PlayerActions
+        {
+            get
+            {
+                if(!_initialized) Initialize();
+                return _input.Player;
+            }
+        }
 
         public static void Initialize()
         {

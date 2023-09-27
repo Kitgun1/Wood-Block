@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Wood Block/Scenes/BootScane.unity
+    guid: 0958098a7fa9b0646b84afac24873d99
+  - enabled: 1
+    path: Assets/Wood Block/Scenes/Game.unity
+    guid: aa9e0f52dffa9c14282944a837e9f5ad
   m_configObjects: {}
