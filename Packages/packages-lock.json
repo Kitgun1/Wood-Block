@@ -33,7 +33,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "f7ae1d8073e01b433c134dc68e444562d74bb5e9"
+      "hash": "a4f2ff3c89898e6628eb2e6c962155504cb08f39"
     },
     "com.cysharp.unitask": {
       "version": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
@@ -178,7 +178,7 @@
     },
     "com.unity.ext.nunit": {
       "version": "1.0.6",
-      "depth": 2,
+      "depth": 1,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
@@ -213,8 +213,8 @@
       }
     },
     "com.unity.ide.rider": {
-      "version": "3.0.24",
-      "depth": 1,
+      "version": "3.0.25",
+      "depth": 0,
       "source": "registry",
       "dependencies": {
         "com.unity.ext.nunit": "1.0.6"

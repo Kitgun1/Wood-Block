@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using KiUtility;
+﻿using System.Collections.Generic;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
+using KiUtility;
 
 namespace WoodBlock
 {

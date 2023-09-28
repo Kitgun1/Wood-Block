@@ -9,20 +9,7 @@ using UnityEditor;
 
 namespace WoodBlock
 {
-    #region Custom Types
 
-    [Serializable]
-    public class DictionaryVector2CellInBlock : SerializableDictionary<Vector2, CellInBlock>
-    {
-    }
-#if UNITY_EDITOR
-    [CustomPropertyDrawer(typeof(DictionaryVector2CellInBlock))]
-    public class MyDictionaryExampleDrawer : DictionaryDrawer<Vector2, CellInBlock>
-    {
-    }
-#endif
-
-    #endregion
 
     public class BlockGenerator : MonoBehaviour
     {
