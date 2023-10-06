@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Linq;
 using DG.Tweening;
-using KiUtility;
+using KimicuUtility;
 using UnityEngine;
 using UnityEngine.InputSystem;
 

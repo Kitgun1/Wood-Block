@@ -10,5 +10,6 @@ namespace WoodBlock
         SettingsPopup = 1 << 1,
         Leaderboard = 1 << 2,
         GameView = 1 << 3,
+        Market = 1 << 4,
     }
 }

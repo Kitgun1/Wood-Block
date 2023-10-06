@@ -10,6 +10,8 @@ namespace WoodBlock
             PlayerInput.Initialize();
         }
 
+        public void LoadPlayerData() => PlayerBag.LoadOrCreate();
+
         public void LoadScene(int value) => SceneManager.LoadScene(value);
     }
 }

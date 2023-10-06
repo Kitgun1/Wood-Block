@@ -1,5 +1,5 @@
 ﻿using DG.Tweening;
-using KiUtility;
+using KimicuUtility;
 using UnityEngine;
 using UnityEngine.EventSystems;
 

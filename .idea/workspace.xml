@@ -1,20 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="3592538a-c5f0-4e52-a14a-25b192584a4e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Wood Block/Configs/Maps/Level 2.asset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Wood Block/Configs/Maps/Level 2.asset.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Wood Block/Resources/Blocks/Prefabs/Blocks/WoodBlock.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Wood Block/Resources/Blocks/Prefabs/Blocks/WoodBlock.prefab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Wood Block/Scripts/Core/CustomTypes/ShopPageType.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Wood Block/Scripts/Core/CustomTypes/ShopPageType.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Wood Block/Scripts/UI/Market.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Wood Block/Scripts/UI/Market/ShopController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Wood Block/Scripts/UI/Market/ShopController.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Yandex Metrica.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Yandex Metrica/1.2.0.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Yandex Metrica/1.2.0/Playtesting Sample.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Yandex Metrica/1.2.0/Playtesting Sample/Agava.YandexMetrica.Samples.Playtesting.asmdef" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Yandex Metrica/1.2.0/Playtesting Sample/Agava.YandexMetrica.Samples.Playtesting.asmdef.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Yandex Metrica/1.2.0/Playtesting Sample/PlaytestingCanvas.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Yandex Metrica/1.2.0/Playtesting Sample/PlaytestingCanvas.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Yandex Metrica/1.2.0/Playtesting Sample/PlaytestingScene.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Yandex Metrica/1.2.0/Playtesting Sample/PlaytestingScene.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Wood Block/Resources/Blocks/Prefabs/Leaderboard Item.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Wood Block/Resources/Blocks/Prefabs/Leaderboard Item.prefab.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Wood Block/Scenes/Game.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Wood Block/Scenes/Game.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Wood Block/Scenes/Level Generate.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Wood Block/Scenes/Level Generate.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Wood Block/Scripts/Block/Block.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Wood Block/Scripts/Block/Block.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Wood Block/Scripts/Block/TableGenerator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Wood Block/Scripts/Block/TableGenerator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Wood Block/Scripts/Block/TablePoint.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Wood Block/Scripts/Block/TablePoint.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Wood Block/Scripts/EditorInitialize.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Wood Block/Scripts/EditorInitialize.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Wood Block/Scripts/Grid/Cell.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Wood Block/Scripts/Grid/Cell.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Wood Block/Scripts/Grid/GridMap.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Wood Block/Scripts/Grid/GridMap.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Wood Block/Scripts/Core/CustomTypes/CustomDictionaries.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Wood Block/Scripts/Core/CustomTypes/CustomDictionaries.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Wood Block/Scripts/Core/CustomTypes/WindowType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Wood Block/Scripts/Core/CustomTypes/WindowType.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Wood Block/Scripts/UI/Leaderboard/LeaderboardView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Wood Block/Scripts/UI/Leaderboard/LeaderboardView.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,9 +36,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 2
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
   <component name="ProjectId" id="2VyvQVxj5M8X9Z4LLApMl9rn90K" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -38,6 +50,10 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "Rebasing main",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -50,6 +66,7 @@
       <option name="presentableId" value="Default" />
       <updated>1695821120504</updated>
       <workItem from="1695821123146" duration="233000" />
+      <workItem from="1696157273391" duration="591000" />
     </task>
     <servers />
   </component>

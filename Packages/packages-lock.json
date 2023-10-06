@@ -12,7 +12,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "fa31f21513b73c1cf117bf8d9fccd6f01b2772b7"
+      "hash": "b103dfa3323d73e7edecd44b9760b4a4a93109c4"
     },
     "com.agava.yandexmetrica": {
       "version": "https://github.com/forcepusher/com.agava.yandexmetrica.git",
@@ -26,14 +26,14 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "662d09fb49492debfecb4e8177ebd993929abe59"
+      "hash": "7867caac48048137ffdd979bcfa14b8a286c7ecb"
     },
     "com.blackbox.kiutility": {
       "version": "https://github.com/Kitgun1/KimicuUtility.git",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "a4f2ff3c89898e6628eb2e6c962155504cb08f39"
+      "hash": "ece1d8e47337e03a1de1b26135a82b111976dcff"
     },
     "com.cysharp.unitask": {
       "version": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",

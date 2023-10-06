@@ -1,6 +1,5 @@
-﻿using System;
-using System.Linq;
-using KiUtility;
+﻿using System.Linq;
+using KimicuUtility;
 using UnityEngine;
 
 namespace WoodBlock
