@@ -165,7 +165,7 @@ GameObject:
   - component: {fileID: 682983277738300996}
   - component: {fileID: 3450743284862527007}
   - component: {fileID: 6953908073256464114}
-  - component: {fileID: 9023843855990040709}
+  - component: {fileID: 2070436579099877610}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -230,7 +230,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &9023843855990040709
+--- !u!114 &2070436579099877610
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -386,7 +386,7 @@ GameObject:
   - component: {fileID: 2453837627958722895}
   - component: {fileID: 2991276763824276397}
   m_Layer: 5
-  m_Name: Return Move Product (1)
+  m_Name: Product (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -435,7 +435,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.46383923, g: 0.29411772, b: 0.85882354, a: 1}
+  m_Color: {r: 0.85882354, g: 0.29411772, b: 0.33872086, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -467,7 +467,7 @@ MonoBehaviour:
   _buyButton: {fileID: 2991276763824276397}
   Picture: {fileID: 2173460264486893114}
   TMPPriceJan: {fileID: 2238504702616438138}
-  <ProductId>k__BackingField: return_move_1
+  <ProductId>k__BackingField: clear_table_1
   TMPAmount: {fileID: 2620445837706062478}
 --- !u!114 &2991276763824276397
 MonoBehaviour:
@@ -840,7 +840,7 @@ GameObject:
   - component: {fileID: 4006118607188628960}
   - component: {fileID: 7460718889361626682}
   m_Layer: 5
-  m_Name: Return Move Product (10)
+  m_Name: Product (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -889,7 +889,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.46383923, g: 0.29411772, b: 0.85882354, a: 1}
+  m_Color: {r: 0.85882354, g: 0.29411772, b: 0.33872086, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -921,7 +921,7 @@ MonoBehaviour:
   _buyButton: {fileID: 7460718889361626682}
   Picture: {fileID: 6953908073256464114}
   TMPPriceJan: {fileID: 1078317441568087535}
-  <ProductId>k__BackingField: return_move_10
+  <ProductId>k__BackingField: clear_table_10
   TMPAmount: {fileID: 4580902170040115159}
 --- !u!114 &7460718889361626682
 MonoBehaviour:
@@ -1182,7 +1182,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u041E\u0442\u043C\u0435\u043D\u0438\u0442\u044C \u0445\u043E\u0434\u044B"
+  m_text: "\u041E\u0447\u0438\u0441\u0442\u0438\u0442\u044C \u0441\u0442\u043E\u043B"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ab051a72c7340154fa498e3540b7f45b, type: 2}
   m_sharedMaterial: {fileID: -8685960194695035821, guid: ab051a72c7340154fa498e3540b7f45b, type: 2}
@@ -1263,8 +1263,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbf51be86e70d7941bd40914206e4ddc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  translationName: Cancel Moves
-  FallbackText: "\u041E\u0442\u043C\u0435\u043D\u0438\u0442\u044C \u0445\u043E\u0434\u044B"
+  translationName: Clear the table
+  FallbackText: "\u041E\u0447\u0438\u0441\u0442\u0438\u0442\u044C \u0441\u0442\u043E\u043B"
 --- !u!1 &2694475322796389133
 GameObject:
   m_ObjectHideFlags: 0
@@ -1805,7 +1805,7 @@ GameObject:
   - component: {fileID: 4033681684860477388}
   - component: {fileID: 7263258894108500260}
   m_Layer: 5
-  m_Name: Return Move Product (5)
+  m_Name: Product (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1854,7 +1854,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.46383923, g: 0.29411772, b: 0.85882354, a: 1}
+  m_Color: {r: 0.85882354, g: 0.29411772, b: 0.33872086, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1886,7 +1886,7 @@ MonoBehaviour:
   _buyButton: {fileID: 7263258894108500260}
   Picture: {fileID: 5286936952739260212}
   TMPPriceJan: {fileID: 3471047987872141825}
-  <ProductId>k__BackingField: return_move_5
+  <ProductId>k__BackingField: clear_table_5
   TMPAmount: {fileID: 2786217158399727467}
 --- !u!114 &7263258894108500260
 MonoBehaviour:
@@ -1944,7 +1944,7 @@ GameObject:
   - component: {fileID: 5895565339847432751}
   - component: {fileID: 6189358308022312060}
   m_Layer: 5
-  m_Name: Horizontal Group (1 and 5)
+  m_Name: Horizontal Group
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2096,7 +2096,7 @@ GameObject:
   - component: {fileID: 3692272829216607414}
   - component: {fileID: 1792434569853139041}
   m_Layer: 5
-  m_Name: Horizontal Group (10 and 15)
+  m_Name: Horizontal Group
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2275,7 +2275,7 @@ GameObject:
   - component: {fileID: 2853126689210917965}
   - component: {fileID: 1100136567008538830}
   m_Layer: 5
-  m_Name: Return Move Product Vertical Group
+  m_Name: Clean Table Product Vertical Group
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2362,7 +2362,7 @@ MonoBehaviour:
     - {fileID: 4033681684860477388}
     - {fileID: 4006118607188628960}
     - {fileID: 4518834714315079134}
-    _values: 01000000050000000a0000000f000000
+    _values: 01000000030000000500000009000000
   _disposableProduct:
     _keys: []
     _values: 
@@ -2680,7 +2680,7 @@ GameObject:
   - component: {fileID: 4260166016588402367}
   - component: {fileID: 6721732664923895397}
   - component: {fileID: 2173460264486893114}
-  - component: {fileID: 5917019972944702340}
+  - component: {fileID: 7768799369123861945}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -2745,7 +2745,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5917019972944702340
+--- !u!114 &7768799369123861945
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3240,7 +3240,7 @@ GameObject:
   - component: {fileID: 4518834714315079134}
   - component: {fileID: 2811155397913652917}
   m_Layer: 5
-  m_Name: Return Move Product (15)
+  m_Name: Product (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3289,7 +3289,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.46383923, g: 0.29411772, b: 0.85882354, a: 1}
+  m_Color: {r: 0.85882354, g: 0.29411772, b: 0.33872086, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3321,7 +3321,7 @@ MonoBehaviour:
   _buyButton: {fileID: 2811155397913652917}
   Picture: {fileID: 4685867531236077266}
   TMPPriceJan: {fileID: 1318093703293114838}
-  <ProductId>k__BackingField: return_move_15
+  <ProductId>k__BackingField: clear_table_15
   TMPAmount: {fileID: 1677436269632967070}
 --- !u!114 &2811155397913652917
 MonoBehaviour:
@@ -3904,7 +3904,7 @@ GameObject:
   - component: {fileID: 1259743399195588147}
   - component: {fileID: 4590932011796472076}
   - component: {fileID: 4685867531236077266}
-  - component: {fileID: 2268473790279382378}
+  - component: {fileID: 8865227678073661956}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -3969,7 +3969,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2268473790279382378
+--- !u!114 &8865227678073661956
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3994,7 +3994,7 @@ GameObject:
   - component: {fileID: 5756485584556597555}
   - component: {fileID: 3453446531252947559}
   - component: {fileID: 5286936952739260212}
-  - component: {fileID: 3945786395851562766}
+  - component: {fileID: 6782368536964387532}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -4059,7 +4059,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3945786395851562766
+--- !u!114 &6782368536964387532
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

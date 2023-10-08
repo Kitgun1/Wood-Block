@@ -4,10 +4,10 @@ namespace WoodBlock
 {
     public static class PlayerBag
     {
-        public static int MaxScore { get; private set; } = 0;
-        public static int CoinAmount { get; private set; } = 100;
-        public static int CancelMoveAmount { get; private set; } = 1;
-        public static int ClearTableAmount { get; private set; } = 1;
+        public static int MaxScore { get; set; } = 0;
+        public static int CoinAmount { get; set; } = 100;
+        public static int CancelMoveAmount { get; set; } = 1;
+        public static int ClearTableAmount { get; set; } = 1;
 
         public static void LoadOrCreate()
         {

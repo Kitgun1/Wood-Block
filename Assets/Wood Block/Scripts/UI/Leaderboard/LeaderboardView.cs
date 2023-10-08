@@ -34,6 +34,7 @@ namespace WoodBlock
             var entries = response.entries.OrderBy(e => e.rank).ToList();
             foreach (LeaderboardEntryResponse entry in entries)
             {
+                print($"{entry} | {response}");
                 LeaderboardItem item = Instantiate(entry.rank == response.userRank
                     ? _leaderboardItemMe
                     : _leaderboardItem, _parent.transform);

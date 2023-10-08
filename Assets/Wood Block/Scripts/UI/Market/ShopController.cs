@@ -4,6 +4,7 @@ using System.Linq;
 using KimicuUtility;
 using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace WoodBlock
 {
@@ -57,11 +58,24 @@ namespace WoodBlock
 
         private void OnEnable()
         {
-            DrawPage(ShopPageType.BonusesPage);
+            DrawPage(_homePage);
+        }
+
+        private void Start()
+        {
+            foreach ((ShopPageType pageType, CanvasGroup canvasGroup) in _buttons)
+            {
+                canvasGroup.GetComponent<Button>().AddListener(() =>
+                {
+                    DrawPage(pageType);
+                    _parentProducts.GetComponent<VerticalLayoutGroup>().SetLayoutVertical();
+                });
+            }
         }
 
         private void OnDisable()
         {
+            ClearPage();
         }
 
         public void DrawPage(ShopPageType pagesType)
@@ -71,20 +85,29 @@ namespace WoodBlock
             switch (pagesType)
             {
                 case ShopPageType.CurrencyPage:
-                    foreach (ShopCategory currencyProduct in _currencyProducts)
-                    {
-                        var category = Instantiate(currencyProduct);
-                    }
+                    InstantiateCategory(_currencyProducts);
                     break;
                 case ShopPageType.SkinsPage:
+                    InstantiateCategory(_skinsProducts);
                     break;
                 case ShopPageType.DiscountsPage:
+                    InstantiateCategory(_discountProducts);
                     break;
                 case ShopPageType.BonusesPage:
+                    InstantiateCategory(_bonusesProducts);
                     break;
                 case ShopPageType.None:
                 default:
                     break;
+            }
+        }
+
+        private void InstantiateCategory(List<ShopCategory> list)
+        {
+            foreach (ShopCategory product in list)
+            {
+                ShopCategory category = Instantiate(product, _parentProducts);
+                _spawnedCategories.Add(category);
             }
         }
 

@@ -1,4 +1,5 @@
-﻿using KimicuUtility;
+﻿using CW.Common;
+using KimicuUtility;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -16,7 +17,7 @@ namespace WoodBlock
 
         private int _priceJan = 1;
 
-        public UnityEvent<string, int> OnClickBuyJan { get; private set; }
+        public UnityEvent<string, int> OnClickBuyJan { get; private set; } = new();
 
         protected int PriceJan
         {
@@ -26,10 +27,6 @@ namespace WoodBlock
                 _priceJan = value;
                 TMPPriceJan.text = value.ToString();
             }
-        }
-
-        public virtual void GetReward()
-        {
         }
 
         public DisposableShopProduct InitializeClick()
@@ -42,6 +39,12 @@ namespace WoodBlock
         public DisposableShopProduct SetPicture(Sprite sprite)
         {
             Picture.sprite = sprite;
+            if (sprite != Resources.Load("Sprites/loading", typeof(Sprite)))
+            {
+                Picture.GetComponent<CwRotate>().AngularVelocity = new Vector3(0, 0, 0);
+                Picture.transform.rotation = Quaternion.identity;
+            }
+            else Picture.GetComponent<CwRotate>().AngularVelocity = new Vector3(0, 0, -360);
             return this;
         }
 

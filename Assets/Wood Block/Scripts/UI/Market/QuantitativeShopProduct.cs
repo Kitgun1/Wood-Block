@@ -24,10 +24,5 @@ namespace WoodBlock
             AmountReward = value;
             return this;
         }
-
-        public override void GetReward()
-        {
-            
-        }
     }
 }

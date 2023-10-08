@@ -48,7 +48,7 @@ namespace WoodBlock
                 return false;
             foreach (TablePoint tablePoint in _tableLayout.Points)
             {
-                tablePoint.CreateBlock(_blockTemplates.RandomWithChance()[0]);
+                tablePoint.CreateBlock(_blockTemplates.RandomWithChance().Peek());
             }
 
             return true;

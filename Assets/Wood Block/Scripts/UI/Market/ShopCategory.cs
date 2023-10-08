@@ -5,7 +5,6 @@ using Agava.YandexGames;
 using KimicuUtility;
 using NaughtyAttributes;
 using UnityEngine;
-using Billing = KiYandexSDK.Billing;
 
 namespace WoodBlock
 {
@@ -19,6 +18,26 @@ namespace WoodBlock
         [SerializeField, EnableIf(nameof(_categoryProductType), CategoryProductType.Disposable)]
         private DictionaryDisposableProductReward _disposableProduct = new();
 
+        private readonly Dictionary<string, Action<int>> _rewards = new();
+
+        private void Awake()
+        {
+            _rewards.Add("clear_table_1", RewardClearTable);
+            _rewards.Add("clear_table_3", RewardClearTable);
+            _rewards.Add("clear_table_5", RewardClearTable);
+            _rewards.Add("clear_table_9", RewardClearTable);
+
+            _rewards.Add("return_move_1", RewardReturnMove);
+            _rewards.Add("return_move_5", RewardReturnMove);
+            _rewards.Add("return_move_10", RewardReturnMove);
+            _rewards.Add("return_move_15", RewardReturnMove);
+
+            _rewards.Add("coins_100", RewardCoins);
+            _rewards.Add("coins_500", RewardCoins);
+            _rewards.Add("coins_1000", RewardCoins);
+            _rewards.Add("coins_2000", RewardCoins);
+        }
+
         private void OnEnable()
         {
             switch (_categoryProductType)
@@ -26,27 +45,38 @@ namespace WoodBlock
                 case CategoryProductType.Quantitative:
                     foreach ((QuantitativeShopProduct product, int reward) in _quantitativeProduct)
                     {
-                        CatalogProduct selected = Billing.CatalogProduct.First(p => p.id == product.ProductId);
-                        product.SetPriceJan(int.Parse(selected.price));
+                        CatalogProduct selected =
+                            KiYandexSDK.Billing.CatalogProduct?.FirstOrDefault(p => p.id == product.ProductId);
+                        if (selected == null) continue;
+                        print(System.Convert.ToInt32(selected.priceValue));
+                        product.InitializeClick()
+                            .SetPriceJan(System.Convert.ToInt32(selected.priceValue));
                         StartCoroutine(selected.imageURI.GetPicture(
                             texture2D => product.SetPicture(
                                 Sprite.Create(texture2D, new Rect(0, 0, texture2D.width, texture2D.height),
                                     Vector2.one / 2))));
+
                         product.SetAmountReward(reward);
-                        product.OnClickBuyJan.AddListener(QuantitativeProductPurchaseSuccessCallback);
+                        product.OnClickBuyJan.AddListener(QuantitativeProductPurchase);
                     }
 
                     break;
                 case CategoryProductType.Disposable:
-                    foreach ((DisposableShopProduct product, int price) in _disposableProduct)
+                    foreach ((DisposableShopProduct product, int reward) in _disposableProduct)
                     {
-                        CatalogProduct selected = Billing.CatalogProduct.First(p => p.id == product.ProductId);
-                        product.SetPriceJan(int.Parse(selected.price));
+                        CatalogProduct selected =
+                            KiYandexSDK.Billing.CatalogProduct?.FirstOrDefault(p => p.id == product.ProductId);
+                        if (selected == null) continue;
+
+                        product.InitializeClick()
+                            .SetPriceJan(int.Parse(selected.priceValue));
+
                         StartCoroutine(selected.imageURI.GetPicture(
                             texture2D => product.SetPicture(
                                 Sprite.Create(texture2D, new Rect(0, 0, texture2D.width, texture2D.height),
                                     Vector2.one / 2))));
-                        product.OnClickBuyJan.AddListener(QuantitativeProductPurchaseSuccessCallback);
+
+                        product.OnClickBuyJan.AddListener(QuantitativeProductPurchase);
                     }
 
                     break;
@@ -56,10 +86,20 @@ namespace WoodBlock
             }
         }
 
-        private void QuantitativeProductPurchaseSuccessCallback(string productId, int amount)
+        private void QuantitativeProductPurchase(string productId, int amount)
         {
-            Billing.PurchaseProduct(productId, null, () => { }, onErrorConsume: Debug.LogWarning);
+            print($"click: {productId}:{amount}");
+            KiYandexSDK.Billing.PurchaseProductAndConsume(productId,
+                onSuccessConsume: () =>
+                {
+                    _rewards[productId].Invoke(amount);
+                    print($"{productId}:{amount}");
+                }, onErrorConsume: Debug.LogWarning);
         }
+
+        private static void RewardClearTable(int amount) => PlayerBag.ClearTableAmount += amount;
+        private static void RewardReturnMove(int amount) => PlayerBag.CancelMoveAmount += amount;
+        private static void RewardCoins(int amount) => PlayerBag.CoinAmount += amount;
 
         [Button, EnableIf(nameof(_categoryProductType), CategoryProductType.Quantitative)]
         private void FillQuantitativeDictionary()
