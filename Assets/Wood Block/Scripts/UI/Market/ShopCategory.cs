@@ -101,7 +101,7 @@ namespace WoodBlock
         private static void RewardReturnMove(int amount) => PlayerBag.CancelMoveAmount += amount;
         private static void RewardCoins(int amount) => PlayerBag.CoinAmount += amount;
 
-        [Button, EnableIf(nameof(_categoryProductType), CategoryProductType.Quantitative)]
+        [Button]
         private void FillQuantitativeDictionary()
         {
             foreach (QuantitativeShopProduct child in gameObject.GetComponentsInChildren<QuantitativeShopProduct>())
@@ -110,13 +110,12 @@ namespace WoodBlock
             }
         }
 
-        [Button, EnableIf(nameof(_categoryProductType), CategoryProductType.Disposable)]
+        [Button]
         private void FillDisposableDictionary()
         {
             foreach (DisposableShopProduct child in gameObject.GetComponentsInChildren<DisposableShopProduct>())
             {
-                Debug.Log((QuantitativeShopProduct)child);
-                if ((QuantitativeShopProduct)child != null) continue;
+                if (child is QuantitativeShopProduct) continue;
                 _disposableProduct.TryAdd(child, 0);
             }
         }

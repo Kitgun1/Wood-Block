@@ -43,10 +43,13 @@ namespace WoodBlock
             if (_block == null) return false;
             Rigidbody2D body = _block.gameObject.AddComponent<Rigidbody2D>();
             _block.GetComponent<Collider2D>().isTrigger = true;
+            
+            // Animation Destroy
             var spriteRenderer = _block.GetComponent<SpriteRenderer>();
             body.AddForce(Vector2.up * 2 + new Vector2(Random.Range(-1f, -0.5f), 0), ForceMode2D.Impulse);
-            body.DORotate(15, 0.5f);
-            spriteRenderer.DOColor(new Color(1, 1, 1, 0), 3f);
+            //body.DORotate(15, 0.5f);
+            //spriteRenderer.DOColor(new Color(1, 1, 1, 0), 3f);
+            
             Destroy(_block.Transform.gameObject, 3f);
 
             _block = null;

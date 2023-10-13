@@ -1,13 +1,59 @@
 ﻿using KiYandexSDK;
+using UnityEngine.Events;
 
 namespace WoodBlock
 {
     public static class PlayerBag
     {
-        public static int MaxScore { get; set; } = 0;
-        public static int CoinAmount { get; set; } = 100;
-        public static int CancelMoveAmount { get; set; } = 1;
-        public static int ClearTableAmount { get; set; } = 1;
+        private static int _maxScore = 0;
+        private static int _coinAmount = 0;
+        private static int _cancelMoveAmount = 0;
+        private static int _clearTableAmount = 0;
+
+        public static int MaxScore
+        {
+            get => _maxScore;
+            set
+            {
+                _maxScore = value;
+                MaxScoreChanged?.Invoke(value);
+            }
+        }
+
+        public static int CoinAmount
+        {
+            get => _coinAmount;
+            set
+            {
+                _coinAmount = value;
+                CoinAmountChanged?.Invoke(value);
+            }
+        }
+
+        public static int CancelMoveAmount
+        {
+            get => _cancelMoveAmount;
+            set
+            {
+                _cancelMoveAmount = value;
+                CancelMoveAmountChanged?.Invoke(value);
+            }
+        }
+
+        public static int ClearTableAmount
+        {
+            get => _clearTableAmount;
+            set
+            {
+                _clearTableAmount = value;
+                ClearTableAmountChanged?.Invoke(value);
+            }
+        }
+
+        public static readonly UnityEvent<int> MaxScoreChanged = new();
+        public static readonly UnityEvent<int> CoinAmountChanged = new();
+        public static readonly UnityEvent<int> CancelMoveAmountChanged = new();
+        public static readonly UnityEvent<int> ClearTableAmountChanged = new();
 
         public static void LoadOrCreate()
         {
