@@ -1,4 +1,4 @@
-﻿using KiYandexSDK;
+﻿using Kimicu.YandexGames;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,14 +7,10 @@ namespace WoodBlock
 {
     [RequireComponent(typeof(Toggle))]
     [RequireComponent(typeof(Image))]
-    [RequireComponent(typeof(Shadow))]
     public class ToggleSetting : MonoBehaviour
     {
-        [SerializeField] private bool _isShadow = true;
-        [SerializeField] private Color _isOffColor = Color.white;
-        [SerializeField, ShowIf("_isShadow")] private Color _isOffColorShadow = Color.white;
-        [SerializeField] private Color _isOnColor = Color.white;
-        [SerializeField, ShowIf("_isShadow")] private Color _isOnColorShadow = Color.white;
+        [SerializeField] private Sprite _isOffPicture;
+        [SerializeField] private Sprite _isOnPicture;
 
         [SerializeField] private bool _isSaving = true;
         [SerializeField, ShowIf("_isSaving")] private string _key;
@@ -32,7 +28,7 @@ namespace WoodBlock
 
             if (_isSaving)
             {
-                Toggle.isOn = (bool)YandexData.Load(_key, Toggle.isOn);
+                Toggle.isOn = (bool)YandexData.Load(_key, true);
                 UpdateVisual();
             }
 
@@ -49,8 +45,7 @@ namespace WoodBlock
 
         private void ValueChanged(bool value)
         {
-            _image.color = value ? _isOnColor : _isOffColor;
-            if (_isShadow) _shadow.effectColor = Toggle.isOn ? _isOnColorShadow : _isOffColorShadow;
+            _image.sprite = value ? _isOnPicture : _isOffPicture;
 
             if (!_isSaving) return;
             YandexData.Save(_key, value);
@@ -59,8 +54,7 @@ namespace WoodBlock
         [Button]
         private void UpdateVisual()
         {
-            _image.color = Toggle.isOn ? _isOnColor : _isOffColor;
-            if (_isShadow) _shadow.effectColor = Toggle.isOn ? _isOnColorShadow : _isOffColorShadow;
+            _image.sprite = Toggle.isOn ? _isOnPicture : _isOffPicture;
         }
     }
 }

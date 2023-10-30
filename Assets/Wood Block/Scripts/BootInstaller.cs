@@ -1,9 +1,11 @@
 ﻿using System.Collections;
-using Agava.YandexGames;
-using KiYandexSDK;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Billing = KiYandexSDK.Billing;
+#if UNITY_EDITOR && UNITY_WEBGL
+using Kimicu.YandexGames;
+using Agava.YandexGames;
+using Billing = Kimicu.YandexGames.Billing;
+#endif
 
 namespace WoodBlock
 {
@@ -11,12 +13,12 @@ namespace WoodBlock
     {
         private IEnumerator Start()
         {
-#if !UNITY_EDITOR && UNITY_WEBGL
+#if UNITY_EDITOR && UNITY_WEBGL
             yield return YandexGamesSdk.Initialize(); // Initialize Agava SDK.
             yield return YandexData.Initialize(); // Initialize data.
             yield return Billing.Initialize(); // Initialize purchases.
-            AdvertSDK.AdvertInitialize();  // Initialize advert.
-            WebGL.Initialize();  // Initialize WebGL.
+            Advert.AdvertInitialize();  // Initialize advert.
+            WebGL.InitializeListener();  // Initialize WebGL.
 #else
             yield return null;
 #endif

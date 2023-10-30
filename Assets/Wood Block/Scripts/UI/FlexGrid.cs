@@ -13,7 +13,6 @@ namespace WoodBlock
     {
         [SerializeField] private DictionaryFloatInt _amountXElementByWidthScreen = new();
         [SerializeField] private RectTransform _rectParent;
-        [SerializeField] private Vector2 _margin;
         [SerializeField] private RectTransform _child;
 
         private int _amountXElement = 1;
@@ -62,14 +61,14 @@ namespace WoodBlock
 
         private float CalculateWidth()
         {
-            float width = _rectParent.rect.width - _margin.Sum() / _amountXElement;
-            width -= (_amountXElement - 1 - _grid.padding.left - _grid.padding.right) * _grid.spacing.x;
+            float width = _rectParent.rect.width - _grid.padding.horizontal;
+            width -= (_amountXElement - 1) * _grid.spacing.x;
             return width / _amountXElement;
         }
 
         private float CalculateHeight(float gridCellSizeX)
         {
-            float height = _child.rect.height;
+            float height = gridCellSizeX * (1 / 0.6875f);
             return height;
         }
     }

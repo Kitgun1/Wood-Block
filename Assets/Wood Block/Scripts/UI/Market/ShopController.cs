@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using KimicuUtility;
@@ -50,10 +51,13 @@ namespace WoodBlock
             _availableDiscountsPage = (_availablePages & ShopPageType.DiscountsPage) != 0;
             _availableBonusesPage = (_availablePages & ShopPageType.BonusesPage) != 0;
 
-            _buttons.First(pair => pair.Key == ShopPageType.CurrencyPage).Value.Active(_availableCurrencyPage);
-            _buttons.First(pair => pair.Key == ShopPageType.SkinsPage).Value.Active(_availableSkinsPage);
-            _buttons.First(pair => pair.Key == ShopPageType.DiscountsPage).Value.Active(_availableDiscountsPage);
-            _buttons.First(pair => pair.Key == ShopPageType.BonusesPage).Value.Active(_availableBonusesPage);
+            _buttons.First(pair => pair.Key == ShopPageType.CurrencyPage).Value.gameObject
+                .SetActive(_availableCurrencyPage);
+            _buttons.First(pair => pair.Key == ShopPageType.SkinsPage).Value.gameObject.SetActive(_availableSkinsPage);
+            _buttons.First(pair => pair.Key == ShopPageType.DiscountsPage).Value.gameObject
+                .SetActive(_availableDiscountsPage);
+            _buttons.First(pair => pair.Key == ShopPageType.BonusesPage).Value.gameObject
+                .SetActive(_availableBonusesPage);
         }
 
         private void OnEnable()
@@ -100,6 +104,8 @@ namespace WoodBlock
                 default:
                     break;
             }
+
+            LayoutsUpdater.UpdateAllLayouts();
         }
 
         private void InstantiateCategory(List<ShopCategory> list)

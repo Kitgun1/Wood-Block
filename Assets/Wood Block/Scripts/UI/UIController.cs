@@ -6,11 +6,12 @@ namespace WoodBlock
 {
     public class UIController : MonoBehaviour
     {
+        [SerializeField] private WindowType _startingWindow;
         [SerializeField] private DictionaryWindows _windows = new();
 
         private void Awake()
         {
-            OpenWindow(new[] { WindowType.StartMenu });
+            OpenWindow(new[] { _startingWindow });
         }
 
         public void OpenWindow(WindowType[] windowType)
@@ -19,6 +20,8 @@ namespace WoodBlock
             {
                 pair.Value.Active(windowType.Any(w => w == pair.Key));
             }
+
+            LayoutsUpdater.UpdateAllLayouts();
         }
     }
 }

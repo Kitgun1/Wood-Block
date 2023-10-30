@@ -26,14 +26,14 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "8e7fa625f256a4995dd09972ea85139fd7622549"
+      "hash": "ff63ac73f783b3d7a15eb9847960577d90bea6a7"
     },
     "com.blackbox.kiutility": {
       "version": "https://github.com/Kitgun1/KimicuUtility.git",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "e93341719a8fdbdcaac2f01075bb3821934fe806"
+      "hash": "0fce3c7e1d0c9431b81a70be3ebcdf51a6604759"
     },
     "com.cysharp.unitask": {
       "version": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
