@@ -22,13 +22,7 @@ namespace WoodBlock
 
         [ReadOnly] public Cell PointerCell;
 
-        private static GridMap _instance;
-
-        public static GridMap Instance
-        {
-            get => _instance;
-            private set => _instance = value;
-        }
+        public static GridMap Instance { get; private set; }
 
         private void Start()
         {
@@ -36,7 +30,7 @@ namespace WoodBlock
             if (_generateOnAwake) GenerateGrid();
         }
 
-        [Button(nameof(GenerateGrid))]
+        [Button]
         private void GenerateGrid()
         {
             ClearGrid();

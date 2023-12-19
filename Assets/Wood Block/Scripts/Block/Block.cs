@@ -51,7 +51,7 @@ namespace WoodBlock
                 4 => ScaleX4,
                 _ => _currentScale
             };
-            transform.localScale = Vector3.one * _currentScale;
+            transform.DOScale(Vector3.one * _currentScale, 0);
 
             foreach ((Vector2 _, CellInBlock block) in _blocks)
             {

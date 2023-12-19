@@ -16,7 +16,8 @@ namespace WoodBlock
 
         public Block CreateBlock(Block prefab)
         {
-            _block = Instantiate(prefab, transform.position, Quaternion.identity, transform);
+            _block = Instantiate(prefab, transform.position, Quaternion.identity);
+            _block.transform.parent = transform;
             _block.Dropped += BlockOnDropped;
             IsAvailable = false;
             return _block;

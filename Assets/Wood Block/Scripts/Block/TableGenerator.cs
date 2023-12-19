@@ -38,22 +38,19 @@ namespace WoodBlock
 
             if (GridMap.Instance.TryLoss(remainingDictionary))
             {
-                
+                print("You Lose!");
             }
         }
 
-        public bool TryFillPoints()
+        public void TryFillPoints()
         {
+            if(_tableLayout.Points == null) return;
             if (_tableLayout.Points.Where(p => p.IsAvailable).ToArray().Length != _tableLayout.AmountPoints)
-                return false;
+                return;
             foreach (TablePoint tablePoint in _tableLayout.Points)
             {
                 tablePoint.CreateBlock(_blockTemplates.RandomWithChance().Peek());
             }
-
-            return true;
         }
     }
-    
-    
 }

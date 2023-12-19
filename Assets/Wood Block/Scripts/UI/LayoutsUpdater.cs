@@ -28,9 +28,12 @@ namespace WoodBlock
 
         public static void UpdateAllLayouts()
         {
+            if(_transform == null) return;
             var layouts = _transform.GetComponentsInChildren<LayoutGroup>();
-            var rects = layouts.Select(layout => layout.GetComponent<RectTransform>()).ToList();
-            foreach (RectTransform rect in rects) LayoutRebuilder.ForceRebuildLayoutImmediate(rect);
+            var rects = layouts?.Select(layout => layout.GetComponent<RectTransform>()).ToList();
+            if (rects == null) return;
+            foreach (RectTransform rect in rects)
+                LayoutRebuilder.ForceRebuildLayoutImmediate(rect);
         }
     }
 }
