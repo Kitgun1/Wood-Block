@@ -1,34 +1,27 @@
 ﻿using System.Collections;
+using Kimicu.YandexGames;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-#if UNITY_EDITOR && UNITY_WEBGL
-using Kimicu.YandexGames;
-using Agava.YandexGames;
-using Billing = Kimicu.YandexGames.Billing;
-#endif
 
 namespace WoodBlock
 {
-    public class BootInstaller : MonoBehaviour
-    {
-        private IEnumerator Start()
-        {
-#if UNITY_EDITOR && UNITY_WEBGL
-            yield return YandexGamesSdk.Initialize(); // Initialize Agava SDK.
-            yield return YandexData.Initialize(); // Initialize data.
-            yield return Billing.Initialize(); // Initialize purchases.
-            Advert.AdvertInitialize();  // Initialize advert.
-            WebGL.InitializeListener();  // Initialize WebGL.
-#else
-            yield return null;
-#endif
-            PlayerInput.Initialize();
-            LoadPlayerData();
-            LoadScene(1);
-        }
+	public class BootInstaller : MonoBehaviour
+	{
+		private IEnumerator Start()
+		{
+			yield return YandexGamesSdk.Initialize(); // Initialize SDK.
+			yield return Cloud.Initialize(); // Initialize data.
+			yield return Billing.Initialize(); // Initialize purchases.
+			Advertisement.Initialize(); // Initialize advert.
+			WebApplication.Initialize();
 
-        public void LoadPlayerData() => PlayerBag.LoadOrCreate();
+			PlayerInput.Initialize();
+			LoadPlayerData();
+			LoadScene(1);
+		}
 
-        public void LoadScene(int value) => SceneManager.LoadScene(value);
-    }
+		public void LoadPlayerData() => PlayerBag.LoadOrCreate();
+
+		public void LoadScene(int value) => SceneManager.LoadScene(value);
+	}
 }

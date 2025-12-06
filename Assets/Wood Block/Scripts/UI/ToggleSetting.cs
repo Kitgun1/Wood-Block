@@ -28,7 +28,7 @@ namespace WoodBlock
 
             if (_isSaving)
             {
-                Toggle.isOn = (bool)YandexData.Load(_key, true);
+                Toggle.isOn = Cloud.GetValue(_key, true);
                 UpdateVisual();
             }
 
@@ -48,7 +48,7 @@ namespace WoodBlock
             _image.sprite = value ? _isOnPicture : _isOffPicture;
 
             if (!_isSaving) return;
-            YandexData.Save(_key, value);
+            Cloud.SetValue(_key, value);
         }
 
         [Button]

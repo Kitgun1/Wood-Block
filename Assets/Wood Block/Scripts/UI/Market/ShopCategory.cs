@@ -46,7 +46,7 @@ namespace WoodBlock
                     foreach ((QuantitativeShopProduct product, int reward) in _quantitativeProduct)
                     {
                         CatalogProduct selected =
-                            Kimicu.YandexGames.Billing.CatalogProduct?.FirstOrDefault(p => p.id == product.ProductId);
+                            Kimicu.YandexGames.Billing.CatalogProducts?.FirstOrDefault(p => p.id == product.ProductId);
                         if (selected == null) continue;
                         print(System.Convert.ToInt32(selected.priceValue));
                         product.InitializeClick()
@@ -65,7 +65,7 @@ namespace WoodBlock
                     foreach ((DisposableShopProduct product, int reward) in _disposableProduct)
                     {
                         CatalogProduct selected =
-                            Kimicu.YandexGames.Billing.CatalogProduct?.FirstOrDefault(p => p.id == product.ProductId);
+                            Kimicu.YandexGames.Billing.CatalogProducts?.FirstOrDefault(p => p.id == product.ProductId);
                         if (selected == null) continue;
 
                         product.InitializeClick()
