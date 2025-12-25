@@ -89,12 +89,18 @@ namespace WoodBlock
         private void QuantitativeProductPurchase(string productId, int amount)
         {
             print($"click: {productId}:{amount}");
-            Kimicu.YandexGames.Billing.PurchaseProductAndConsume(productId,
-                onSuccessConsume: () =>
+            Kimicu.YandexGames.Billing.PurchaseProduct
+            (
+                productId, 
+                onSuccessCallback: x =>
                 {
                     _rewards[productId].Invoke(amount);
                     print($"{productId}:{amount}");
-                }, onErrorConsume: Debug.LogWarning);
+
+                    Billing.ConsumeProduct(x.purchaseData.purchaseToken, onErrorCallback: Debug.LogError);
+                },
+                onErrorCallback: Debug.LogWarning
+            );
         }
 
         private static void RewardClearTable(int amount) => PlayerBag.ClearTableAmount += amount;

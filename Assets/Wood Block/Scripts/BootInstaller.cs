@@ -10,12 +10,21 @@ namespace WoodBlock
 		private IEnumerator Start()
 		{
 			yield return YandexGamesSdk.Initialize(); // Initialize SDK.
-			yield return Cloud.Initialize(); // Initialize data.
-			yield return Billing.Initialize(); // Initialize purchases.
-			Advertisement.Initialize(); // Initialize advert.
-			WebApplication.Initialize();
+            Debug.Log("YandexGamesSdk инициализирован.");
 
-			PlayerInput.Initialize();
+            yield return Cloud.Initialize(); // Initialize data.
+            Debug.Log("Cloud инициализирован.");
+
+            yield return Billing.Initialize(); // Initialize purchases.
+            Debug.Log("Billing инициализирован.");
+
+            Advertisement.Initialize(); // Initialize advert.
+            Debug.Log("Advertisement инициализирован.");
+
+            WebApplication.Initialize();
+            Debug.Log("WebApplication инициализирован.");
+
+            PlayerInput.Initialize();
 			LoadPlayerData();
 			LoadScene(1);
 		}
