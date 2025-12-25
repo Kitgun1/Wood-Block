@@ -12,7 +12,7 @@ namespace WoodBlock
 
         public static LifeTime Instance { get; private set; }
 
-        private void OnEnable()
+        private void Awake()
         {
             if (Instance == null)
                 Instance = this;
@@ -20,7 +20,7 @@ namespace WoodBlock
                 Debug.Log("Обнаружен дубликат LifeTime", this);
         }
 
-        private void OnDisable()
+        private void OnDestroy()
         {
             if (Instance == this)
                 Instance = null;
