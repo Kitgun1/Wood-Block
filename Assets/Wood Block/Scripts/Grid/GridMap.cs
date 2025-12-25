@@ -24,7 +24,12 @@ namespace WoodBlock
 
         public static GridMap Instance { get; private set; }
 
-        private void Start()
+        /// <summary>
+        /// Вызывается при уничтожении определённого количества звёзд(блоков хз)
+        /// </summary>
+        public event Action<int> OnDestroyCellInBlocks;
+
+        private void Awake()
         {
             Instance = this;
             if (_generateOnAwake) GenerateGrid();
@@ -147,11 +152,16 @@ namespace WoodBlock
                 if (xLineFilled) filledCells.AddRange(xFilledCells);
             }
 
+            int starsDestroyedCount = 0;
             var filled = new HashSet<Cell>(filledCells);
             foreach (Cell cell in filled)
             {
-                cell.TryRemoveBlock();
+                if (cell.TryRemoveBlock())
+                    starsDestroyedCount++;
             }
+
+            if (starsDestroyedCount > 0 && OnDestroyCellInBlocks != null)
+                OnDestroyCellInBlocks.Invoke(starsDestroyedCount);
         }
 
         private void AddMapInHistory()

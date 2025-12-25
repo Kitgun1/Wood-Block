@@ -1,7 +1,9 @@
 ﻿using DG.Tweening;
 using KimicuUtility;
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Random = UnityEngine.Random;
 
 namespace WoodBlock
 {
@@ -12,6 +14,7 @@ namespace WoodBlock
         private CellInBlock _block;
         private KiCoroutine _routine = new();
 
+        public event Action OnDestroyBlock;
         public bool IsAvailable => _block == null;
 
         public void OnPointerEnter(PointerEventData eventData)
@@ -53,6 +56,8 @@ namespace WoodBlock
             Destroy(_block.Transform.gameObject, 3f);
 
             _block = null;
+
+            OnDestroyBlock?.Invoke();
             return true;
         }
     }
