@@ -1,12 +1,13 @@
-﻿using System.Collections;
-using Kimicu.YandexGames;
+﻿using Kimicu.YandexGames;
+using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace WoodBlock
 {
-	public class BootInstaller : MonoBehaviour
+	public sealed class BootInstaller : MonoBehaviour
 	{
+        [SerializeField] private string _nextScene;
+
 		private IEnumerator Start()
 		{
 			yield return YandexGamesSdk.Initialize(); // Initialize SDK.
@@ -26,11 +27,10 @@ namespace WoodBlock
 
             PlayerInput.Initialize();
 			LoadPlayerData();
-			LoadScene(1);
+
+            SceneLoader.LoadScene(_nextScene);
 		}
 
 		public void LoadPlayerData() => PlayerBag.LoadOrCreate();
-
-		public void LoadScene(int value) => SceneManager.LoadScene(value);
 	}
 }

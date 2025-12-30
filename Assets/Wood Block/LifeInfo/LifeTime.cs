@@ -5,7 +5,7 @@ namespace WoodBlock
 {
     public sealed class LifeTime : MonoBehaviour
     {
-        [SerializeField] private TMP_Text _text;
+        [SerializeField] private TMP_Text[] _labels;
 
         private float _value;
         public float Value => _value;
@@ -29,7 +29,10 @@ namespace WoodBlock
         public void Update()
         {
             _value += Time.deltaTime;
-            _text.text = _value.ToString("0");
+            for (int i = 0; i < _labels.Length; i++)
+            {
+                _labels[i].text = _value.ToString("0");
+            }
         }
     }
 }

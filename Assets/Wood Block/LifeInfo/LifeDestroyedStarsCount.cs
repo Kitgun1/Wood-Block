@@ -5,7 +5,7 @@ namespace WoodBlock
 {
     public sealed class LifeDestroyedStars : MonoBehaviour
     {
-        [SerializeField] private TMP_Text _text;
+        [SerializeField] private TMP_Text[] _labels;
         private int _destroyedCount = 0;
 
         public static LifeDestroyedStars Instance { get; private set; }
@@ -29,7 +29,10 @@ namespace WoodBlock
         private void OnDestroyCellInBlock(int count)
         {
             _destroyedCount += count;
-            _text.text = _destroyedCount.ToString();
+            for (int i = 0; i < _labels.Length; i++)
+            {
+                _labels[i].text = _destroyedCount.ToString();
+            }
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Linq;
 using KimicuUtility;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace WoodBlock
 {
@@ -12,6 +13,8 @@ namespace WoodBlock
         [SerializeField] private List<ObjectChance<Block>> _blockTemplates = new();
 
         private TableLayout _tableLayout;
+
+        public UnityEvent OnLooseCalledFromShitEvent;
 
         private void Awake()
         {
@@ -38,7 +41,8 @@ namespace WoodBlock
 
             if (GridMap.Instance.TryLoss(remainingDictionary))
             {
-                print("You Lose!");
+                Debug.Log("You Lose!", this);
+                OnLooseCalledFromShitEvent?.Invoke();
             }
         }
 
