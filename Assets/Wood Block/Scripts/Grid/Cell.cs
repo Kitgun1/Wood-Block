@@ -15,7 +15,7 @@ namespace WoodBlock
         private KiCoroutine _routine = new();
 
         public event Action OnDestroyBlock;
-        public bool IsAvailable => _block == null;
+        public bool IsEmpty => _block == null;
 
         public void OnPointerEnter(PointerEventData eventData)
         {
@@ -51,6 +51,12 @@ namespace WoodBlock
                 _block.Transform.DOMove(transform.position + Vector3.back * 0.5f, 0.2f);
         }
 
+        public void RemoveBlock()
+        {
+            if (!TryRemoveBlock())
+                Debug.LogError("Блок уже удалён.", this);
+        }
+
         public bool TryRemoveBlock(bool animate = true)
         {
             if (_block == null) 
@@ -77,6 +83,16 @@ namespace WoodBlock
             _block = null;
             OnDestroyBlock?.Invoke();
             return true;
+        }
+
+        public static bool Exist(Cell cell)
+        {
+            return cell != null;
+        }
+
+        public static bool NotExist(Cell cell)
+        {
+            return cell == null;
         }
     }
 }
