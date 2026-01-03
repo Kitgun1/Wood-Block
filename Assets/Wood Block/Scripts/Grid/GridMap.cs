@@ -16,7 +16,6 @@ namespace WoodBlock
         [SerializeField] private List<LevelMap> _maps = new();
 
         private readonly List<Cell> _spawnedCells = new();
-        private readonly List<bool?[,]> _historyMap = new();
 
         private Cell[,] _cellMatrix;
 
@@ -26,8 +25,21 @@ namespace WoodBlock
 
         /// <summary>
         /// Вызывается при уничтожении определённого количества звёзд(блоков хз)
+        /// Но не при загрузке/выгрузке карты или возвращения в истории
         /// </summary>
         public event Action<int> OnDestroyCellInBlocks;
+
+        public int CalculateBlocksCount()
+        {
+            int count = 0;
+            for (int i = 0; i < _spawnedCells.Count; i++)
+            {
+                var cell = _spawnedCells[i];
+                if (!cell.IsAvailable)
+                    count++;
+            }
+            return count;
+        }
 
         private void Awake()
         {
@@ -88,21 +100,26 @@ namespace WoodBlock
             }
         }
 
+        List<Cell> filledCells = new(128);
+        List<Cell> yFilledCells = new(64);
+        List<Cell> xFilledCells = new(64);
         private void UpdateGrid(List<Vector2Int> updatedCells)
         {
-            List<Cell> filledCells = new(128);
+            filledCells.Clear();
 
             foreach (Vector2Int updatedCell in updatedCells)
             {
                 bool yLineFilled = true;
-                List<Cell> yFilledCells = new(64);
+                yFilledCells.Clear();
 
                 bool xLineFilled = true;
-                List<Cell> xFilledCells = new(64);
+                xFilledCells.Clear();
 
                 for (int y = updatedCell.y; y < _cellMatrix.GetLength(1); y++)
                 {
-                    if (_cellMatrix[updatedCell.x, y] == null) break;
+                    if (_cellMatrix[updatedCell.x, y] == null) 
+                        break;
+
                     if (_cellMatrix[updatedCell.x, y].IsAvailable)
                     {
                         yLineFilled = false;
@@ -153,8 +170,8 @@ namespace WoodBlock
             }
 
             int starsDestroyedCount = 0;
-            var filled = new HashSet<Cell>(filledCells);
-            foreach (Cell cell in filled)
+
+            foreach (Cell cell in filledCells)
             {
                 if (cell.TryRemoveBlock())
                     starsDestroyedCount++;
@@ -162,29 +179,6 @@ namespace WoodBlock
 
             if (starsDestroyedCount > 0 && OnDestroyCellInBlocks != null)
                 OnDestroyCellInBlocks.Invoke(starsDestroyedCount);
-        }
-
-        private void AddMapInHistory()
-        {
-            int maxX = _cellMatrix.GetLength(0);
-            int maxY = _cellMatrix.GetLength(1);
-            bool?[,] map = new bool?[maxX, maxY];
-            for (int y = _cellMatrix.GetLength(1) - 1; y >= 0; y--)
-            {
-                for (int x = 0; x < _cellMatrix.GetLength(0); x++)
-                {
-                    if (_cellMatrix[x, y] == null)
-                    {
-                        map[x, y] = null;
-                        continue;
-                    }
-
-                    map[x, y] = !_cellMatrix[x, y].IsAvailable;
-                }
-            }
-
-            _historyMap.Insert(0, map);
-            if (_historyMap.Count > 50) _historyMap.RemoveRange(50, _historyMap.Count - 50);
         }
 
         private bool CheckPastBlockInCells(DictionaryVector2CellInBlock cellsInBlock, CellInBlock origin)
@@ -253,34 +247,10 @@ namespace WoodBlock
 
                 UpdateGrid(updatedCells);
 
-                AddMapInHistory();
-
                 return true;
             }
 
             return false;
-        }
-
-        public void UndoStepsInHistory(int amount)
-        {
-            int availableAmount = Mathf.Clamp(amount, 1, _historyMap.Count);
-            for (int y = _historyMap[availableAmount].GetLength(1) - 1; y >= 0; y--)
-            {
-                for (int x = 0; x < _historyMap[availableAmount].GetLength(0); x++)
-                {
-                    if (_historyMap[availableAmount][x, y] == null) continue;
-                    if (_historyMap[availableAmount][x, y].Value)
-                    {
-                        _cellMatrix[x, y].SetBlock();
-                    }
-                    else
-                    {
-                        _cellMatrix[x, y].TryRemoveBlock();
-                    }
-                }
-            }
-
-            _historyMap.RemoveRange(0, availableAmount - 1);
         }
 
         public bool TryLoss(Dictionary<DictionaryVector2CellInBlock, CellInBlock> remainingBlocks)

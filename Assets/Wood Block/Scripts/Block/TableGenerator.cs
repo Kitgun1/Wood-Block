@@ -13,7 +13,6 @@ namespace WoodBlock
         [SerializeField] private List<ObjectChance<Block>> _blockTemplates = new();
 
         private TableLayout _tableLayout;
-
         public UnityEvent OnLooseCalledFromShitEvent;
 
         private void Awake()
@@ -30,7 +29,9 @@ namespace WoodBlock
         private void OnDroppedBlock()
         {
             TryFillPoints();
-            if (_tableLayout.Points.Any()) CheckForLose();
+
+            if (_tableLayout.Points.Any()) 
+                CheckForLose();
         }
 
         private void CheckForLose()
@@ -48,9 +49,12 @@ namespace WoodBlock
 
         public void TryFillPoints()
         {
-            if(_tableLayout.Points == null) return;
+            if(_tableLayout.Points == null) 
+                return;
+
             if (_tableLayout.Points.Where(p => p.IsAvailable).ToArray().Length != _tableLayout.AmountPoints)
                 return;
+
             foreach (TablePoint tablePoint in _tableLayout.Points)
             {
                 tablePoint.CreateBlock(_blockTemplates.RandomWithChance().Peek());

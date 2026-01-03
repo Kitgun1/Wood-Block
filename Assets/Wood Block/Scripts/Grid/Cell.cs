@@ -27,36 +27,54 @@ namespace WoodBlock
             if (GridMap.Instance.PointerCell == this) GridMap.Instance.PointerCell = null;
         }
 
-        public void SetBlock(CellInBlock block)
+        public void SetBlock(CellInBlock block, bool animate = true)
         {
+            if (_block != null)
+                return;
+
             _block = block;
             _block.Transform.parent = transform;
-            _block.Transform.DOMove(transform.position + Vector3.back * 0.5f, 0.2f);
+            
+            if (animate)
+                _block.Transform.DOMove(transform.position + Vector3.back * 0.5f, 0.2f);
         }
 
-        public void SetBlock()
+        public void SetBlock(bool animate = true)
         {
-            Vector3 spawnPos = transform.position + (Vector3.up + Vector3.right) / 2;
-            _block = Instantiate(_defaultBlockTemplate, spawnPos, Quaternion.identity, transform);
-            _block.Transform.DOMove(transform.position + Vector3.back * 0.5f, 0.2f);
+            if (_block == null)
+            {
+                Vector3 spawnPos = transform.position + (Vector3.up + Vector3.right) / 2;
+                _block = Instantiate(_defaultBlockTemplate, spawnPos, Quaternion.identity, transform);
+            }
+
+            if (animate)
+                _block.Transform.DOMove(transform.position + Vector3.back * 0.5f, 0.2f);
         }
 
-        public bool TryRemoveBlock()
+        public bool TryRemoveBlock(bool animate = true)
         {
-            if (_block == null) return false;
-            Rigidbody2D body = _block.gameObject.AddComponent<Rigidbody2D>();
-            _block.GetComponent<Collider2D>().isTrigger = true;
-            
-            // Animation Destroy
-            var spriteRenderer = _block.GetComponent<SpriteRenderer>();
-            body.AddForce(Vector2.up * 2 + new Vector2(Random.Range(-1f, -0.5f), 0), ForceMode2D.Impulse);
-            //body.DORotate(15, 0.5f);
-            //spriteRenderer.DOColor(new Color(1, 1, 1, 0), 3f);
-            
-            Destroy(_block.Transform.gameObject, 3f);
+            if (_block == null) 
+                return false;
+
+            if (animate)
+            {
+                Rigidbody2D body = _block.gameObject.AddComponent<Rigidbody2D>();
+                _block.GetComponent<Collider2D>().isTrigger = true;
+
+                // Animation Destroy
+                var spriteRenderer = _block.GetComponent<SpriteRenderer>();
+                body.AddForce(Vector2.up * 2 + new Vector2(Random.Range(-1f, -0.5f), 0), ForceMode2D.Impulse);
+                //body.DORotate(15, 0.5f);
+                //spriteRenderer.DOColor(new Color(1, 1, 1, 0), 3f);
+
+                Destroy(_block.Transform.gameObject, 3f);
+            }
+            else
+            {
+                Destroy(_block.gameObject);
+            }
 
             _block = null;
-
             OnDestroyBlock?.Invoke();
             return true;
         }
