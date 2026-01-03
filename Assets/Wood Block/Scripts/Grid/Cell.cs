@@ -9,8 +9,6 @@ namespace WoodBlock
 {
     public class Cell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
-        [SerializeField] private CellInBlock _defaultBlockTemplate;
-
         private CellInBlock _block;
         private KiCoroutine _routine = new();
 
@@ -30,30 +28,24 @@ namespace WoodBlock
         public void SetBlock(CellInBlock block, bool animate = true)
         {
             if (_block != null)
+            {
+                Debug.LogError("Блок уже существует", this);
                 return;
+            }
 
             _block = block;
             _block.Transform.parent = transform;
-            
-            if (animate)
-                _block.Transform.DOMove(transform.position + Vector3.back * 0.5f, 0.2f);
+            AnimateSpawn();
         }
 
-        public void SetBlock(bool animate = true)
+        public void AnimateSpawn()
         {
-            if (_block == null)
-            {
-                Vector3 spawnPos = transform.position + (Vector3.up + Vector3.right) / 2;
-                _block = Instantiate(_defaultBlockTemplate, spawnPos, Quaternion.identity, transform);
-            }
-
-            if (animate)
-                _block.Transform.DOMove(transform.position + Vector3.back * 0.5f, 0.2f);
+            _block.Transform.DOMove(transform.position + Vector3.back * 0.5f, 0.2f);
         }
 
-        public void RemoveBlock()
+        public void RemoveBlock(bool animate = true)
         {
-            if (!TryRemoveBlock())
+            if (!TryRemoveBlock(animate))
                 Debug.LogError("Блок уже удалён.", this);
         }
 

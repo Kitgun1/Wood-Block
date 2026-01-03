@@ -1,25 +1,34 @@
-﻿using System;
+﻿using NaughtyAttributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using NaughtyAttributes;
+using Unity.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using ReadOnly = NaughtyAttributes.ReadOnlyAttribute;
 
 namespace WoodBlock
 {
+    public sealed class GridHistory
+    {
+        public List<Vector2Int> created;
+        public List<Vector2Int> removed;
+    }
+
     public class GridMap : MonoBehaviour
     {
         [SerializeField] private bool _generateOnAwake;
         [SerializeField] private float _offsetY;
 
         [SerializeField] private Cell _cellTemplate;
+        [SerializeField] private CellInBlock _cellInBlockPrefab;
         [SerializeField] private List<LevelMap> _maps = new();
 
         private readonly List<Cell> _spawnedCells = new();
 
         private Vector2Int _size;
         private Cell[,] _grid;
-
+        private Stack<GridHistory> _history = new();
 
         [ReadOnly] public Cell PointerCell;
 
@@ -96,11 +105,12 @@ namespace WoodBlock
             }
         }
 
-        private void UpdateGrid(List<Vector2Int> updatedCells)
+        private void Step(List<Vector2Int> created)
         {
-            for (int i = 0; i < updatedCells.Count; i++)
+            var removed = new List<Vector2Int>();
+            for (int i = 0; i < created.Count; i++)
             {
-                var updatedCell = updatedCells[i];
+                var updatedCell = created[i];
 
                 if (ChechFillY(updatedCell, out int maxY, out int minY))
                 {
@@ -108,6 +118,7 @@ namespace WoodBlock
                     for (int y = minY; y <= maxY; y++)
                     {
                         _grid[x, y].RemoveBlock();
+                        removed.Add(new(x, y));
                     }
                 }
 
@@ -117,8 +128,43 @@ namespace WoodBlock
                     for (int x = minX; x <= maxX; x++)
                     {
                         _grid[x, y].RemoveBlock();
+                        removed.Add(new(x, y));
                     }
                 }
+            }
+            _history.Push(new() { created = created, removed = removed });
+            Score.Instance.Value += removed.Count;
+        }
+
+        public bool CanUndo()
+        {
+            return _history.Count > 0;
+        }
+
+        /// <summary>
+        /// Отменяет последний ход и возвращает разницу между количеством блоков
+        /// с текущего до прошлого (возвращаемого) хода
+        /// </summary>
+        /// <returns></returns>
+        public void Undo()
+        {
+            var step = _history.Pop();
+
+            var removedList = step.removed;
+            for (int i = 0; i < removedList.Count; i++)
+            {
+                var removed = removedList[i];
+
+                var block = Instantiate(_cellInBlockPrefab);
+                _grid[removed.x, removed.y].SetBlock(block, false);
+            }
+            Score.Instance.Value -= removedList.Count;
+
+            var createdList = step.created;
+            for (int i = 0; i < createdList.Count; i++)
+            {
+                var created = createdList[i];
+                _grid[created.x, created.y].RemoveBlock(false);
             }
         }
 
@@ -218,6 +264,12 @@ namespace WoodBlock
             return false;
         }
 
+        public void UseBomb(Cell position)
+        {
+            Vector2Int intPos = _grid.GetCellPosition(position);
+            position.RemoveBlock(true);
+        }
+
         public bool TrySetBlockInCells(DictionaryVector2CellInBlock cellsInBlock, CellInBlock origin)
         {
             Dictionary<Vector2Int, CellInBlock> availableBlock = new();
@@ -252,7 +304,7 @@ namespace WoodBlock
                     updatedCells.Add(pos);
                 }
 
-                UpdateGrid(updatedCells);
+                Step(updatedCells);
 
                 return true;
             }
