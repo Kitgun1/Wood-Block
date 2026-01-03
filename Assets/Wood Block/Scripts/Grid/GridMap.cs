@@ -264,10 +264,44 @@ namespace WoodBlock
             return false;
         }
 
+        private static readonly List<Vector2Int> createdEmpty = new();
         public void UseBomb(Cell position)
         {
             Vector2Int intPos = _grid.GetCellPosition(position);
-            position.RemoveBlock(true);
+            int x = intPos.x;
+            int y = intPos.y;
+
+            List<Vector2Int> removed = new(9);
+
+            TryRemoveBlockAt(x - 1, y);
+            TryRemoveBlockAt(x - 1, y + 1);
+            TryRemoveBlockAt(x - 1, y - 1);
+
+            TryRemoveBlockAt(x, y);
+            TryRemoveBlockAt(x, y + 1);
+            TryRemoveBlockAt(x, y - 1);
+
+            TryRemoveBlockAt(x + 1, y);
+            TryRemoveBlockAt(x + 1, y + 1);
+            TryRemoveBlockAt(x + 1, y - 1);
+
+            _history.Push(new() { created = createdEmpty, removed = removed });
+            Score.Instance.Value += removed.Count;
+
+            bool TryRemoveBlockAt(int x, int y)
+            {
+                try
+                {
+                    if (_grid[x, y].TryRemoveBlock())
+                    {
+                        removed.Add(new(x, y));
+                        return true;
+                    }
+                } catch { }
+
+                return false;
+
+            }
         }
 
         public bool TrySetBlockInCells(DictionaryVector2CellInBlock cellsInBlock, CellInBlock origin)

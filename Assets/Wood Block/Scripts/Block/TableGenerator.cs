@@ -100,10 +100,16 @@ namespace WoodBlock
             }
         }
 
+        public void PushBombInHistory()
+        {
+            _history.Push(null);
+        }
 
         public void Undo()
         {
             var history = _history.Pop();
+            if (history == null) 
+                return;
 
             if (!history.point.IsEmpty)
             {
