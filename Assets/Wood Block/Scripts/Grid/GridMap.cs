@@ -1,4 +1,5 @@
 ﻿using NaughtyAttributes;
+using NUnit.Framework.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,23 @@ using ReadOnly = NaughtyAttributes.ReadOnlyAttribute;
 
 namespace WoodBlock
 {
+    public struct GridFill : IEquatable<GridFill>
+    {
+        public int cord;
+        public int min;
+        public int max;
+
+        public readonly bool Equals(GridFill other)
+        {
+            return min == other.min && max == other.max && cord == other.cord;
+        }
+    }
+
     public sealed class GridHistory
     {
         public List<Vector2Int> created;
-        public List<Vector2Int> removed;
+        public Vector2Int[] removed;
+        public int points;
     }
 
     public class GridMap : MonoBehaviour
@@ -105,35 +119,77 @@ namespace WoodBlock
             }
         }
 
-        private void Step(List<Vector2Int> created)
+
+        private readonly HashSet<Vector2Int> s_removed = new(32);
+        private readonly HashSet<GridFill> s_vertiacalFills = new(32);
+        private readonly HashSet<GridFill> s_horizontalFills = new(32);
+        private void CheckFills(List<Vector2Int> created)
         {
-            var removed = new List<Vector2Int>();
+            s_removed.Clear();
+            s_vertiacalFills.Clear();
+            s_horizontalFills.Clear();
+            int fillsCount = 0;
+
             for (int i = 0; i < created.Count; i++)
             {
                 var updatedCell = created[i];
 
-                if (ChechFillY(updatedCell, out int maxY, out int minY))
+                if (ChechFillVertical(updatedCell, out var vertiacalFill))
                 {
-                    int x = updatedCell.x;
-                    for (int y = minY; y <= maxY; y++)
+                    if (!s_vertiacalFills.Contains(vertiacalFill))
                     {
-                        _grid[x, y].RemoveBlock();
-                        removed.Add(new(x, y));
+                        s_vertiacalFills.Add(vertiacalFill);
+                        fillsCount++;
                     }
                 }
 
-                if (ChechFillX(updatedCell, out int maxX, out int minX))
+                if (ChechFillHorizontal(updatedCell, out var horizontalFill))
                 {
-                    int y = updatedCell.y;
-                    for (int x = minX; x <= maxX; x++)
+                    if (!s_horizontalFills.Contains(horizontalFill))
                     {
-                        _grid[x, y].RemoveBlock();
-                        removed.Add(new(x, y));
+                        s_horizontalFills.Add(horizontalFill);
+                        fillsCount++;
                     }
                 }
             }
-            _history.Push(new() { created = created, removed = removed });
-            Score.Instance.Value += removed.Count;
+
+            foreach (GridFill fill in s_vertiacalFills)
+            {
+                int x = fill.cord;
+                int minY = fill.min;
+                int maxY = fill.max;
+
+                for (int y = minY; y <= maxY; y++)
+                {
+                    if (s_removed.Contains(new(x, y)))
+                        continue;
+
+                    var cell = _grid[x, y];
+                    if (cell.TryRemoveBlock())
+                        s_removed.Add(new(x, y));
+                }
+            }
+
+            foreach (GridFill fill in s_horizontalFills)
+            {
+                int y = fill.cord;
+                int minX = fill.min;
+                int maxX = fill.max;
+
+                for (int x = minX; x <= maxX; x++)
+                {
+                    if (s_removed.Contains(new(x, y)))
+                        continue;
+
+                    var cell = _grid[x, y];
+                    if (cell.TryRemoveBlock())
+                        s_removed.Add(new(x, y));
+                }
+            }
+
+            int score = s_removed.Count * fillsCount;
+            _history.Push(new() { created = created, removed = s_removed.ToArray(), points = score });
+            Score.Instance.Value += score;
         }
 
         public bool CanUndo()
@@ -151,14 +207,14 @@ namespace WoodBlock
             var step = _history.Pop();
 
             var removedList = step.removed;
-            for (int i = 0; i < removedList.Count; i++)
+            for (int i = 0; i < removedList.Length; i++)
             {
                 var removed = removedList[i];
 
                 var block = Instantiate(_cellInBlockPrefab);
                 _grid[removed.x, removed.y].SetBlock(block, false);
             }
-            Score.Instance.Value -= removedList.Count;
+            Score.Instance.Value -= step.points;
 
             var createdList = step.created;
             for (int i = 0; i < createdList.Count; i++)
@@ -168,11 +224,13 @@ namespace WoodBlock
             }
         }
 
-        private bool ChechFillY(Vector2Int point, out int maxY, out int minY)
+        private bool ChechFillVertical(Vector2Int point, out GridFill result)
         {
+            result = default;
+
             int x = point.x;
-            maxY = point.y;
-            minY = point.y;
+            int maxY = point.y;
+            int minY = point.y;
 
             for (int y = maxY; y < _size.y; y++)
             {
@@ -198,14 +256,20 @@ namespace WoodBlock
                 minY = y;
             }
 
+            result.cord = point.x;
+            result.min = minY;
+            result.max = maxY;
+
             return true;
         }
 
-        private bool ChechFillX(Vector2Int point, out int maxX, out int minX)
+        private bool ChechFillHorizontal(Vector2Int point, out GridFill result)
         {
+            result = default;
+
             int y = point.y;
-            maxX = point.x;
-            minX = point.x;
+            int maxX = point.x;
+            int minX = point.x;
 
             for (int x = maxX; x < _size.x; x++)
             {
@@ -230,6 +294,10 @@ namespace WoodBlock
 
                 minX = x;
             }
+
+            result.cord = point.y;
+            result.min = minX;
+            result.max = maxX;
 
             return true;
         }
@@ -271,7 +339,7 @@ namespace WoodBlock
             int x = intPos.x;
             int y = intPos.y;
 
-            List<Vector2Int> removed = new(9);
+            var removed = new NativeList<Vector2Int>(Allocator.Temp);
 
             TryRemoveBlockAt(x - 1, y);
             TryRemoveBlockAt(x - 1, y + 1);
@@ -285,8 +353,8 @@ namespace WoodBlock
             TryRemoveBlockAt(x + 1, y + 1);
             TryRemoveBlockAt(x + 1, y - 1);
 
-            _history.Push(new() { created = createdEmpty, removed = removed });
-            Score.Instance.Value += removed.Count;
+            _history.Push(new() { created = createdEmpty, removed = removed.ToArray(), points = removed.Length });
+            Score.Instance.Value += removed.Length;
 
             bool TryRemoveBlockAt(int x, int y)
             {
@@ -338,7 +406,7 @@ namespace WoodBlock
                     updatedCells.Add(pos);
                 }
 
-                Step(updatedCells);
+                CheckFills(updatedCells);
 
                 return true;
             }
