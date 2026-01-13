@@ -1,3 +1,4 @@
+using NUnit.Framework.Interfaces;
 using TMPro;
 using UnityEngine;
 
@@ -7,8 +8,8 @@ namespace WoodBlock
     {
         [SerializeField] private TMP_Text[] _labels;
 
-        private float _value;
-        public float Value => _value;
+        private float _seconds;
+        public float Value => _seconds;
 
         public static LifeTime Instance { get; private set; }
 
@@ -28,11 +29,38 @@ namespace WoodBlock
 
         public void Update()
         {
-            _value += Time.deltaTime;
+            _seconds += Time.deltaTime;
             for (int i = 0; i < _labels.Length; i++)
+                _labels[i].text = GetText();
+        }
+
+        public string GetText()
+        {
+            int seconds = (int)_seconds;
+            int minutes = 0;
+            int hours = 0;
+
+            if (seconds > 60)
             {
-                _labels[i].text = _value.ToString("0");
+                minutes = seconds / 60;
+                seconds -= minutes * 60;
             }
+
+            if (minutes > 60)
+            {
+                hours = minutes / 60;
+                minutes -= hours * 60;
+            }
+
+            string text = string.Empty;
+
+            if (hours != 0)
+                text += $"{hours} ч. ";
+
+            if (minutes != 0)
+                text += $"{minutes} м. ";
+
+            return text + $"{seconds} с.";
         }
     }
 }

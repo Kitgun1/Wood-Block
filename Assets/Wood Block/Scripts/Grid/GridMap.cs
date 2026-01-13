@@ -119,6 +119,12 @@ namespace WoodBlock
             }
         }
 
+        public void DestroyAllBlocks()
+        {
+            foreach (var cell in _grid)
+                cell.TryRemoveBlock();
+        }
+
 
         private readonly HashSet<Vector2Int> s_removed = new(32);
         private readonly HashSet<GridFill> s_vertiacalFills = new(32);
