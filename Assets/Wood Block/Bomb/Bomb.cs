@@ -3,6 +3,7 @@ using KimicuUtility;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static UnityEngine.GraphicsBuffer;
 
 namespace WoodBlock
 {
@@ -13,6 +14,7 @@ namespace WoodBlock
         public float z;
 
         private bool grabbed = false;
+        private Cell target;
 
         private void Update()
         {
@@ -43,11 +45,12 @@ namespace WoodBlock
 
             if (GridMap.Instance.PointerCell != null)
             {
+                target = GridMap.Instance.PointerCell;
                 Advertisement.ShowVideoAd
                 (
                     onRewardedCallback: () =>
                     {
-                        GridMap.Instance.UseBomb(GridMap.Instance.PointerCell);
+                        GridMap.Instance.UseBomb(target);
                         TableGenerator.Instance.PushBombInHistory();
                     }
                 );
