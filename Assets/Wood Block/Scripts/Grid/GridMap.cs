@@ -122,7 +122,7 @@ namespace WoodBlock
         public void DestroyAllBlocks()
         {
             foreach (var cell in _grid)
-                cell.TryRemoveBlock();
+                cell?.TryRemoveBlock();
         }
 
 
