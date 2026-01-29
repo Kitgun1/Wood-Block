@@ -7,8 +7,6 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Slider))]
 public class SliderSettings : MonoBehaviour
 {
-    [SerializeField,Range(0,1)] private float _startValue;
-
     [SerializeField] private bool _isSaving = true;
     [SerializeField, ShowIf("_isSaving")] private string _key;
 
@@ -18,18 +16,14 @@ public class SliderSettings : MonoBehaviour
 
     private void Awake()
     {
-        _slider ??= GetComponent<Slider>();
-        _slider.onValueChanged.AddListener(ChangeValue);
+        _slider.onValueChanged?.AddListener(ChangeValue);
 
-        if (_isSaving)
+        if (_isSaving && Cloud.HasKey(_key))
             _slider.value = Cloud.GetValue<float>(_key);
+        else
+            _slider.value = 1;
     }
-    private void OnValidate()
-    {
-        _slider ??= GetComponent<Slider>();
-        _slider.value = _startValue;
-    }
-
+    private void OnValidate() => _slider ??= GetComponent<Slider>();
 
     private void ChangeValue(float value)
     {

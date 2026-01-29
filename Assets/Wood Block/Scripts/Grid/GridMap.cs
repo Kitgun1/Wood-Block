@@ -38,6 +38,10 @@ namespace WoodBlock
         [SerializeField] private CellInBlock _cellInBlockPrefab;
         [SerializeField] private List<LevelMap> _maps = new();
 
+        [SerializeField, Min(1)] private int _scoreMultipier = 10;
+
+        public bool IsMultiplierEnabled { get; set; } =  false;
+
         private readonly List<Cell> _spawnedCells = new();
 
         private Vector2Int _size;
@@ -195,7 +199,11 @@ namespace WoodBlock
 
             int score = s_removed.Count * fillsCount;
             _history.Push(new() { created = created, removed = s_removed.ToArray(), points = score });
-            Score.Instance.Value += score;
+
+            if (IsMultiplierEnabled)
+                Score.Instance.Value += score * _scoreMultipier;
+            else
+                Score.Instance.Value += score;
         }
 
         public bool CanUndo()

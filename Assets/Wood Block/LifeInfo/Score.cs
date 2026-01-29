@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -42,7 +43,6 @@ namespace WoodBlock
         {
             Value += count;
         }
-
         private void UpdateUI()
         {
             for (int i = 0; i < _labels.Length; i++)
