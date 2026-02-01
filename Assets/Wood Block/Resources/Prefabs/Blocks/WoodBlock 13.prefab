@@ -50,7 +50,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18efec167b394cca9b2ac3ffd437bbd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 5
+  _speedMove: 5
+  _durationScale: 0.5
 --- !u!114 &4864403149863511237
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -342,6 +343,22 @@ PrefabInstance:
     - target: {fileID: 3058423576393638552, guid: db1dc5e1891194e47bf7b1adceb68bd9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4404918540206448421, guid: db1dc5e1891194e47bf7b1adceb68bd9, type: 3}
+      propertyPath: m_Size.x
+      value: 3.1527064
+      objectReference: {fileID: 0}
+    - target: {fileID: 4404918540206448421, guid: db1dc5e1891194e47bf7b1adceb68bd9, type: 3}
+      propertyPath: m_Size.y
+      value: 3.1340435
+      objectReference: {fileID: 0}
+    - target: {fileID: 4404918540206448421, guid: db1dc5e1891194e47bf7b1adceb68bd9, type: 3}
+      propertyPath: m_Offset.x
+      value: 1.0513531
+      objectReference: {fileID: 0}
+    - target: {fileID: 4404918540206448421, guid: db1dc5e1891194e47bf7b1adceb68bd9, type: 3}
+      propertyPath: m_Offset.y
+      value: -1.0420216
       objectReference: {fileID: 0}
     - target: {fileID: 8049391326088791316, guid: db1dc5e1891194e47bf7b1adceb68bd9, type: 3}
       propertyPath: m_Name

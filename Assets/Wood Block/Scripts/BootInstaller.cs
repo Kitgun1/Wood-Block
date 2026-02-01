@@ -16,7 +16,7 @@ namespace WoodBlock
             yield return Cloud.Initialize(); // Initialize data.
             Debug.Log("Cloud инициализирован.");
 
-         //   yield return Billing.Initialize(); // Initialize purchases.
+            yield return Billing.Initialize(); // Initialize purchases.
             Debug.Log("Billing инициализирован.");
 
             Advertisement.Initialize(); // Initialize advert.

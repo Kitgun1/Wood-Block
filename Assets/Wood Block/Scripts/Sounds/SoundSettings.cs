@@ -1,5 +1,7 @@
 using Kimicu.YandexGames;
+using Unity.VectorGraphics;
 using UnityEngine;
+using WoodBlock;
 
 [RequireComponent(typeof(AudioSource))]
 public class SoundSettings : MonoBehaviour
@@ -21,18 +23,21 @@ public class SoundSettings : MonoBehaviour
         if (_minPitch >= _maxPitch)
             _minPitch = _maxPitch - 0.1f;
     }
-    private void OnEnable() => _slider.OnValueChanged += SetVolume;
-    private void OnDisable() => _slider.OnValueChanged -= SetVolume;
+    private void OnEnable() { if (_slider is not null) _slider.OnValueChanged += SetVolume; }
+    private void OnDisable() { if (_slider is not null) _slider.OnValueChanged -= SetVolume; }
+
 
     public void Play()
     {
         float pitch = Random.Range(0.9f,1.1f);
         _audioSource.pitch = pitch;
+        if(_audioSource.isActiveAndEnabled)
         _audioSource.Play();
     }
     public void SetVolume(float volume)
     {
         _audioSource.volume = volume;
+        _slider.SetValue(volume);
         Cloud.SetValue("soundsVolume", volume);
         Cloud.SaveInCloud();
     }
@@ -40,5 +45,7 @@ public class SoundSettings : MonoBehaviour
     {
         if (Cloud.HasKey("soundsVolume"))
             SetVolume(Cloud.GetValue<float>("soundsVolume"));
+        else
+            SetVolume(1f);
     }
 }

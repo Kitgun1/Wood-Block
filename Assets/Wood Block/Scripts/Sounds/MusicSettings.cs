@@ -1,37 +1,24 @@
 using Kimicu.YandexGames;
 using UnityEngine;
-
-[RequireComponent(typeof(AudioSource))]
 public class MusicSettings : MonoBehaviour
 {
     [SerializeField] private SliderSettings _slider;
+    private MusciPlayer _musicPlayer;
 
-    private AudioSource _musicSource;
-    private static MusicSettings _instance = null;
-
-    private void Start()
-    {
-        if (_instance == null)
-            _instance = this; 
-        else if (_instance == this)
-            Destroy(gameObject);
-
-        DontDestroyOnLoad(gameObject);
-        Initialize();
-        PlayMusic();
-    }
-    private void OnValidate() => _musicSource ??= GetComponent<AudioSource>();
+    private void Start() => Initialize();
     private void OnEnable() { if(_slider is not null)_slider.OnValueChanged += SetVolume; }
     private void OnDisable() { if (_slider is not null) _slider.OnValueChanged -= SetVolume; }
 
     public void SetVolume(float volume)
     {
-        _musicSource.volume = volume;
+        _musicPlayer.SetVolume(volume);
+        _slider.SetValue(volume);
         Cloud.SetValue("musicVolume", volume);
         Cloud.SaveInCloud();
     }
     private void Initialize()
     {
+        _musicPlayer = FindFirstObjectByType<MusciPlayer>();
 
         if (Cloud.HasKey("musicVolume"))
             SetVolume(Cloud.GetValue<float>("musicVolume"));
@@ -42,5 +29,4 @@ public class MusicSettings : MonoBehaviour
             Cloud.SaveInCloud();
         }
     }
-    private void PlayMusic() => _musicSource.Play();
 }

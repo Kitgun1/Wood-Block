@@ -122,6 +122,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4404918540206448421, guid: db1dc5e1891194e47bf7b1adceb68bd9, type: 3}
+      propertyPath: m_Size.x
+      value: 2.102355
+      objectReference: {fileID: 0}
+    - target: {fileID: 4404918540206448421, guid: db1dc5e1891194e47bf7b1adceb68bd9, type: 3}
+      propertyPath: m_Size.y
+      value: 3.165286
+      objectReference: {fileID: 0}
+    - target: {fileID: 4404918540206448421, guid: db1dc5e1891194e47bf7b1adceb68bd9, type: 3}
+      propertyPath: m_Offset.x
+      value: 0.5261776
+      objectReference: {fileID: 0}
+    - target: {fileID: 4404918540206448421, guid: db1dc5e1891194e47bf7b1adceb68bd9, type: 3}
+      propertyPath: m_Offset.y
+      value: 1.0576432
+      objectReference: {fileID: 0}
     - target: {fileID: 8049391326088791316, guid: db1dc5e1891194e47bf7b1adceb68bd9, type: 3}
       propertyPath: m_Name
       value: Block Point

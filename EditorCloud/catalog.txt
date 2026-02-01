@@ -1,8 +1,8 @@
 [
   {
-    "description": "Валюта для покупки предметов в магазине.",
+    "description": "Скин",
     "id": "coins_1000_example",
-    "imageURI": "//yastatic.net/s3/games-static/static-data/images/payments/sdk/currency-icon-s@2x.png",
+    "imageURI": "https://avatars.mds.yandex.net/get-games/17955142/2a0000019c1b204ff76415a1929c4d5350c4//default87x87",
     "price": "9 YAN",
     "priceCurrencyCode": "YAN",
     "priceValue": "9",
