@@ -22,16 +22,4 @@ namespace WoodBlock
     [CustomPropertyDrawer(typeof(DictionaryShopWindow))] 
     public class DictionaryShopWindowDrawer : DictionaryDrawer<ShopPageType, CanvasGroup> { }
 #endif
-
-    [Serializable] public class DictionaryQuantitativeProductReward : SerializableDictionary<QuantitativeShopProduct, int> { }
-#if UNITY_EDITOR
-    [CustomPropertyDrawer(typeof(DictionaryQuantitativeProductReward))] 
-    public class DictionaryQuantitativeProductRewardDrawer : DictionaryDrawer<QuantitativeShopProduct, int> { }
-#endif
-
-    [Serializable] public class DictionaryDisposableProductReward : SerializableDictionary<DisposableShopProduct, int> { }
-#if UNITY_EDITOR
-    [CustomPropertyDrawer(typeof(DictionaryDisposableProductReward))] 
-    public class DictionaryDisposableProductRewardDrawer : DictionaryDrawer<DisposableShopProduct, int> { }
-#endif
 }

@@ -1,13 +1,13 @@
 [
   {
-    "description": "Скин",
-    "id": "coins_1000_example",
+    "description": "Скин травы",
+    "id": "skin_grass",
     "imageURI": "https://avatars.mds.yandex.net/get-games/17955142/2a0000019c1b204ff76415a1929c4d5350c4//default87x87",
-    "price": "9 YAN",
+    "price": "25 YAN",
     "priceCurrencyCode": "YAN",
-    "priceValue": "9",
+    "priceValue": "25",
     "priceCurrencyPicture": "//yastatic.net/s3/games-static/static-data/images/payments/sdk/currency-icon-s@2x.png",
-    "title": "1000 монет"
+    "title": "Скин травы"
   },
   {
     "description": "Валюта для покупки предметов в магазине.",

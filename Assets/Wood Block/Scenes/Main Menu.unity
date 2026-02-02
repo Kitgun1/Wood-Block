@@ -588,7 +588,7 @@ GameObject:
   - component: {fileID: 217212051}
   - component: {fileID: 217212053}
   m_Layer: 0
-  m_Name: MusicController
+  m_Name: '[MusicController]'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -800,10 +800,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1478068999}
-        m_TargetAssemblyTypeName: KimicuUtility.KiCanvasGroup, KimicuUtility.Runtime
-        m_MethodName: TurnOff
-        m_Mode: 1
+      - m_Target: {fileID: 1478068995}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -945,7 +945,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22ca308ea27187348ab8de3a1531944f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShopSystem
-  _spriteRenderer: {fileID: 494162484772627174, guid: e15692d389b80ca49b79cb7b192eeaaa, type: 3}
 --- !u!114 &433419295
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3036,15 +3035,13 @@ GameObject:
   - component: {fileID: 1478068996}
   - component: {fileID: 1478068998}
   - component: {fileID: 1478068997}
-  - component: {fileID: 1478069000}
-  - component: {fileID: 1478068999}
   m_Layer: 5
   m_Name: ShopPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1478068996
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3104,30 +3101,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1478068995}
   m_CullTransparentMesh: 1
---- !u!114 &1478068999
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1478068995}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19b6c3d6232d4c63aa850f0e3ac5730d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: KimicuUtility.Runtime::KimicuUtility.KiCanvasGroup
---- !u!225 &1478069000
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1478068995}
-  m_Enabled: 1
-  m_Alpha: 0
-  m_Interactable: 0
-  m_BlocksRaycasts: 0
-  m_IgnoreParentGroups: 0
 --- !u!1 &1587798194
 GameObject:
   m_ObjectHideFlags: 0
@@ -3309,10 +3282,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1478068999}
-        m_TargetAssemblyTypeName: KimicuUtility.KiCanvasGroup, KimicuUtility.Runtime
-        m_MethodName: TurnOn
-        m_Mode: 1
+      - m_Target: {fileID: 1478068995}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

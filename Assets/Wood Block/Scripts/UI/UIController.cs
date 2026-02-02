@@ -18,7 +18,7 @@ namespace WoodBlock
         {
             foreach (var pair in _windows)
             {
-                pair.Value.Active(windowType.Any(w => w == pair.Key));
+                pair.Value?.Active(windowType.Any(w => w == pair.Key));
             }
 
             LayoutsUpdater.UpdateAllLayouts();

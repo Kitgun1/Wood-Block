@@ -54,7 +54,7 @@ public class ShopSystem : MonoBehaviour
             {
                 //фильтрация продуктов, чтобы в гоп не попадало ничего кроме скинов
                 var justSkins = Billing.CatalogProducts.Where(x => x.id.Contains("skin")).ToList();
-
+                Debug.Log(justSkins.Count);
                 foreach (var item in justSkins)
                     _skins.Add(new ShopItem(false, item));
             }
