@@ -1,5 +1,6 @@
 ﻿using Kimicu.YandexGames;
 using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace WoodBlock
@@ -24,6 +25,9 @@ namespace WoodBlock
 
             WebApplication.Initialize();
             Debug.Log("WebApplication инициализирован.");
+
+            yield return YandexCurrencyService.Initialize();
+            Debug.Log("YandexCurrenceService инициализирован.");
 
             PlayerInput.Initialize();
 			LoadPlayerData();

@@ -1,15 +1,16 @@
 using Cysharp.Threading.Tasks;
 using Kimicu.YandexGames;
 using Kimicu.YandexGames.Extension;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class YandexCurrencyService
+public static class YandexCurrencyService
 {
-    public List<(string id, string code, Sprite sprite)> Currencies { get; private set; }
+    public static List<(string id, string code, Sprite sprite)> Currencies { get; private set; }
 
-    public async void Initialize()
+    public static IEnumerator Initialize()
     {
         /* Инициализация данных о yandex currency */
         Currencies = new List<(string id, string code, Sprite sprite)>();
@@ -23,7 +24,7 @@ public class YandexCurrencyService
 
         foreach (var product in currencyUrls)
         {
-            await PictureExtension.GetPicture(product.priceCurrencyPicture, texture =>
+            yield return PictureExtension.GetPicture(product.priceCurrencyPicture, texture =>
             {
                 Rect rect = new Rect(0, 0, texture.width, texture.height);
                 var sprite = Sprite.Create(texture, rect, new Vector2(0.5f, 0.5f));

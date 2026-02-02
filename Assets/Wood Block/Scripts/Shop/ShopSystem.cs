@@ -8,7 +8,6 @@ using Billing = Kimicu.YandexGames.Billing;
 [RequireComponent(typeof(GUIDrawer))]
 public class ShopSystem : MonoBehaviour
 {
-    [SerializeField] private SpriteRenderer _spriteRenderer;
 
     private List<ShopItem> _skins = new();
     private string _currentSelectedSkin = "";
@@ -21,29 +20,26 @@ public class ShopSystem : MonoBehaviour
         Initialize();
     }
 
-    public void BuyItem(string itemID, Sprite skinSprite)
+    public void BuyItem(string itemID)
     {
         if (CheckIsItemBought(itemID))
-            SelectSkin(itemID, skinSprite);
+            SelectSkin(itemID);
         else
             Billing.PurchaseProduct(itemID, ConsumePayment, Debug.LogError);
     }
-    public void SelectSkin(string ItemID, Sprite skinSprite)
-    {
-        if (_currentSelectedSkin != "")
-        {
-            _currentSelectedSkin = ItemID;
-            _spriteRenderer.sprite = skinSprite;
-            ShopSaver.Save(_skins, _currentSelectedSkin);
-        }
-    }
+    public ShopItem GetShopItemByID(string ItemID) => _skins.Find(x => x.CatalogProduct.id == ItemID);
 
+    private void SelectSkin(string ItemID)
+    {
+        _currentSelectedSkin = ItemID;
+        ShopSaver.Save(_currentSelectedSkin);
+    }
     private void ConsumePayment(PurchaseProductResponse response)
     {
         var itemID = _skins.FindIndex(x => x.CatalogProduct.id == response.purchaseData.productID);
         Billing.ConsumeProduct(response.purchaseData.purchaseToken, () => _skins[itemID].IsBought = true);
 
-        ShopSaver.Save(_skins, _currentSelectedSkin);
+        ShopSaver.Save(_skins);
 
         OnShopUpdated?.Invoke(_skins);
     }
@@ -52,15 +48,18 @@ public class ShopSystem : MonoBehaviour
     {
         if (Billing.Initialized)
         {
-            var result = ShopSaver.HasSaves();
-
-            if (result.skinSaves)
+            if (ShopSaver.HasSkinsSaves())
                 _skins = ShopSaver.LoadData().Item1;
             else
-                foreach (var item in Billing.CatalogProducts)
-                    _skins.Add(new ShopItem(false, item));
+            {
+                //фильтрация продуктов, чтобы в гоп не попадало ничего кроме скинов
+                var justSkins = Billing.CatalogProducts.Where(x => x.id.Contains("skin")).ToList();
 
-            if (result.selectedItemSaves)
+                foreach (var item in justSkins)
+                    _skins.Add(new ShopItem(false, item));
+            }
+
+            if (ShopSaver.HasSelectedSkinsSaves())
                 _currentSelectedSkin = ShopSaver.LoadData().Item2;
 
 

@@ -1,10 +1,15 @@
-﻿using NaughtyAttributes;
+﻿using Kimicu.YandexGames;
+using Kimicu.YandexGames.Extension;
+using NaughtyAttributes;
 using NUnit.Framework.Internal;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Collections;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 using ReadOnly = NaughtyAttributes.ReadOnlyAttribute;
 
@@ -40,7 +45,7 @@ namespace WoodBlock
 
         [SerializeField, Min(1)] private int _scoreMultipier = 10;
 
-        public bool IsMultiplierEnabled { get; set; } =  false;
+        public bool IsMultiplierEnabled { get; set; } = false;
 
         private readonly List<Cell> _spawnedCells = new();
 
@@ -118,9 +123,37 @@ namespace WoodBlock
             {
                 Vector3 spawnPosition = (Vector3)(Vector2)position + startPosition;
                 Cell spawned = Instantiate(_cellTemplate, spawnPosition, Quaternion.identity, transform);
+                UseSkin(spawned);
+
                 _spawnedCells.Add(spawned);
                 _grid[position.x - minX, position.y - minY] = spawned;
             }
+        }
+        private void UseSkin(Cell cell)
+        {
+            if (ShopSaver.HasSelectedSkinsSaves())
+            {
+                string id = ShopSaver.LoadSelectedSkinData();
+
+                if(id != "")
+                {
+                    var item = Billing.CatalogProducts.First(x => x.id == id);
+
+                    var spriteRenderer = cell.gameObject.GetComponent<SpriteRenderer>();
+                    spriteRenderer.color = Color.white;
+
+                    StartCoroutine(DownloadImage(item.imageURI,spriteRenderer));
+                }
+            }
+        }
+        private IEnumerator DownloadImage(string url, SpriteRenderer targetImage)
+        {
+            yield return PictureExtension.GetPicture(url, texture =>
+            {
+                Rect rect = new Rect(0, 0, texture.width, texture.height);
+                Sprite sprite = Sprite.Create(texture, rect, new Vector2(0.5f, 0.5f));
+                targetImage.sprite = sprite;
+            });
         }
 
         public void DestroyAllBlocks()
@@ -379,7 +412,8 @@ namespace WoodBlock
                         removed.Add(new(x, y));
                         return true;
                     }
-                } catch { }
+                }
+                catch { }
 
                 return false;
 

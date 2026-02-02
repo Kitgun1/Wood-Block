@@ -1,85 +1,45 @@
 using Kimicu.YandexGames;
-using Kimicu.YandexGames.Extension;
-using KimicuUtility;
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using TMPro;
-using UnityEditor.SearchService;
 using UnityEngine;
-using UnityEngine.Networking;
-using UnityEngine.UI;
 
 public class GUIDrawer : MonoBehaviour
 {
-    [SerializeField] private ShopSystem _shopSystem;
     [Space]
     [Header("Links")]
-    [SerializeField] private List<ShopProduct> _shopProducts;
+    [SerializeField] private ShopSystem _shopSystem;
+    [SerializeField] private Transform _rootSpawnPurchases;
+    [SerializeField] private GameObject _purchasePrefab;
+
+    private List<GameObject> _products = new();
 
 
 
     private void OnEnable()
     {
-        _shopSystem.OnShopUpdated += UpdateGUI;
-        _shopSystem.OnInitialized += InitilizeGUI;
+        _shopSystem.OnShopUpdated += UpdatePurchasesList;
+        _shopSystem.OnInitialized += InitializePurchasesList;
     }
     private void OnDisable()
     {
-        _shopSystem.OnShopUpdated -= UpdateGUI;
-        _shopSystem.OnInitialized -= InitilizeGUI;
+        _shopSystem.OnShopUpdated -= UpdatePurchasesList;
+        _shopSystem.OnInitialized -= InitializePurchasesList;
     }
 
-    private void UpdateGUI(List<ShopItem> shopItems)
+    public void UpdatePurchasesList(List<ShopItem> list)
     {
-        for (int i = 0; i < shopItems.Count; i++)
+        for (int i = 0; i < list.Count; i++)
         {
-            if (shopItems[i].IsBought)
-                _shopProducts[i].ButtonText.text = "Select";
-            else
-                _shopProducts[i].ButtonText.text = "Buy";
+            _products[i].GetComponent<Purchase>().UpdatePurchase();
         }
     }
-    public void InitilizeGUI(List<ShopItem> shopItems)
+    public void InitializePurchasesList(List<ShopItem> list)
     {
-        for (int i = 0; i < shopItems.Count; i++)
+        // Spawn catalog
+        for (int i = 0; i < list.Count; i++)
         {
-            ShopItem currentItem = shopItems[i];
-            ShopProduct currentProduct = _shopProducts[i];
-
-            _shopProducts[i].PriceText.text = currentItem.CatalogProduct.priceValue;
-
-            if (currentItem.IsBought)
-                _shopProducts[i].ButtonText.text = "Select";
-            else
-                _shopProducts[i].ButtonText.text = "Buy";
-
-            StartCoroutine(DownloadImage(currentItem.CatalogProduct.imageURI, _shopProducts[i].Image));
-            currentProduct.Button.AddListener(() => _shopSystem.BuyItem(currentItem.CatalogProduct.id, currentProduct.Image.sprite));
+            GameObject purchaseObj = Instantiate(_purchasePrefab, _rootSpawnPurchases);
+            purchaseObj.GetComponent<Purchase>().Initialize(list[i].CatalogProduct.id,_shopSystem);
+            _products.Add(purchaseObj);
         }
     }
-
-    private IEnumerator DownloadImage(string url, Image targetImage)
-    {
-        yield return PictureExtension.GetPicture(url, texture =>
-        {
-            Rect rect = new Rect(0, 0, texture.width, texture.height);
-            Sprite sprite = Sprite.Create(texture, rect, new Vector2(0.5f, 0.5f));
-            targetImage.sprite = sprite;
-        });
-    }
-}
-
-[Serializable]
-public struct ShopProduct
-{
-    [SerializeField] private TMP_Text _priceText;
-    [SerializeField] private TMP_Text _buttonText;
-    [SerializeField] private Button _buttons;
-    [SerializeField] private Image _image;
-
-    public TMP_Text PriceText { get => _priceText; }
-    public TMP_Text ButtonText { get => _buttonText; }
-    public Image Image { get => _image; }
-    public Button Button { get => _buttons; }
 }
