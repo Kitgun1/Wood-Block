@@ -1,0 +1,16 @@
+{
+  "score": 18,
+  "extraData": "example description",
+  "rank": 16557,
+  "player": {
+    "uniqueID": "userPlayer",
+    "lang": "ru",
+    "publicName": "OurPlayerName",
+    "profilePicture": "https://avatar.iran.liara.run/public",
+    "scopePermissions": {
+      "avatar": "",
+      "public_name": "OurPlayerName"
+    }
+  },
+  "formattedScore": "18"
+}

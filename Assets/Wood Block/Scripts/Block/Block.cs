@@ -81,7 +81,7 @@ namespace WoodBlock
             _selectedCell = cell;
             _offsetPosition = cell.transform.position - transform.position;
             transform.DOScale(Vector3.one, _durationScale / 2)
-                .OnComplete(() => _offsetPosition = cell.transform.position - transform.position);
+               .OnComplete(() => _offsetPosition = cell.transform.position - transform.position);
             PlayerInput.PlayerActions.MousePosition.performed += MousePositionChanged;
             PlayerInput.PlayerActions.Touch.canceled += TouchCanceled;
         }
@@ -115,6 +115,7 @@ namespace WoodBlock
                 }
 
                 transform.DOScale(Vector3.one * _currentScale, _durationScale);
+                
             }
         }
     }

@@ -1,0 +1,9 @@
+{
+  "app": null,
+  "browser": null,
+  "i18n": {
+    "lang": "ru",
+    "tld": null
+  },
+  "payload": null
+}

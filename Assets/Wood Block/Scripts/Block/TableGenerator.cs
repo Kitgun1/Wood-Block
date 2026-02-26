@@ -124,5 +124,10 @@ namespace WoodBlock
 
             history.point.CreateBlock(history.prefab);
         }
+
+        private void SaveBestScore()
+        {
+            DataSaver.Save(SaveKeys.BestScore, Score.Instance.Value);
+        }
     }
 }

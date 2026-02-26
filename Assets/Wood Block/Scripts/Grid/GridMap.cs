@@ -7,7 +7,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Collections;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -41,9 +40,11 @@ namespace WoodBlock
 
         [SerializeField] private Cell _cellTemplate;
         [SerializeField] private CellInBlock _cellInBlockPrefab;
-        [SerializeField] private List<LevelMap> _maps = new();
+        [SerializeField] private List<LevelMap> _mapsForPc = new();
+        [SerializeField] private List<LevelMap> _mapsForMobile = new();
 
         [SerializeField, Min(1)] private int _scoreMultipier = 10;
+        [SerializeField] private QuestManager _questManager;
 
         public bool IsMultiplierEnabled { get; set; } = false;
 
@@ -82,11 +83,11 @@ namespace WoodBlock
         }
 
         [Button]
-        private void GenerateGrid()
+        public void GenerateGrid()
         {
             DisposeGrid();
 
-            LevelMap selectedMap = _maps[Random.Range(0, _maps.Count)];
+            LevelMap selectedMap = Device.IsMobile ? _mapsForMobile[Random.Range(0, _mapsForMobile.Count)] : _mapsForPc[Random.Range(0, _mapsForPc.Count)];
 
             int minX = selectedMap.GetPositions().Min(v => v.x);
             int maxX = selectedMap.GetPositions().Max(v => v.x);
@@ -94,13 +95,13 @@ namespace WoodBlock
             int maxY = selectedMap.GetPositions().Max(v => v.y);
 
             Vector3 startPosition = new(MathF.Ceiling(maxX / 2), MathF.Ceiling(maxY / 2), 0);
-            startPosition += new Vector3(0.5f, 0.5f, 0);
+            startPosition += new Vector3(0.5f, -0.5f, 0);
 
             _size = new(maxX - minX + 1, maxY - minY + 1);
             _grid = new Cell[_size.x, _size.y];
 
             transform.position = new Vector3(0, 0);
-            SpawnCells(selectedMap, startPosition, minX, minY);
+            SpawnCells(selectedMap, startPosition, minX, minY,maxY); 
             transform.position = new Vector3(-maxX, -maxY + _offsetY);
         }
 
@@ -110,16 +111,18 @@ namespace WoodBlock
             {
                 for (int y = 0; y < _size.y; y++)
                 {
-                    Destroy(_grid[x, y].gameObject);
+                    if (_grid[x, y] != null)
+                        Destroy(_grid[x, y].gameObject);
                 }
             }
             _spawnedCells.Clear();
             _grid = null;
         }
 
-        private void SpawnCells(LevelMap selectedMap, Vector3 startPosition, int minX, int minY)
+        private void SpawnCells(LevelMap selectedMap, Vector3 startPosition, int minX, int minY,int maxY)
         {
-            foreach (Vector2Int position in selectedMap.GetPositions())
+            var newList = selectedMap.GetPositions().Where(item => item.y <= maxY).ToList();
+            foreach (Vector2Int position in newList)
             {
                 Vector3 spawnPosition = (Vector3)(Vector2)position + startPosition;
                 Cell spawned = Instantiate(_cellTemplate, spawnPosition, Quaternion.identity, transform);
@@ -131,19 +134,16 @@ namespace WoodBlock
         }
         private void UseSkin(Cell cell)
         {
-            if (ShopSaver.HasSelectedSkinsSaves())
+            string id = DataSaver.Load<string>(SaveKeys.SelectedSkinId);
+
+            if (id != "" && id != string.Empty && id != null)
             {
-                string id = ShopSaver.LoadSelectedSkinData();
+                var item = Billing.CatalogProducts.First(x => x.id == id);
 
-                if(id != "")
-                {
-                    var item = Billing.CatalogProducts.First(x => x.id == id);
+                var spriteRenderer = cell.gameObject.GetComponent<SpriteRenderer>();
+                spriteRenderer.color = Color.white;
 
-                    var spriteRenderer = cell.gameObject.GetComponent<SpriteRenderer>();
-                    spriteRenderer.color = Color.white;
-
-                    StartCoroutine(DownloadImage(item.imageURI,spriteRenderer));
-                }
+                StartCoroutine(DownloadImage(item.imageURI, spriteRenderer));
             }
         }
         private IEnumerator DownloadImage(string url, SpriteRenderer targetImage)
@@ -233,10 +233,25 @@ namespace WoodBlock
             int score = s_removed.Count * fillsCount;
             _history.Push(new() { created = created, removed = s_removed.ToArray(), points = score });
 
+
+
             if (IsMultiplierEnabled)
+            {
                 Score.Instance.Value += score * _scoreMultipier;
+
+                var quests = _questManager.GetActiveQuests();
+                foreach (var quest in quests)
+                    quest.AddProgress(score * _scoreMultipier);
+            }
             else
+            {
                 Score.Instance.Value += score;
+
+                var quests = _questManager.GetActiveQuests();
+                foreach (var quest in quests)
+                    quest.AddProgress(score);
+            }
+
         }
 
         public bool CanUndo()

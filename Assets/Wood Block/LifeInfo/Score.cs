@@ -23,8 +23,6 @@ namespace WoodBlock
 
         private void OnEnable()
         {
-            GridMap.Instance.OnDestroyCellInBlocks += OnDestroyCellInBlock;
-
             if (Instance == null)
                 Instance = this;
             else
@@ -33,16 +31,11 @@ namespace WoodBlock
 
         private void OnDisable()
         {
-            GridMap.Instance.OnDestroyCellInBlocks -= OnDestroyCellInBlock;
 
             if (Instance == this)
                 Instance = null;
         }
-
-        private void OnDestroyCellInBlock(int count)
-        {
-            Value += count;
-        }
+        public void Clear() { _value = 0; UpdateUI(); }
         private void UpdateUI()
         {
             for (int i = 0; i < _labels.Length; i++)

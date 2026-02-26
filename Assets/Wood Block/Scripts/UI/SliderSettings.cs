@@ -13,12 +13,14 @@ public class SliderSettings : MonoBehaviour
 
     private void Awake()
     {
+        _slider = GetComponent<Slider>();
         _slider.onValueChanged?.AddListener(ChangeValue);
     }
-    private void OnValidate() => _slider ??= GetComponent<Slider>();
 
     public void SetValue(float value)
     {
+        if (_slider == null)
+            _slider = GetComponent<Slider>();
         _slider.value = value;
     }
     private void ChangeValue(float value)

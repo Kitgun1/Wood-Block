@@ -1,4 +1,5 @@
 ﻿using Kimicu.YandexGames;
+using Lean.Localization;
 using System.Collections;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -23,11 +24,17 @@ namespace WoodBlock
             Advertisement.Initialize(); // Initialize advert.
             Debug.Log("Advertisement инициализирован.");
 
+            yield return YandexCurrencyService.Initialize();
+            Debug.Log("YandexCurrenceService инициализирован.");
+
             WebApplication.Initialize();
             Debug.Log("WebApplication инициализирован.");
 
-            yield return YandexCurrencyService.Initialize();
-            Debug.Log("YandexCurrenceService инициализирован.");
+            YandexGamesSdk.GameReady();
+
+            if(!DataSaver.HasSaves(SaveKeys.CurrentLevel))
+                DataSaver.Save(SaveKeys.CurrentLevel,1);
+
 
             PlayerInput.Initialize();
 			LoadPlayerData();

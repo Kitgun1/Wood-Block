@@ -20,7 +20,14 @@ public class BillingsManager : MonoBehaviour
 
                 foreach (var product in products)
                 {
-                    Billing.ConsumeProduct(product.purchaseToken,onSuccessCallback:() => _buyActions?.Invoke(product.productID), onErrorCallback: Debug.LogError);
+                    Billing.ConsumeProduct(product.purchaseToken, onSuccessCallback: () => _buyActions?.Invoke(product.productID), onErrorCallback: (string error) =>
+                    {
+                        if (error.Contains("User canceled"))
+                            Debug.Log("User canceled purchase");
+                        else
+                            Debug.LogError(error);
+                    }
+                    );
                 }
             });
         }

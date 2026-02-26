@@ -9,16 +9,14 @@ using Billing = Kimicu.YandexGames.Billing;
 public class ShopSystem : MonoBehaviour
 {
 
-    private List<ShopItem> _skins = new();
+    private List<ShopItem> _items = new();
     private string _currentSelectedSkin = "";
+    private string _currentSelectedBackground = "";
 
     public Action<List<ShopItem>> OnShopUpdated;
     public Action<List<ShopItem>> OnInitialized;
 
-    private void Start()
-    {
-        Initialize();
-    }
+    private void Start() => Initialize();
 
     public void BuyItem(string itemID)
     {
@@ -27,46 +25,58 @@ public class ShopSystem : MonoBehaviour
         else
             Billing.PurchaseProduct(itemID, ConsumePayment, Debug.LogError);
     }
-    public ShopItem GetShopItemByID(string ItemID) => _skins.Find(x => x.CatalogProduct.id == ItemID);
+    public ShopItem GetShopItemByID(string ItemID) => _items.Find(x => x.CatalogProduct.id == ItemID);
 
     private void SelectSkin(string ItemID)
     {
-        _currentSelectedSkin = ItemID;
-        ShopSaver.Save(_currentSelectedSkin);
+        if (GetShopItemByID(ItemID).ProductType == ProductType.Skin)
+        {
+            _currentSelectedSkin = ItemID;
+            DataSaver.Save(SaveKeys.SelectedSkinId, _currentSelectedSkin);
+        }
+        else
+        {
+            _currentSelectedBackground = ItemID;
+            DataSaver.Save(SaveKeys.SelectedBackgroundId, _currentSelectedBackground);
+        }
     }
     private void ConsumePayment(PurchaseProductResponse response)
     {
-        var itemID = _skins.FindIndex(x => x.CatalogProduct.id == response.purchaseData.productID);
-        Billing.ConsumeProduct(response.purchaseData.purchaseToken, () => _skins[itemID].IsBought = true);
+        var itemID = _items.FindIndex(x => x.CatalogProduct.id == response.purchaseData.productID);
+        Billing.ConsumeProduct(response.purchaseData.purchaseToken, () => _items[itemID].IsBought = true);
 
-        ShopSaver.Save(_skins);
-
-        OnShopUpdated?.Invoke(_skins);
+        DataSaver.Save(SaveKeys.Products,_items);
+            
+        OnShopUpdated?.Invoke(_items);
     }
-    private bool CheckIsItemBought(string id) => _skins.First(x => x.CatalogProduct.id == id).IsBought;
+    private bool CheckIsItemBought(string id) => _items.First(x => x.CatalogProduct.id == id).IsBought;
     private void Initialize()
     {
         if (Billing.Initialized)
         {
-            if (ShopSaver.HasSkinsSaves())
-                _skins = ShopSaver.LoadData().Item1;
+            if (DataSaver.HasSaves(SaveKeys.Products))
+                _items = DataSaver.Load<List<ShopItem>>(SaveKeys.Products);
             else
-            {
-                //фильтрация продуктов, чтобы в гоп не попадало ничего кроме скинов
-                var justSkins = Billing.CatalogProducts.Where(x => x.id.Contains("skin")).ToList();
-                Debug.Log(justSkins.Count);
-                foreach (var item in justSkins)
-                    _skins.Add(new ShopItem(false, item));
-            }
-
-            if (ShopSaver.HasSelectedSkinsSaves())
-                _currentSelectedSkin = ShopSaver.LoadData().Item2;
+                SortProductsCatalog();
 
 
-            OnInitialized?.Invoke(_skins);
+            if (DataSaver.HasSaves(SaveKeys.SelectedSkinId))
+                _currentSelectedSkin = DataSaver.Load<string>(SaveKeys.SelectedSkinId);
+
+            OnInitialized?.Invoke(_items);
         }
         else
             Debug.LogError("Billing not initialized");
+    }
+    private void SortProductsCatalog()
+    {
+        var justSkins = Billing.CatalogProducts.Where(x => x.id.Contains("skin")).ToList();
+        var justBackgrounds = Billing.CatalogProducts.Where(x => x.id.Contains("bg")).ToList();
+
+        foreach (var item in justSkins)
+            _items.Add(new ShopItem(false, item,ProductType.Skin));
+        foreach (var item in justBackgrounds)
+            _items.Add(new ShopItem(false, item,ProductType.Background));
     }
 }
 
@@ -74,14 +84,18 @@ public class ShopItem
 {
     private bool _isBought;
     private CatalogProduct _catalogProduct;
+    private ProductType _productType;
 
     public bool IsBought { get => _isBought; set => _isBought = value; }
     public CatalogProduct CatalogProduct { get => _catalogProduct; }
+    public ProductType ProductType { get => _productType; }
+ 
 
-    public ShopItem(bool isBought, CatalogProduct catalogProduct)
+    public ShopItem(bool isBought, CatalogProduct catalogProduct,ProductType productType)
     {
         _isBought = isBought;
         _catalogProduct = catalogProduct;
+        _productType = productType;
     }
 
 }

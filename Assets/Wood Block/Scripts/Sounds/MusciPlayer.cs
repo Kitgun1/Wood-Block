@@ -7,7 +7,7 @@ public class MusciPlayer : MonoBehaviour
     private AudioSource _audioSource;
     private static MusciPlayer _instance = null;
 
-    private void Awake()
+    private void Start()
     {
         if (_instance != null && _instance != this)
         {
@@ -18,9 +18,18 @@ public class MusciPlayer : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         _audioSource = GetComponent<AudioSource>();
-        if (Cloud.HasKey("musicVolume"))
-            _audioSource.volume = Cloud.GetValue<float>("musicVolume");
+        _audioSource.volume = DataSaver.Load<float>(SaveKeys.MusicVolume);
+        WebApplication.InAdvertChangeState += Play;
     }
-
-    public void SetVolume(float volume) => _audioSource.volume = volume;
+    private void Play(bool value)
+    {
+        if(value == false)
+        _audioSource.Play();
+    }
+    public void SetVolume(float volume) 
+    {
+        if(_audioSource == null)
+            _audioSource = GetComponent<AudioSource>();
+        _audioSource.volume = volume; 
+    }
 }

@@ -18,8 +18,6 @@ public class SoundSettings : MonoBehaviour
     private void Start() => Initialize();
     private void OnValidate()
     {
-        _audioSource ??= GetComponent<AudioSource>();
-
         if (_minPitch >= _maxPitch)
             _minPitch = _maxPitch - 0.1f;
     }
@@ -29,23 +27,23 @@ public class SoundSettings : MonoBehaviour
 
     public void Play()
     {
-        float pitch = Random.Range(0.9f,1.1f);
+        if (_audioSource == null)
+            _audioSource = GetComponent<AudioSource>();
+        float pitch = Random.Range(0.9f, 1.1f);
         _audioSource.pitch = pitch;
-        if(_audioSource.isActiveAndEnabled)
         _audioSource.Play();
     }
     public void SetVolume(float volume)
     {
+        if (_audioSource == null)
+            _audioSource = GetComponent<AudioSource>();
         _audioSource.volume = volume;
         _slider.SetValue(volume);
-        Cloud.SetValue("soundsVolume", volume);
-        Cloud.SaveInCloud();
+        DataSaver.Save(SaveKeys.SoundsVolume,volume);
     }
     private void Initialize()
     {
-        if (Cloud.HasKey("soundsVolume"))
-            SetVolume(Cloud.GetValue<float>("soundsVolume"));
-        else
-            SetVolume(1f);
+        _audioSource = GetComponent<AudioSource>();
+        _audioSource.volume = DataSaver.Load<float>(SaveKeys.SoundsVolume);
     }
 }

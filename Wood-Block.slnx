@@ -2,8 +2,8 @@
   <Project Path="CW.Common.csproj" />
   <Project Path="LeanLocalization.csproj" />
   <Project Path="Assembly-CSharp-Editor-firstpass.csproj" />
-  <Project Path="LeanCommon.csproj" />
   <Project Path="Assembly-CSharp.csproj" />
+  <Project Path="LeanCommon.csproj" />
   <Project Path="Assembly-CSharp-firstpass.csproj" />
   <Project Path="LeanLocalizationEditor.csproj" />
 </Solution>

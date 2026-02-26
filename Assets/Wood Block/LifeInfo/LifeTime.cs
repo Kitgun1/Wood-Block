@@ -33,6 +33,7 @@ namespace WoodBlock
             for (int i = 0; i < _labels.Length; i++)
                 _labels[i].text = GetText();
         }
+        public void Clear() => _seconds = 0;
 
         public string GetText()
         {
