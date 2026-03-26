@@ -10,7 +10,6 @@ using UnityEngine.UI;
 public class Purchase : MonoBehaviour
 {
     [SerializeField] private ShopProduct _product;
-    private ProductType _productType;
 
     private string _id;
     private ShopSystem _shopSystem;
@@ -19,26 +18,32 @@ public class Purchase : MonoBehaviour
 
     public void UpdatePurchase()
     {
-        var item = _shopSystem.GetShopItemByID(_id);
+        if (gameObject.activeInHierarchy)
+        {
+            var item = _shopSystem.GetShopItemByID(_id);
 
-        _product.PriceText.text = item.CatalogProduct.priceValue;
-        _product.TitleText.text = item.CatalogProduct.title;
+            _product.PriceText.text = item.CatalogProduct.priceValue;
+            _product.TitleText.text = item.CatalogProduct.title;
 
-        if (item.IsBought)
-            _product.ButtonText.text = "Select";
-        else
-            _product.ButtonText.text = "Buy";
+            if (item.IsBought)
+            {
+                if (DataSaver.Load<string>(SaveKeys.SelectedSkinId) == _id || DataSaver.Load<string>(SaveKeys.SelectedBackgroundId) == _id)
+                    _product.ButtonText.text = "Selected";
+                else
+                    _product.ButtonText.text = "Select";
+            }
+            else
+                _product.ButtonText.text = "Buy";
 
-        if (_productType == ProductType.Skin)
             StartCoroutine(DownloadImage(item.CatalogProduct.imageURI, _product.Image));
+        }
     }
-    public void Initialize(string id,ShopSystem system)
+    public void Initialize(string id, ShopSystem system)
     {
         _id = id;
         _shopSystem = system;
 
         var item = _shopSystem.GetShopItemByID(_id);
-        _productType = item.ProductType;
         _product.Button.AddListener(() => _shopSystem.BuyItem(item.CatalogProduct.id));
         _product.CurrencySprite.sprite = YandexCurrencyService.Currencies[0].sprite;
     }

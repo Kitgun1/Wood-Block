@@ -1,0 +1,161 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7870b1710f16d6499ddbb77908e1cf8, type: 3}
+  m_Name: Skins
+  m_EditorClassIdentifier: Assembly-CSharp::SkinsData
+  _backgroundSkins:
+    _serializedList:
+    - Key: base_bg
+      Value:
+        _background: {fileID: 21300000, guid: b8ae7a835d6378d44ae78850a430e26f, type: 3}
+        _frameForCell: {fileID: 21300000, guid: 056e11685e34fb94a943267b6cdf4c67, type: 3}
+        _shoesBlockFrame: {fileID: -930335885, guid: fe2f701fbf3ecf446be891688e8b8529, type: 3}
+        _gameFrame: {fileID: 0}
+        _button: {fileID: 21300000, guid: 863f72dfb8a2a6e43b59079bcd9eedc4, type: 3}
+        _settingsPanel: {fileID: 21300000, guid: 22a044d1bc017994ba061903066ed966, type: 3}
+        _buyButton: {fileID: -1971806508, guid: d92407042a62892499f67ada93c5a9c2, type: 3}
+        _losePanel: {fileID: 21300000, guid: 77916d379ed02e84cb8e075af15588a3, type: 3}
+    - Key: beach_bg
+      Value:
+        _background: {fileID: -1997928135, guid: 4e09c0e453ad6eb4bb3c0cbed65dad93, type: 3}
+        _frameForCell: {fileID: -1139941439, guid: 6520aa2e149659d41b3bb96fed413131, type: 3}
+        _shoesBlockFrame: {fileID: -375445989, guid: dbed217d895317d4cb687efe0933942d, type: 3}
+        _gameFrame: {fileID: 1883265391, guid: 2dee31f682ddedc4ba6e9d48b025d0e6, type: 3}
+        _button: {fileID: -745652508, guid: bab048683169f7c4fa74e3b147aff402, type: 3}
+        _settingsPanel: {fileID: 1883265391, guid: 2dee31f682ddedc4ba6e9d48b025d0e6, type: 3}
+        _buyButton: {fileID: 672849851, guid: cd8e43fc2b1add24cbfa530995c36073, type: 3}
+        _losePanel: {fileID: 1883265391, guid: 2dee31f682ddedc4ba6e9d48b025d0e6, type: 3}
+    - Key: space_bg
+      Value:
+        _background: {fileID: 799502138, guid: 84395e8e190c93f43a88266163cc89c4, type: 3}
+        _frameForCell: {fileID: -1039707283, guid: e9ad1f1c1bbc21640ab50b9f736db908, type: 3}
+        _shoesBlockFrame: {fileID: 718913418, guid: bc531d51037c98d49bbc665446afa7bb, type: 3}
+        _gameFrame: {fileID: 817525311, guid: 81dca51f85736f440aea4e39c364432d, type: 3}
+        _button: {fileID: 1057576192, guid: 2567763acc2a5254fad2a3624d7f79de, type: 3}
+        _settingsPanel: {fileID: 817525311, guid: 81dca51f85736f440aea4e39c364432d, type: 3}
+        _buyButton: {fileID: 1079512802, guid: 8e1a7f70fc24715429c39c8bac7de4a6, type: 3}
+        _losePanel: {fileID: 817525311, guid: 81dca51f85736f440aea4e39c364432d, type: 3}
+    - Key: forest_bg
+      Value:
+        _background: {fileID: 1353084791, guid: f9b08d5ca5327b64c9a1e7ec66c8f7e0, type: 3}
+        _frameForCell: {fileID: -494937031, guid: 3b3b5cc9a6c9149418086c9bbac9b07b, type: 3}
+        _shoesBlockFrame: {fileID: 518247139, guid: 94fa901cbdb51fb4d815e77c2ef6d923, type: 3}
+        _gameFrame: {fileID: -860858892, guid: 4e01a4cfa5f7acc40a15e5989f788c17, type: 3}
+        _button: {fileID: -309932176, guid: 54d48e2aaff84ef4ba82fb07a3a9ed54, type: 3}
+        _settingsPanel: {fileID: -860858892, guid: 4e01a4cfa5f7acc40a15e5989f788c17, type: 3}
+        _buyButton: {fileID: -334832781, guid: ad30fee6e6a13b94b9b75da0c0ff1e67, type: 3}
+        _losePanel: {fileID: -860858892, guid: 4e01a4cfa5f7acc40a15e5989f788c17, type: 3}
+    - Key: sea_bg
+      Value:
+        _background: {fileID: 1158215330, guid: 7d9786c6f220a0b43b3f1b8729892ac6, type: 3}
+        _frameForCell: {fileID: -1930784826, guid: 55154ce82547aeb4ba57828e6f0c8d3d, type: 3}
+        _shoesBlockFrame: {fileID: 1418735418, guid: 8f8c39227abaa5249be9c23a862165b3, type: 3}
+        _gameFrame: {fileID: 732746251, guid: 818dcbbb251ff774db973f300cc32ce7, type: 3}
+        _button: {fileID: -2116696697, guid: 7bac5da29121e0c42b6eb9ef5475cfe5, type: 3}
+        _settingsPanel: {fileID: 732746251, guid: 818dcbbb251ff774db973f300cc32ce7, type: 3}
+        _buyButton: {fileID: 268375926, guid: de59f206e5b41dc4a9c2c7f3fd9c67ab, type: 3}
+        _losePanel: {fileID: 732746251, guid: 818dcbbb251ff774db973f300cc32ce7, type: 3}
+    - Key: wildwest_bg
+      Value:
+        _background: {fileID: -954508506, guid: 777d05c9ae5740446a112e88dd3c6086, type: 3}
+        _frameForCell: {fileID: -782659537, guid: 01bfbeaa3b4ab554dab0568a76ec093c, type: 3}
+        _shoesBlockFrame: {fileID: 1548812060, guid: 460b4da30b5dcb44d98f31883b3766e7, type: 3}
+        _gameFrame: {fileID: 1444472822, guid: dc61b14f39bdd074dbcf67275cb78f12, type: 3}
+        _button: {fileID: 160570249, guid: db58c875b20a40443ac447e0a6de5244, type: 3}
+        _settingsPanel: {fileID: 1444472822, guid: dc61b14f39bdd074dbcf67275cb78f12, type: 3}
+        _buyButton: {fileID: -644456887, guid: c0abcb58a8c6ce740bff46901c75c862, type: 3}
+        _losePanel: {fileID: 1444472822, guid: dc61b14f39bdd074dbcf67275cb78f12, type: 3}
+    - Key: nightmare_bg
+      Value:
+        _background: {fileID: -394287215, guid: ae704f8759ea0e945b94629799877c7c, type: 3}
+        _frameForCell: {fileID: 185184172, guid: 9129f961c5fb00044adbed4a99a39d5c, type: 3}
+        _shoesBlockFrame: {fileID: -1467329738, guid: 43ab7943fe4030742bcd834646e51103, type: 3}
+        _gameFrame: {fileID: 1469178055, guid: 2e8cd858a0039824ab7cd06f33a7cf4f, type: 3}
+        _button: {fileID: -1485883879, guid: 5ca6b34a5006c9b4297976bb1da27587, type: 3}
+        _settingsPanel: {fileID: 1469178055, guid: 2e8cd858a0039824ab7cd06f33a7cf4f, type: 3}
+        _buyButton: {fileID: 1842571712, guid: 13f2446b3bea2654bb99068d13f88164, type: 3}
+        _losePanel: {fileID: 1469178055, guid: 2e8cd858a0039824ab7cd06f33a7cf4f, type: 3}
+    - Key: north_bg
+      Value:
+        _background: {fileID: 1241541577, guid: c7bb4e451f7df8e41b3f3085af1f50a2, type: 3}
+        _frameForCell: {fileID: -183974396, guid: 242d61ea9ef84394f969b3244f4d9640, type: 3}
+        _shoesBlockFrame: {fileID: -275807163, guid: 39883a6a436bf3f4597b2dab6c280cc5, type: 3}
+        _gameFrame: {fileID: -844414369, guid: 7b249e5bc28215b40a17b083dbb3d91d, type: 3}
+        _button: {fileID: 771831164, guid: 7d38c3b7eba1f2b469f153cc4737692c, type: 3}
+        _settingsPanel: {fileID: -844414369, guid: 7b249e5bc28215b40a17b083dbb3d91d, type: 3}
+        _buyButton: {fileID: 908375324, guid: 49fcd42dbbef3f54baed77597903771a, type: 3}
+        _losePanel: {fileID: 0}
+    - Key: neon_bg
+      Value:
+        _background: {fileID: 1241541577, guid: c7bb4e451f7df8e41b3f3085af1f50a2, type: 3}
+        _frameForCell: {fileID: 21300000, guid: 3db6a5bceac21174f9902bccb3db215f, type: 3}
+        _shoesBlockFrame: {fileID: -146029924, guid: 76fb4dd842078464b9bb1abdef791a24, type: 3}
+        _gameFrame: {fileID: 1531675527, guid: 7bc262115ce1c6c4084f268b7fa50a55, type: 3}
+        _button: {fileID: 543102685, guid: 768adf55e3d1d2047978c22dcf0ade41, type: 3}
+        _settingsPanel: {fileID: 1531675527, guid: 7bc262115ce1c6c4084f268b7fa50a55, type: 3}
+        _buyButton: {fileID: -127455756, guid: a7f5bd39ad638f84e8b94194574e0ae4, type: 3}
+        _losePanel: {fileID: 0}
+    - Key: industrial_bg
+      Value:
+        _background: {fileID: 21300000, guid: 2ce0d71cb809b75418070e7f39831db9, type: 3}
+        _frameForCell: {fileID: 21300000, guid: 534145a740ac5464c813659dcd09b30d, type: 3}
+        _shoesBlockFrame: {fileID: -1827978380, guid: 3a7f01f2277dac84ebb4d95e52a28df2, type: 3}
+        _gameFrame: {fileID: 1085399997, guid: 636cd1b95be69fa43bf82c2acfc71a7d, type: 3}
+        _button: {fileID: 1137956016, guid: 3dcc8d4a9239dec45afd89e34b11580a, type: 3}
+        _settingsPanel: {fileID: 1085399997, guid: 636cd1b95be69fa43bf82c2acfc71a7d, type: 3}
+        _buyButton: {fileID: -195570602, guid: 94a3cb2dad0339247b4fa0212b6bda67, type: 3}
+        _losePanel: {fileID: 0}
+    - Key: sky_skin
+      Value:
+        _background: {fileID: 21300000, guid: 84b2e9c6f3013d14ebf2187fd5fcca5a, type: 3}
+        _frameForCell: {fileID: 21300000, guid: e9682d808e318a6469278a3ca7c8828f, type: 3}
+        _shoesBlockFrame: {fileID: -175512732, guid: 549173a47e88dcf428392df54af8cc36, type: 3}
+        _gameFrame: {fileID: -895483958, guid: 535278c2137f70547b8ed30b8b3e53d6, type: 3}
+        _button: {fileID: -1710452272, guid: 60d1589d49c8184438ce4de42b4e99c6, type: 3}
+        _settingsPanel: {fileID: -895483958, guid: 535278c2137f70547b8ed30b8b3e53d6, type: 3}
+        _buyButton: {fileID: -618282044, guid: b72269dae5f7b174e82ab4182e84dcc5, type: 3}
+        _losePanel: {fileID: 0}
+  _skins:
+    _serializedList:
+    - Key: base_skin
+      Value:
+        _cell: {fileID: 21300000, guid: 147d61e403f4e064bb81d12651a06998, type: 3}
+    - Key: space_skin
+      Value:
+        _cell: {fileID: -378212198, guid: c7fd8de5c9a2ed1478293ca422034812, type: 3}
+    - Key: beach_skin
+      Value:
+        _cell: {fileID: 1908166034, guid: 95014e83a52e8654f9dc6c6d8c01399b, type: 3}
+    - Key: wildwest_skin
+      Value:
+        _cell: {fileID: 588209437, guid: be95c06b3fdec904db182b395547a1da, type: 3}
+    - Key: nightmare_skin
+      Value:
+        _cell: {fileID: 432655189, guid: 22841b07c45dc184b8fd6b0ead562ef5, type: 3}
+    - Key: sea_skin
+      Value:
+        _cell: {fileID: 1488862162, guid: ceec50f6cd8b3d447993725b3844d394, type: 3}
+    - Key: forest_skin
+      Value:
+        _cell: {fileID: 841566930, guid: 13c2a979922d3cb4daada90162786dc9, type: 3}
+    - Key: north_skin
+      Value:
+        _cell: {fileID: -2114723093, guid: a792826e94b139b489f1051ade0f4e37, type: 3}
+    - Key: neon_skin
+      Value:
+        _cell: {fileID: -2130387561, guid: a7cac4d4dba7dbb40a1ab1d3cbd8d1ec, type: 3}
+    - Key: industrial_skin
+      Value:
+        _cell: {fileID: 1590939815, guid: 7a13c647ceda81f48878e69749e92fa2, type: 3}
+    - Key: sky_skin
+      Value:
+        _cell: {fileID: -1250312824, guid: 974ad40bb9e7b9b438541e79523c1b94, type: 3}

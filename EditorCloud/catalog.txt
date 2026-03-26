@@ -1,7 +1,7 @@
 [
   {
     "description": "Скин травы",
-    "id": "skin_grass",
+    "id": "industrial_skin",
     "imageURI": "https://avatars.mds.yandex.net/get-games/17955142/2a0000019c1b204ff76415a1929c4d5350c4//default87x87",
     "price": "25 YAN",
     "priceCurrencyCode": "YAN",
@@ -10,13 +10,33 @@
     "title": "Скин травы"
   },
   {
-    "description": "Валюта для покупки предметов в магазине.",
-    "id": "coins_100_example",
-    "imageURI": "//yastatic.net/s3/games-static/static-data/images/payments/sdk/currency-icon-s@2x.png",
+    "description": "Скин бревна",
+    "id": "skin_lox",
+    "imageURI": "https://avatars.mds.yandex.net/get-games/17955142/2a0000019c1b204ff76415a1929c4d5350c4//default87x87",
+    "price": "25 YAN",
+    "priceCurrencyCode": "YAN",
+    "priceValue": "25",
+    "priceCurrencyPicture": "//yastatic.net/s3/games-static/static-data/images/payments/sdk/currency-icon-s@2x.png",
+    "title": "Скин травы"
+  },
+  {
+    "description": "Скин",
+    "id": "skin_pop",
+    "imageURI": "https://avatars.mds.yandex.net/get-games/17955142/2a0000019c1b204ff76415a1929c4d5350c4//default87x87",
+    "price": "25 YAN",
+    "priceCurrencyCode": "YAN",
+    "priceValue": "25",
+    "priceCurrencyPicture": "//yastatic.net/s3/games-static/static-data/images/payments/sdk/currency-icon-s@2x.png",
+    "title": "Скин травы"
+  },
+  {
+    "description": "Фон завод",
+    "id": "industrial_bg",
+    "imageURI": "https://avatars.mds.yandex.net/get-games/17955142/2a0000019c1b204ff76415a1929c4d5350c4//default87x87",
     "price": "1 YAN",
     "priceCurrencyCode": "YAN",
-    "priceValue": "1",
+    "priceValue": "15",
     "priceCurrencyPicture": "//yastatic.net/s3/games-static/static-data/images/payments/sdk/currency-icon-s@2x.png",
-    "title": "100 монет"
+    "title": "Фон завода"
   }
 ]

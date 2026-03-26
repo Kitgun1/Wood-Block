@@ -436,6 +436,7 @@ GameObject:
   - component: {fileID: 8104121599583016332}
   - component: {fileID: 4559407515057697328}
   - component: {fileID: 974414047038607815}
+  - component: {fileID: 3250909346036129840}
   m_Layer: 5
   m_Name: Item
   m_TagString: Untagged
@@ -523,6 +524,22 @@ MonoBehaviour:
     _buttons: {fileID: 7334406155613394217}
     _image: {fileID: 4684162695621674061}
     _currencySprite: {fileID: 8042034436291617954}
+--- !u!114 &3250909346036129840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3745880891020012425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4af20456670eb5a40836453ddedf69af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinAplayer
+  _spriteRenederer: {fileID: 0}
+  _buttonRender: {fileID: 4559407515057697328}
+  _skinsData: {fileID: 11400000, guid: c73cd4aa4f76e7d4997affdc7053a12e, type: 2}
+  _type: 5
 --- !u!1 &5315627208788392387
 GameObject:
   m_ObjectHideFlags: 0
@@ -738,6 +755,7 @@ GameObject:
   - component: {fileID: 1466568349433730853}
   - component: {fileID: 5411334652377192628}
   - component: {fileID: 7334406155613394217}
+  - component: {fileID: 5099402389720346609}
   m_Layer: 5
   m_Name: BuyButton
   m_TagString: Untagged
@@ -802,7 +820,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 1.2
 --- !u!114 &7334406155613394217
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -847,3 +865,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &5099402389720346609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7636453518006569243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4af20456670eb5a40836453ddedf69af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinAplayer
+  _spriteRenederer: {fileID: 0}
+  _buttonRender: {fileID: 5411334652377192628}
+  _skinsData: {fileID: 11400000, guid: c73cd4aa4f76e7d4997affdc7053a12e, type: 2}
+  _type: 6

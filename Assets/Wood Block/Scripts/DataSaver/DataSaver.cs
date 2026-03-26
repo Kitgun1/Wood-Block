@@ -18,8 +18,12 @@ public class DataSaver
     public static bool HasSaves(SaveKeys type) => Cloud.HasKey(SavesKeys[type]);
     public static void Save<T>(SaveKeys type, T value)
     {
-        Cloud.SetValue(SavesKeys[type], value, onErrorCallback: Debug.LogError);
-        Cloud.SaveInCloud(onErrorCallback: Debug.LogError);
+        if (Cloud.HasKey(SavesKeys[type]))
+        {
+                Cloud.SetValue(SavesKeys[type], value,true, onErrorCallback: Debug.LogError);
+        }
+        else
+            Cloud.SetValue(SavesKeys[type], value,true, onErrorCallback: Debug.LogError);
     }
     public static T Load<T>(SaveKeys type) 
     {

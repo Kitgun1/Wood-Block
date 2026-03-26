@@ -32,8 +32,14 @@ namespace WoodBlock
 
             YandexGamesSdk.GameReady();
 
-            if(!DataSaver.HasSaves(SaveKeys.CurrentLevel))
+            if(!DataSaver.HasSaves(SaveKeys.MusicVolume))
+                DataSaver.Save(SaveKeys.MusicVolume,1f);
+            if(!DataSaver.HasSaves(SaveKeys.SoundsVolume))
+                DataSaver.Save(SaveKeys.SoundsVolume, 1f);
+            if (!DataSaver.HasSaves(SaveKeys.CurrentLevel))
                 DataSaver.Save(SaveKeys.CurrentLevel,1);
+            if (!DataSaver.HasSaves(SaveKeys.SelectedBackgroundId))
+                DataSaver.Save(SaveKeys.SelectedBackgroundId, "base_bg");
 
 
             PlayerInput.Initialize();

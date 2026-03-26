@@ -1,18 +1,16 @@
 {
   "dependencies": {
     "com.blackbox.kimicuyandexgames": {
-      "version": "https://github.com/Kitgun1/KimicuYandexGames.git",
+      "version": "file:com.blackbox.kimicuyandexgames",
       "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "df8d3c7c33393e4a010c5568f9d05957b115aa27"
+      "source": "embedded",
+      "dependencies": {}
     },
     "com.blackbox.kiutility": {
-      "version": "https://github.com/Kitgun1/KimicuUtility.git",
+      "version": "file:com.blackbox.kiutility",
       "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "0fce3c7e1d0c9431b81a70be3ebcdf51a6604759"
+      "source": "embedded",
+      "dependencies": {}
     },
     "com.cysharp.unitask": {
       "version": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",

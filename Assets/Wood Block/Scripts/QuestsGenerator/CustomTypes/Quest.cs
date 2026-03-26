@@ -101,14 +101,14 @@ public class Quest
         {
             case QuestType.CollectBlocks:
                 if(LeanLocalization.GetFirstCurrentLanguage() == "Russian")
-                return $"Собрать {_targetBlocks} звезды";
+                return $"Собрать {_targetBlocks} очков";
                 else
-                    return $"Collect {_targetBlocks} stars";
+                    return $"Collect {_targetBlocks} points";
             case QuestType.CollectTimed:
                 if (LeanLocalization.GetFirstCurrentLanguage() == "Russian")
-                    return $"Собрать {_targetBlocks} звезды за {_timeLimit} сек";
+                    return $"Собрать {_targetBlocks} очки за {_timeLimit} сек";
                 else
-                    return $"Collect {_targetBlocks} stars for {_timeLimit} sec";
+                    return $"Collect {_targetBlocks} points for {_timeLimit} sec";
             default:
                 return "Неизвестный квест";
         }

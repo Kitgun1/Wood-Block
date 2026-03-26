@@ -17,7 +17,7 @@ public class LevelController : MonoBehaviour
     public void SaveCurrentLevel()
     {
         Scene scene = SceneManager.GetActiveScene();
-        int levelId = Convert.ToInt32(scene.name.Split('_')[1]);
+        int levelId = scene.buildIndex - 2;
 
         if(DataSaver.Load<int>(SaveKeys.CurrentLevel) < levelId + 1)
             DataSaver.Save(SaveKeys.CurrentLevel, levelId + 1);

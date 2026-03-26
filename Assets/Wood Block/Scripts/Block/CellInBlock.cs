@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Kimicu.YandexGames;
+using Kimicu.YandexGames.Extension;
+using System;
+using System.Collections;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -17,6 +21,7 @@ namespace WoodBlock
             Transform = transform;
             _collider = GetComponent<Collider2D>();
         }
+
 
         public void OnPointerDown(PointerEventData eventData)
         {

@@ -16,6 +16,8 @@ public class ShopSystem : MonoBehaviour
     public Action<List<ShopItem>> OnShopUpdated;
     public Action<List<ShopItem>> OnInitialized;
 
+    public static Action OnBackgroundSkinChanged;
+
     private void Start() => Initialize();
 
     public void BuyItem(string itemID)
@@ -33,11 +35,14 @@ public class ShopSystem : MonoBehaviour
         {
             _currentSelectedSkin = ItemID;
             DataSaver.Save(SaveKeys.SelectedSkinId, _currentSelectedSkin);
+            OnShopUpdated?.Invoke(_items);
         }
         else
         {
             _currentSelectedBackground = ItemID;
             DataSaver.Save(SaveKeys.SelectedBackgroundId, _currentSelectedBackground);
+            OnBackgroundSkinChanged?.Invoke();
+            OnShopUpdated?.Invoke(_items);
         }
     }
     private void ConsumePayment(PurchaseProductResponse response)

@@ -1,9 +1,20 @@
 ﻿<Solution>
   <Project Path="CW.Common.csproj" />
   <Project Path="LeanLocalization.csproj" />
-  <Project Path="Assembly-CSharp-Editor-firstpass.csproj" />
   <Project Path="Assembly-CSharp.csproj" />
+  <Project Path="Assembly-CSharp-Editor-firstpass.csproj" />
+  <Project Path="AYellowpaper.SerializedCollections.csproj" />
   <Project Path="LeanCommon.csproj" />
+  <Project Path="Agava.YandexGames.csproj" />
+  <Project Path="KimicuYandexGames.Runtime.csproj" />
   <Project Path="Assembly-CSharp-firstpass.csproj" />
+  <Project Path="AYellowpaper.SerializedCollections.Editor.csproj" />
+  <Project Path="KimicuUtility.Runtime.csproj" />
+  <Project Path="KimicuYandexGames.Extensions.csproj" />
+  <Project Path="KimicuUtility.Editor.csproj" />
+  <Project Path="KimicuYandexGames.Utils.csproj" />
   <Project Path="LeanLocalizationEditor.csproj" />
+  <Project Path="KimicuYandexGames.Editor.csproj" />
+  <Project Path="Agava.WebUtility.csproj" />
+  <Project Path="Agava.YandexMetrica.csproj" />
 </Solution>

@@ -1,0 +1,18 @@
+License from the Massachusetts Institute of Technology
+
+Copyright (c) 2023-2024 TheErikSar
+
+Permission is hereby granted free of charge to any person receiving a copy
+of this software and related documentation files (the "Software") to work
+with the Software, with a prohibition
+on personal commercial use, copying, modification, combining, publishing, distributing, sublicensing and/or selling
+copies of the Software and allowing persons who are provided
+with the Software,
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED
+IMPLIED, INCLUDING, BUT NOT LIMITED TO, WARRANTIES OF MERCHANTABILITY,
+SUITABILITY FOR A SPECIFIC PURPOSE AND NON-INFRINGEMENT OF COPYRIGHTS. BY NO MEANS
+THE AUTHORS OR COPYRIGHT HOLDERS ARE NOT RESPONSIBLE FOR ANY CLAIMS, DAMAGES OR OTHER
+LIABILITY, WHETHER IN CONNECTION WITH AN ACTION UNDER A CONTRACT, A TORT OR OTHERWISE, ARISING AS A RESULT OF
+USE OF THE SOFTWARE OR IN CONNECTION WITH IT, AS WELL AS IN CONNECTION WITH OTHER TRANSACTIONS WITH
+SOFTWARE.

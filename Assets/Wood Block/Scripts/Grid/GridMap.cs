@@ -58,12 +58,6 @@ namespace WoodBlock
 
         public static GridMap Instance { get; private set; }
 
-        /// <summary>
-        /// Вызывается при уничтожении определённого количества звёзд(блоков хз)
-        /// Но не при загрузке/выгрузке карты или возвращения в истории
-        /// </summary>
-        public event Action<int> OnDestroyCellInBlocks;
-
         public int CalculateBlocksCount()
         {
             int count = 0;
@@ -126,34 +120,10 @@ namespace WoodBlock
             {
                 Vector3 spawnPosition = (Vector3)(Vector2)position + startPosition;
                 Cell spawned = Instantiate(_cellTemplate, spawnPosition, Quaternion.identity, transform);
-                UseSkin(spawned);
 
                 _spawnedCells.Add(spawned);
                 _grid[position.x - minX, position.y - minY] = spawned;
             }
-        }
-        private void UseSkin(Cell cell)
-        {
-            string id = DataSaver.Load<string>(SaveKeys.SelectedSkinId);
-
-            if (id != "" && id != string.Empty && id != null)
-            {
-                var item = Billing.CatalogProducts.First(x => x.id == id);
-
-                var spriteRenderer = cell.gameObject.GetComponent<SpriteRenderer>();
-                spriteRenderer.color = Color.white;
-
-                StartCoroutine(DownloadImage(item.imageURI, spriteRenderer));
-            }
-        }
-        private IEnumerator DownloadImage(string url, SpriteRenderer targetImage)
-        {
-            yield return PictureExtension.GetPicture(url, texture =>
-            {
-                Rect rect = new Rect(0, 0, texture.width, texture.height);
-                Sprite sprite = Sprite.Create(texture, rect, new Vector2(0.5f, 0.5f));
-                targetImage.sprite = sprite;
-            });
         }
 
         public void DestroyAllBlocks()
@@ -239,17 +209,23 @@ namespace WoodBlock
             {
                 Score.Instance.Value += score * _scoreMultipier;
 
-                var quests = _questManager.GetActiveQuests();
-                foreach (var quest in quests)
-                    quest.AddProgress(score * _scoreMultipier);
+                if(_questManager != null)
+                {
+                    var quests = _questManager.GetActiveQuests();
+                    foreach (var quest in quests)
+                        quest.AddProgress(score * _scoreMultipier);
+                }
             }
             else
             {
                 Score.Instance.Value += score;
 
-                var quests = _questManager.GetActiveQuests();
-                foreach (var quest in quests)
-                    quest.AddProgress(score);
+                if(_questManager != null)
+                {
+                    var quests = _questManager.GetActiveQuests();
+                    foreach (var quest in quests)
+                        quest.AddProgress(score);
+                }
             }
 
         }
