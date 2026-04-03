@@ -9,25 +9,20 @@ public class HorizontalScrollContentAutoSize : MonoBehaviour
     private RectTransform _contentRectTransform;
     private RectTransform _itemRectTransform;
 
-    private int _priviousChildCount = 0;
-
 
     private void Start()
     {
         _root = GetComponent<HorizontalLayoutGroup>();
         _contentRectTransform = GetComponent<RectTransform>();
 
-        _priviousChildCount = _contentRectTransform.childCount;
 
         GetItemTransform();
     }
 
-    private void FixedUpdate() { if (_priviousChildCount != _contentRectTransform.childCount) CalculateSize(); }
+    private void FixedUpdate() => CalculateSize();
 
     private void CalculateSize()
     {
-        _priviousChildCount = _contentRectTransform.childCount;
-
         if (_itemRectTransform is null)
             GetItemTransform();
 
@@ -36,9 +31,9 @@ public class HorizontalScrollContentAutoSize : MonoBehaviour
             int totalChildren = _root.transform.childCount;
             float padding = _root.padding.right + _root.padding.left;
 
-            float totalWidth = (_itemRectTransform.rect.width + padding) * totalChildren;
+            float totalWidth = ((_itemRectTransform.rect.width + padding) * totalChildren) * 1.2f;
 
-            _contentRectTransform.sizeDelta = new Vector2(totalWidth, _contentRectTransform.rect.height);
+            _contentRectTransform.sizeDelta = new Vector2(totalWidth, _contentRectTransform.sizeDelta.y);
         }
     }
 

@@ -84,8 +84,8 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: 056e11685e34fb94a943267b6cdf4c67, type: 3}
-  m_Color: {r: 0.6784314, g: 0.45098042, b: 0.20784315, a: 1}
+  m_Sprite: {fileID: -494937031, guid: 3b3b5cc9a6c9149418086c9bbac9b07b, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
@@ -132,7 +132,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.032258, y: 1.032258}
+    oldSize: {x: 2.56, y: 2.56}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 1
@@ -165,5 +165,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SkinAplayer
   _spriteRenederer: {fileID: 494162484772627174}
+  _buttonRender: {fileID: 0}
   _skinsData: {fileID: 11400000, guid: c73cd4aa4f76e7d4997affdc7053a12e, type: 2}
   _type: 2

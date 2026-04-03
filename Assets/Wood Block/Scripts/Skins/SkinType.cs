@@ -7,7 +7,6 @@ public enum SkinType
     FrameForCell,
     GameFrame,
     Button,
-    SettingsPanel,
     BuyButton,
     Cell,
     ShopButtonLine,

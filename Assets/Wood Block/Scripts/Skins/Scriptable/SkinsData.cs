@@ -37,7 +37,6 @@ public class SkinBackground
     [SerializeField] private Sprite _shoesBlockFrame;
     [SerializeField] private Sprite _gameFrame;
     [SerializeField] private Sprite _button;
-    [SerializeField] private Sprite _settingsPanel;
     [SerializeField] private Sprite _buyButton;
     [SerializeField] private Sprite _losePanel;
 
@@ -46,7 +45,6 @@ public class SkinBackground
     public Sprite ShoesBlockFrame { get => _shoesBlockFrame; }
     public Sprite GameFrame { get => _gameFrame; }
     public Sprite Button { get => _button; }
-    public Sprite SettingsPanel { get => _settingsPanel; }
     public Sprite BuyButton { get => _buyButton; }
     public Sprite LosePanel { get => _losePanel; }
 }

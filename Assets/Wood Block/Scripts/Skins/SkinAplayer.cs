@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,12 +21,12 @@ public class SkinAplayer : MonoBehaviour
             case SkinType.Cell:
                 if (DataSaver.HasSaves(SaveKeys.SelectedSkinId))
                 {
-                    var skin = _skinsData.GetSkin(DataSaver.Load<string>(SaveKeys.SelectedSkinId));
+                    Skin skin = _skinsData.GetSkin(DataSaver.Load<string>(SaveKeys.SelectedSkinId));
                     ShoesSkin(skin);
                 }
                 else
                 {
-                    var skin = _skinsData.GetSkin("base_bg");
+                    Skin skin = _skinsData.GetSkin("base_skin");
                     ShoesSkin(skin);
                 }
 
@@ -33,12 +34,12 @@ public class SkinAplayer : MonoBehaviour
             default:
                 if (DataSaver.HasSaves(SaveKeys.SelectedBackgroundId))
                 {
-                    var skin = _skinsData.GetBackgroundSkin(DataSaver.Load<string>(SaveKeys.SelectedBackgroundId));
+                    SkinBackground skin = _skinsData.GetBackgroundSkin(DataSaver.Load<string>(SaveKeys.SelectedBackgroundId));
                     ShoesSkin(skin);
                 }
                 else
                 {
-                    var skin = _skinsData.GetBackgroundSkin("base_bg");
+                    SkinBackground skin = _skinsData.GetBackgroundSkin("base_bg");
                     ShoesSkin(skin);
                 }
                 break;
@@ -65,23 +66,20 @@ public class SkinAplayer : MonoBehaviour
             case SkinType.Button:
                 _buttonRender.sprite = skin.Button;
                 break;
-            case SkinType.SettingsPanel:
-                _buttonRender.sprite = skin.SettingsPanel;
-                break;
             case SkinType.BuyButton:
                 _buttonRender.sprite = skin.BuyButton;
                 break;
             case SkinType.ShopButtonLine:
                 _buttonRender.sprite = skin.ShoesBlockFrame;
                 break;
-                case SkinType.LosePanel:
+            case SkinType.LosePanel:
                 _buttonRender.sprite = skin.LosePanel;
                 break;
         }
     }
     private void ShoesSkin(Skin skin)
     {
-        if(skin == null)
+        if (skin == null)
         {
             Debug.Log("Skin is null");
             return;

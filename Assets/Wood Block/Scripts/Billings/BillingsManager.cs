@@ -7,7 +7,7 @@ using UnityEngine.Events;
 
 public class BillingsManager : MonoBehaviour
 {
-    [SerializeField] private UnityEvent<string> _buyActions;
+    [SerializeField] private ShopSystem _shopSystem;
 
     private void Start()
     {
@@ -20,7 +20,7 @@ public class BillingsManager : MonoBehaviour
 
                 foreach (var product in products)
                 {
-                    Billing.ConsumeProduct(product.purchaseToken, onSuccessCallback: () => _buyActions?.Invoke(product.productID), onErrorCallback: (string error) =>
+                    Billing.ConsumeProduct(product.purchaseToken, onSuccessCallback: () => _shopSystem.BuyItem(product.productID), onErrorCallback: (string error) =>
                     {
                         if (error.Contains("User canceled"))
                             Debug.Log("User canceled purchase");
