@@ -1,16 +1,20 @@
 {
   "dependencies": {
     "com.blackbox.kimicuyandexgames": {
-      "version": "file:com.blackbox.kimicuyandexgames",
+      "version": "https://github.com/TheErikSar/KimicuYandexGames.git",
       "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
+      "source": "git",
+      "dependencies": {
+        "com.unity.vectorgraphics": "2.0.0-preview.25"
+      },
+      "hash": "285152f909127d858d95c2a8bf4c10062d1e78c6"
     },
     "com.blackbox.kiutility": {
-      "version": "file:com.blackbox.kiutility",
+      "version": "https://github.com/Kitgun1/KimicuUtility.git",
       "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
+      "source": "git",
+      "dependencies": {},
+      "hash": "a2260075d6f590fde9304c68069664dfd9eaf481"
     },
     "com.coffee.softmask-for-ugui": {
       "version": "https://github.com/mob-sakai/SoftMaskForUGUI.git?path=Packages/src",
@@ -328,6 +332,23 @@
         "com.unity.modules.ui": "1.0.0",
         "com.unity.modules.imgui": "1.0.0"
       }
+    },
+    "com.unity.vectorgraphics": {
+      "version": "3.0.0-preview.7",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.ugui": "2.0.0",
+        "com.unity.2d.sprite": "1.0.0",
+        "com.unity.modules.ui": "1.0.0",
+        "com.unity.modules.physics": "1.0.0",
+        "com.unity.modules.animation": "1.0.0",
+        "com.unity.modules.physics2d": "1.0.0",
+        "com.unity.modules.uielements": "1.0.0",
+        "com.unity.modules.vectorgraphics": "1.0.0",
+        "com.unity.modules.imageconversion": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
     },
     "com.unity.modules.accessibility": {
       "version": "1.0.0",

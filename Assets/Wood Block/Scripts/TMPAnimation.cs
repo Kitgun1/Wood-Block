@@ -28,7 +28,7 @@ namespace WoodBlock
             if (_currentStep >= _steps.Count) _currentStep = 0;
             _tmpText.text = _steps[_currentStep];
             _currentStep++;
-            _routine.StartRoutine(KiCoroutine.Delay(_stepDuration, StepEnded), true);
+            _routine.StartRoutine(KiCoroutine.Delay(_stepDuration, StepEnded));
         }
     }
 }

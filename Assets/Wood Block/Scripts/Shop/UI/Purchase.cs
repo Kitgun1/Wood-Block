@@ -51,7 +51,7 @@ public class Purchase : MonoBehaviour
                     _product.ButtonText.text = "Buy";
             }
 
-            Debug.Log(YandexCurrencyService.Currencies[0].sprite);
+            _product.CurrencySprite.sprite = YandexCurrencyService.Currencies[0].sprite;
             StartCoroutine(DownloadImage(item.CatalogProduct.imageURI, _product.Image));
         }
     }

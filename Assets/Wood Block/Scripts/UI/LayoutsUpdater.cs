@@ -13,7 +13,7 @@ namespace WoodBlock
         private static Transform _transform;
 
         private void Awake() => _transform = transform;
-        private void OnEnable() => _routine.StartRoutine(DelayLayouts(), true);
+        private void OnEnable() => _routine.StartRoutine(DelayLayouts());
         private void OnDisable() => _routine.StopRoutine();
 
 
