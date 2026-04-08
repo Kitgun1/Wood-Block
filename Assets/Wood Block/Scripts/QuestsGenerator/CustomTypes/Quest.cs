@@ -95,23 +95,9 @@ public class Quest
     }
 
     // Получить описание квеста
-    public string GetDescription()
+    public (QuestType,int,float?) GetDescription()
     {
-        switch (_type)
-        {
-            case QuestType.CollectBlocks:
-                if(LeanLocalization.GetFirstCurrentLanguage() == "Russian")
-                return $"Собрать {_targetBlocks} очков";
-                else
-                    return $"Collect {_targetBlocks} points";
-            case QuestType.CollectTimed:
-                if (LeanLocalization.GetFirstCurrentLanguage() == "Russian")
-                    return $"Собрать {_targetBlocks} очки за {_timeLimit} сек";
-                else
-                    return $"Collect {_targetBlocks} points for {_timeLimit} sec";
-            default:
-                return "Неизвестный квест";
-        }
+        return (_type, _targetBlocks, _timeLimit);
     }
 }
 

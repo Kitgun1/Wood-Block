@@ -40,9 +40,10 @@ namespace WoodBlock
 
         [SerializeField] private Cell _cellTemplate;
         [SerializeField] private CellInBlock _cellInBlockPrefab;
-        [SerializeField] private List<LevelMap> _mapsForPc = new();
         [SerializeField] private List<LevelMap> _mapsForMobile = new();
+        [SerializeField] private List<LevelMap> _mapsForPc = new();
 
+        [SerializeField] private bool _isQuestLevel = true;
         [SerializeField, Min(1)] private int _scoreMultipier = 10;
         [SerializeField] private QuestManager _questManager;
 
@@ -81,7 +82,7 @@ namespace WoodBlock
         {
             DisposeGrid();
 
-            LevelMap selectedMap = Device.IsMobile ? _mapsForMobile[Random.Range(0, _mapsForMobile.Count)] : _mapsForPc[Random.Range(0, _mapsForPc.Count)];
+            LevelMap selectedMap = _isQuestLevel ? _mapsForMobile[Random.Range(0, _mapsForMobile.Count)] : _mapsForPc[Random.Range(0,_mapsForPc.Count)];
 
             int minX = selectedMap.GetPositions().Min(v => v.x);
             int maxX = selectedMap.GetPositions().Max(v => v.x);
@@ -95,7 +96,7 @@ namespace WoodBlock
             _grid = new Cell[_size.x, _size.y];
 
             transform.position = new Vector3(0, 0);
-            SpawnCells(selectedMap, startPosition, minX, minY,maxY); 
+            SpawnCells(selectedMap, startPosition, minX, minY, maxY);
             transform.position = new Vector3(-maxX, -maxY + _offsetY);
         }
 
@@ -113,7 +114,7 @@ namespace WoodBlock
             _grid = null;
         }
 
-        private void SpawnCells(LevelMap selectedMap, Vector3 startPosition, int minX, int minY,int maxY)
+        private void SpawnCells(LevelMap selectedMap, Vector3 startPosition, int minX, int minY, int maxY)
         {
             var newList = selectedMap.GetPositions().Where(item => item.y <= maxY).ToList();
             foreach (Vector2Int position in newList)
@@ -209,7 +210,7 @@ namespace WoodBlock
             {
                 Score.Instance.Value += score * _scoreMultipier;
 
-                if(_questManager != null)
+                if (_questManager != null)
                 {
                     var quests = _questManager.GetActiveQuests();
                     foreach (var quest in quests)
@@ -220,7 +221,7 @@ namespace WoodBlock
             {
                 Score.Instance.Value += score;
 
-                if(_questManager != null)
+                if (_questManager != null)
                 {
                     var quests = _questManager.GetActiveQuests();
                     foreach (var quest in quests)
@@ -443,6 +444,7 @@ namespace WoodBlock
                 {
                     _grid[pos.x, pos.y].SetBlock(cellInBlock);
                     updatedCells.Add(pos);
+                    SetSortingLayer(cellInBlock);
                 }
 
                 CheckFills(updatedCells);
@@ -451,6 +453,10 @@ namespace WoodBlock
             }
 
             return false;
+        }
+        private void SetSortingLayer(CellInBlock cell)
+        {
+            cell.GetComponent<SpriteRenderer>().sortingOrder = 1; ;
         }
 
         public bool TryLoss(Dictionary<DictionaryVector2CellInBlock, CellInBlock> remainingBlocks)

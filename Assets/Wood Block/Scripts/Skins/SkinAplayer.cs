@@ -85,6 +85,7 @@ public class SkinAplayer : MonoBehaviour
             return;
         }
         _spriteRenederer.sprite = skin.Cell;
+        _spriteRenederer.sortingOrder = 10;
         SetSpriteSize(_spriteRenederer, 102, 104);
     }
 

@@ -18,14 +18,14 @@ namespace WoodBlock
             yield return Cloud.Initialize(); // Initialize data.
             Debug.Log("Cloud инициализирован.");
 
-            yield return Billing.Initialize(); // Initialize purchases.
+            yield return Billing.Initialize(Agava.YandexGames.ProductPictureSize.svg); // Initialize purchases.
             Debug.Log("Billing инициализирован.");
+
+            yield return YandexCurrencyService.BillingYandexCurrencySetup();
+            Debug.Log("Yandex Currency инициализирован");
 
             Advertisement.Initialize(); // Initialize advert.
             Debug.Log("Advertisement инициализирован.");
-
-            yield return YandexCurrencyService.Initialize();
-            Debug.Log("YandexCurrenceService инициализирован.");
 
             WebApplication.Initialize();
             Debug.Log("WebApplication инициализирован.");

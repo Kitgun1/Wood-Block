@@ -1,3 +1,4 @@
+using Lean.Localization;
 using System;
 using TMPro;
 using UnityEngine;
@@ -5,7 +6,6 @@ using UnityEngine;
 public class QuestUI : MonoBehaviour
 {
     [SerializeField] private TMP_Text _descriptionText;
-    [SerializeField] private TMP_Text _progressText;
     [SerializeField] private TMP_Text _timerText; // Для timed квестов
 
     private Quest _currentQuest;
@@ -35,8 +35,25 @@ public class QuestUI : MonoBehaviour
 
     private void UpdateUI(Quest quest)
     {
-        _descriptionText.text = quest.GetDescription();
-        _progressText.text = quest.CurrentProgress.ToString();
+        var serparatedString = quest.GetDescription();
+        switch (serparatedString.Item1)
+        {
+            case QuestType.CollectBlocks:
+                if (LeanLocalization.GetFirstCurrentLanguage() == "Russian")
+                    _descriptionText.text = $"Собрать {quest.CurrentProgress}/{serparatedString.Item2} очков";
+                else
+                    _descriptionText.text = $"Collect {quest.CurrentProgress}/{serparatedString.Item2} points";
+                break;
+            case QuestType.CollectTimed:
+                if (LeanLocalization.GetFirstCurrentLanguage() == "Russian")
+                    _descriptionText.text =  $"Собрать {quest.CurrentProgress}/{serparatedString.Item2} очков за {serparatedString.Item3} сек";
+                else
+                    _descriptionText.text = $"Collect {quest.CurrentProgress}/{serparatedString.Item2} points for {serparatedString.Item3} sec";
+                break;
+            default:
+                Debug.LogError("Unknown quest");
+                break;
+        }
     }
 
     private void UpdateTimerUI(Quest quest)

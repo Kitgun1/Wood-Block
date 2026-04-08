@@ -1099,131 +1099,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 32469730}
   m_CullTransparentMesh: 1
---- !u!1 &36164309
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 36164311}
-  - component: {fileID: 36164310}
-  m_Layer: 0
-  m_Name: LevelCreater
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &36164310
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 36164309}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1db065f6862c7ee46bf815079d7da134, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LevelCreater
-  _maxLevelCount: 75
-  _baseLevelPath: Assets/Wood Block/Scenes/LevelBase.unity
-  _savePath: Assets/Wood Block/Scenes/Levels
-  _prefab: {fileID: 0}
-  _root: {fileID: 0}
-  _buttons:
-  - {fileID: 1865871825}
-  - {fileID: 320767839}
-  - {fileID: 1767325458}
-  - {fileID: 41458414}
-  - {fileID: 2103286833}
-  - {fileID: 1302841507}
-  - {fileID: 982042848}
-  - {fileID: 1898396456}
-  - {fileID: 1207435555}
-  - {fileID: 1551347344}
-  - {fileID: 1029287904}
-  - {fileID: 769914408}
-  - {fileID: 694515872}
-  - {fileID: 828811718}
-  - {fileID: 1298865090}
-  - {fileID: 1102030472}
-  - {fileID: 1136236175}
-  - {fileID: 1777182915}
-  - {fileID: 565674242}
-  - {fileID: 1341017222}
-  - {fileID: 610024074}
-  - {fileID: 161767024}
-  - {fileID: 684944751}
-  - {fileID: 1281411548}
-  - {fileID: 163968093}
-  - {fileID: 1596583409}
-  - {fileID: 2086202629}
-  - {fileID: 352697437}
-  - {fileID: 1513807788}
-  - {fileID: 760027786}
-  - {fileID: 1719246191}
-  - {fileID: 614248340}
-  - {fileID: 1400041485}
-  - {fileID: 585937739}
-  - {fileID: 831840541}
-  - {fileID: 226534137}
-  - {fileID: 1751688655}
-  - {fileID: 23984017}
-  - {fileID: 523574392}
-  - {fileID: 1704409996}
-  - {fileID: 1781919400}
-  - {fileID: 962204584}
-  - {fileID: 6568927}
-  - {fileID: 36442212}
-  - {fileID: 2018587794}
-  - {fileID: 1024637706}
-  - {fileID: 451949325}
-  - {fileID: 1544267956}
-  - {fileID: 216614912}
-  - {fileID: 44639717}
-  - {fileID: 1701703118}
-  - {fileID: 1988442994}
-  - {fileID: 1077025064}
-  - {fileID: 1428409761}
-  - {fileID: 1261412773}
-  - {fileID: 1722665053}
-  - {fileID: 1738213427}
-  - {fileID: 1881839402}
-  - {fileID: 1800704737}
-  - {fileID: 677095430}
-  - {fileID: 1461665955}
-  - {fileID: 1802523391}
-  - {fileID: 802893672}
-  - {fileID: 1142276527}
-  - {fileID: 862233847}
-  - {fileID: 648641064}
-  - {fileID: 1218758996}
-  - {fileID: 1893802787}
-  - {fileID: 628331517}
-  - {fileID: 2044167394}
-  - {fileID: 1988820248}
-  - {fileID: 380007854}
-  - {fileID: 82177554}
-  - {fileID: 1988994705}
-  - {fileID: 2117285516}
---- !u!4 &36164311
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 36164309}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.06022, y: 1.24031, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &36442211
 GameObject:
   m_ObjectHideFlags: 0
@@ -2987,7 +2862,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 52.8
+  m_fontSize: 42.15
   m_fontSizeBase: 46
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3862,6 +3737,58 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 209589072}
   m_CullTransparentMesh: 1
+--- !u!1 &213237075
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 213237076}
+  - component: {fileID: 213237077}
+  m_Layer: 0
+  m_Name: Select
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &213237076
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 213237075}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1922461867}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &213237077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 213237075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb15fa0e7301ff849bf4d6dcede7c12b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: LeanLocalization::Lean.Localization.LeanPhrase
+  data: 0
+  entries:
+  - Language: English
+    Text: Select
+    Object: {fileID: 0}
+  - Language: Russian
+    Text: "\u0412\u044B\u0431\u0440\u0430\u0442\u044C"
+    Object: {fileID: 0}
 --- !u!1 &216614911
 GameObject:
   m_ObjectHideFlags: 0
@@ -5429,6 +5356,58 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &332144204
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 332144205}
+  - component: {fileID: 332144206}
+  m_Layer: 0
+  m_Name: WoodBlockPazzle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &332144205
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 332144204}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1922461867}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &332144206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 332144204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb15fa0e7301ff849bf4d6dcede7c12b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: LeanLocalization::Lean.Localization.LeanPhrase
+  data: 0
+  entries:
+  - Language: English
+    Text: WOOD BLOCK PAZZLE
+    Object: {fileID: 0}
+  - Language: Russian
+    Text: "\u041F\u0410\u0417\u0417\u041B \u0418\u0417 \u0411\u041B\u041E\u041A\u041E\u0412"
+    Object: {fileID: 0}
 --- !u!1 &352697436
 GameObject:
   m_ObjectHideFlags: 0
@@ -6441,6 +6420,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22ca308ea27187348ab8de3a1531944f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShopSystem
+  _defaultSkinId: base_skin
+  _defaultBackgroundId: base_bg
+  _autoSelectDefaultItems: 1
+  _debugMode: 0
 --- !u!114 &433419295
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9662,7 +9645,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -372.56857}
+  m_AnchoredPosition: {x: 0, y: -315.39072}
   m_SizeDelta: {x: 0, y: 564}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &676514922
@@ -10800,6 +10783,7 @@ GameObject:
   - component: {fileID: 711730972}
   - component: {fileID: 711730974}
   - component: {fileID: 711730973}
+  - component: {fileID: 711730975}
   m_Layer: 5
   m_Name: Logo
   m_TagString: Untagged
@@ -10846,7 +10830,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Wood Block Pazzle
+  m_text: WOOD BLOCK PAZZLE
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ab051a72c7340154fa498e3540b7f45b, type: 2}
   m_sharedMaterial: {fileID: -8685960194695035821, guid: ab051a72c7340154fa498e3540b7f45b, type: 2}
@@ -10926,6 +10910,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 711730971}
   m_CullTransparentMesh: 1
+--- !u!114 &711730975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 711730971}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9195c76e11297a4a9196553b20edc88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizatinText
+  translationName: WoodBlockPazzle
+  FallbackText: Wood Block Pazzle
 --- !u!1 &712197022
 GameObject:
   m_ObjectHideFlags: 0
@@ -11114,6 +11112,58 @@ MonoBehaviour:
     Object: {fileID: 0}
   - Language: Russian
     Text: "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438"
+    Object: {fileID: 0}
+--- !u!1 &756876055
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 756876056}
+  - component: {fileID: 756876057}
+  m_Layer: 0
+  m_Name: Selected
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &756876056
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 756876055}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1922461867}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &756876057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 756876055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb15fa0e7301ff849bf4d6dcede7c12b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: LeanLocalization::Lean.Localization.LeanPhrase
+  data: 0
+  entries:
+  - Language: English
+    Text: Selected
+    Object: {fileID: 0}
+  - Language: Russian
+    Text: "\u0412\u044B\u0431\u0440\u0430\u043D"
     Object: {fileID: 0}
 --- !u!1 &760027785
 GameObject:
@@ -11608,8 +11658,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 762918992}
   m_HandleRect: {fileID: 762918991}
   m_Direction: 0
-  m_Value: 1.0000023
-  m_Size: 0.98057723
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -15170,7 +15220,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -714.61536, y: 0}
+  m_AnchoredPosition: {x: -783.6613, y: 0}
   m_SizeDelta: {x: 1402, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1074089645
@@ -16494,7 +16544,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 52.8
+  m_fontSize: 42.15
   m_fontSizeBase: 46
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -23106,7 +23156,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -714.6154, y: 0}
+  m_AnchoredPosition: {x: -783.6613, y: 0}
   m_SizeDelta: {x: 1402, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1623089545
@@ -26520,8 +26570,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2066293334}
   m_HandleRect: {fileID: 2066293333}
   m_Direction: 0
-  m_Value: 0.99999774
-  m_Size: 0.98057723
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -27298,6 +27348,58 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1880335146}
   m_CullTransparentMesh: 1
+--- !u!1 &1881167490
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1881167491}
+  - component: {fileID: 1881167492}
+  m_Layer: 0
+  m_Name: Buy
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1881167491
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1881167490}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1922461867}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1881167492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1881167490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb15fa0e7301ff849bf4d6dcede7c12b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: LeanLocalization::Lean.Localization.LeanPhrase
+  data: 0
+  entries:
+  - Language: English
+    Text: Buy
+    Object: {fileID: 0}
+  - Language: Russian
+    Text: "\u041A\u0443\u043F\u0438\u0442\u044C"
+    Object: {fileID: 0}
 --- !u!1 &1881839401
 GameObject:
   m_ObjectHideFlags: 0
@@ -28526,6 +28628,10 @@ RectTransform:
   - {fileID: 2046811164}
   - {fileID: 402412619}
   - {fileID: 1175384206}
+  - {fileID: 332144205}
+  - {fileID: 1881167491}
+  - {fileID: 213237076}
+  - {fileID: 756876056}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -31395,4 +31501,3 @@ SceneRoots:
   - {fileID: 1450392552}
   - {fileID: 1922461867}
   - {fileID: 1997211800}
-  - {fileID: 36164311}

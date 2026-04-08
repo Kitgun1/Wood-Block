@@ -6,7 +6,7 @@
     "price": "25 YAN",
     "priceCurrencyCode": "YAN",
     "priceValue": "25",
-    "priceCurrencyPicture": "//yastatic.net/s3/games-static/static-data/images/payments/sdk/currency-icon-s@2x.png",
+    "priceCurrencyPicture": "//yastatic.net/s3/games-static/static-data/images/payments/sdk/rub/currency-icon-m.svg",
     "title": "Скин травы"
   },
   {
@@ -16,7 +16,7 @@
     "price": "25 YAN",
     "priceCurrencyCode": "YAN",
     "priceValue": "25",
-    "priceCurrencyPicture": "//yastatic.net/s3/games-static/static-data/images/payments/sdk/currency-icon-s@2x.png",
+    "priceCurrencyPicture": "//yastatic.net/s3/games-static/static-data/images/payments/sdk/rub/currency-icon-m.svg",
     "title": "Скин дерева"
   },
   {
@@ -26,7 +26,7 @@
     "price": "25 YAN",
     "priceCurrencyCode": "YAN",
     "priceValue": "25",
-    "priceCurrencyPicture": "//yastatic.net/s3/games-static/static-data/images/payments/sdk/currency-icon-s@2x.png",
+    "priceCurrencyPicture": "//yastatic.net/s3/games-static/static-data/images/payments/sdk/rub/currency-icon-m.svg",
     "title": "Скин леса"
   },
   {
@@ -36,7 +36,7 @@
     "price": "25 YAN",
     "priceCurrencyCode": "YAN",
     "priceValue": "25",
-    "priceCurrencyPicture": "//yastatic.net/s3/games-static/static-data/images/payments/sdk/currency-icon-s@2x.png",
+    "priceCurrencyPicture": "//yastatic.net/s3/games-static/static-data/images/payments/sdk/rub/currency-icon-m.svg",
     "title": "Скин камня"
   },
 ]

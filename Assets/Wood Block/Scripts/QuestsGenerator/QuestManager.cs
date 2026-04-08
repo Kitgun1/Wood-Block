@@ -15,9 +15,8 @@ public class QuestManager : MonoBehaviour
     [Header("Префабы UI")]
     [SerializeField] private GameObject _questPrefab;
     [SerializeField] private TMP_Text _levelText;
-    [Header("Containers For Device")]
-    [SerializeField] private Transform _questContainerForPc;
-    [SerializeField] private Transform _questContainerForMobile;
+    [Header("Container")]
+    [SerializeField] private Transform _questContainer;
 
     [Header("Настройки авто-обновления")]
     [SerializeField] private bool _autoGenerateOnStart = true;   
@@ -73,14 +72,8 @@ public class QuestManager : MonoBehaviour
     }
     private void ClearQuestContainer()
     {
-        Transform container;
 
-        if(Device.IsMobile)
-            container = _questContainerForMobile;
-        else
-            container = _questContainerForPc;
-
-        foreach (Transform child in container)
+        foreach (Transform child in _questContainer)
         {
             Destroy(child.gameObject);
         }
@@ -96,17 +89,11 @@ public class QuestManager : MonoBehaviour
 
     private QuestUI CreateQuestUI(Quest quest)
     {
-        if (_questPrefab == null || _questContainerForPc == null) return null;
+        if (_questPrefab == null || _questContainer == null) return null;
 
-        Transform container;
-
-        if (Device.IsMobile)
-            container = _questContainerForMobile;
-        else
-            container = _questContainerForPc;
 
         // Создаем префаб
-        GameObject questObject = Instantiate(_questPrefab, container);
+        GameObject questObject = Instantiate(_questPrefab, _questContainer);
         questObject.name = $"Quest_{_activeQuests.Count + 1}_{quest.QuestType}";
 
         // Получаем компонент QuestUI

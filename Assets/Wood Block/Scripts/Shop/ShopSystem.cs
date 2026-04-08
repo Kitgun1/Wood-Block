@@ -3,104 +3,477 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static UnityEngine.Audio.ProcessorInstance;
 using Billing = Kimicu.YandexGames.Billing;
 
 [RequireComponent(typeof(GUIDrawer))]
 public class ShopSystem : MonoBehaviour
 {
+    [Header("Default Items Settings")]
+    [SerializeField] private string _defaultSkinId = "base_skin";
+    [SerializeField] private string _defaultBackgroundId = "base_bg";
+    [SerializeField] private bool _autoSelectDefaultItems = true;
+
+    [Header("Debug")]
+    [SerializeField] private bool _debugMode = false;
 
     private List<ShopItem> _items = new();
-    private string _currentSelectedSkin = "";
-    private string _currentSelectedBackground = "";
+    private string _currentSelectedSkin = string.Empty;
+    private string _currentSelectedBackground = string.Empty;
 
-    public Action<List<ShopItem>> OnShopUpdated;
-    public Action<List<ShopItem>> OnInitialized;
+    private HashSet<string> _defaultItemsIds = new();
 
-    public static Action OnBackgroundSkinChanged;
+    public event Action<List<ShopItem>> OnShopUpdated;
+    public event Action<List<ShopItem>> OnInitialized;
+    public static event Action OnBackgroundSkinChanged;
+    public static event Action OnSkinSelected;
 
     private void Start() => Initialize();
 
     public void BuyItem(string itemID)
     {
-        if (CheckIsItemBought(itemID))
-            SelectSkin(itemID);
-        else
-            Billing.PurchaseProduct(itemID, ConsumePayment, Debug.LogError);
-    }
-    public ShopItem GetShopItemByID(string ItemID) => _items.Find(x => x.CatalogProduct.id == ItemID);
-
-    private void SelectSkin(string ItemID)
-    {
-        if (GetShopItemByID(ItemID).ProductType == ProductType.Skin)
+        var shopItem = GetShopItemByID(itemID);
+        if (shopItem == null)
         {
-            _currentSelectedSkin = ItemID;
-            DataSaver.Save(SaveKeys.SelectedSkinId, _currentSelectedSkin);
-            OnShopUpdated?.Invoke(_items);
+            Debug.LogError($"ShopItem with ID {itemID} not found");
+            return;
+        }
+
+        if (shopItem.IsBought)
+        {
+            SelectSkin(itemID);
         }
         else
         {
-            _currentSelectedBackground = ItemID;
+            Billing.PurchaseProduct(itemID, OnPurchaseSuccess, OnPurchaseError);
+        }
+    }
+
+    public ShopItem GetShopItemByID(string itemID)
+        => _items.FirstOrDefault(x => x.CatalogProduct.id == itemID);
+
+    public void ConsumeProduct(string productID)
+    {
+        var shopItem = GetShopItemByID(productID);
+
+        if (shopItem == null)
+        {
+            Debug.LogError($"Product {productID} not found in shop items");
+            return;
+        }
+
+        shopItem.IsBought = true;
+        DataSaver.Save(SaveKeys.Products, _items);
+        OnProductConsumed(productID);
+    }
+
+    private void SelectSkin(string itemID)
+    {
+        var shopItem = GetShopItemByID(itemID);
+        if (shopItem == null) return;
+
+        if (!shopItem.IsBought)
+        {
+            Debug.LogWarning($"Trying to select not bought item: {itemID}");
+            return;
+        }
+
+        if (shopItem.ProductType == ProductType.Skin)
+        {
+            _currentSelectedSkin = itemID;
+            DataSaver.Save(SaveKeys.SelectedSkinId, _currentSelectedSkin);
+            OnSkinSelected?.Invoke();
+
+            if (_debugMode)
+                Debug.Log($"Skin selected: {itemID}");
+        }
+        else
+        {
+            _currentSelectedBackground = itemID;
             DataSaver.Save(SaveKeys.SelectedBackgroundId, _currentSelectedBackground);
             OnBackgroundSkinChanged?.Invoke();
-            OnShopUpdated?.Invoke(_items);
-        }
-    }
-    private void ConsumePayment(PurchaseProductResponse response)
-    {
-        var itemID = _items.FindIndex(x => x.CatalogProduct.id == response.purchaseData.productID);
-        Billing.ConsumeProduct(response.purchaseData.purchaseToken, () => _items[itemID].IsBought = true);
 
-        DataSaver.Save(SaveKeys.Products,_items);
-            
+            if (_debugMode)
+                Debug.Log($"Background selected: {itemID}");
+        }
+
         OnShopUpdated?.Invoke(_items);
     }
-    private bool CheckIsItemBought(string id) => _items.First(x => x.CatalogProduct.id == id).IsBought;
+
+    private void OnPurchaseSuccess(PurchaseProductResponse response)
+    {
+        string productID = response.purchaseData.productID;
+        var shopItem = GetShopItemByID(productID);
+
+        if (shopItem == null)
+        {
+            Debug.LogError($"Product {productID} not found in shop items");
+            return;
+        }
+
+        shopItem.IsBought = true;
+        DataSaver.Save(SaveKeys.Products, _items);
+
+        Billing.ConsumeProduct(response.purchaseData.purchaseToken,
+            () => OnProductConsumed(productID),
+            error => Debug.LogError($"Consume error: {error}"));
+    }
+
+    private void OnProductConsumed(string productID)
+    {
+        if (_debugMode)
+            Debug.Log($"Product {productID} consumed successfully");
+
+        OnShopUpdated?.Invoke(_items);
+        SelectSkin(productID);
+    }
+
+    private void OnPurchaseError(string error)
+    {
+        Debug.LogError($"Purchase failed: {error}");
+    }
+
+    private bool CheckIsItemBought(string id)
+        => GetShopItemByID(id)?.IsBought ?? false;
+
     private void Initialize()
     {
-        if (Billing.Initialized)
+        if (!Billing.Initialized)
         {
-            if (DataSaver.HasSaves(SaveKeys.Products))
-                _items = DataSaver.Load<List<ShopItem>>(SaveKeys.Products);
-            else
-                SortProductsCatalog();
+            Debug.LogError("Billing not initialized");
+            return;
+        }
 
+        InitializeDefaultItemsIds();
+        LoadOrCreateShopItems();
+        SetupDefaultItems();
+        LoadSelectedItems();
 
-            if (DataSaver.HasSaves(SaveKeys.SelectedSkinId))
-                _currentSelectedSkin = DataSaver.Load<string>(SaveKeys.SelectedSkinId);
+        OnInitialized?.Invoke(_items);
 
-            OnInitialized?.Invoke(_items);
+        if (_debugMode)
+            Debug.Log($"Shop initialized. Total items: {_items.Count}, Default items: {_defaultItemsIds.Count}");
+    }
+
+    private void InitializeDefaultItemsIds()
+    {
+        _defaultItemsIds.Clear();
+
+        if (!string.IsNullOrEmpty(_defaultSkinId))
+            _defaultItemsIds.Add(_defaultSkinId);
+
+        if (!string.IsNullOrEmpty(_defaultBackgroundId))
+            _defaultItemsIds.Add(_defaultBackgroundId);
+    }
+
+    private void LoadOrCreateShopItems()
+    {
+        if (DataSaver.HasSaves(SaveKeys.Products))
+        {
+            _items = DataSaver.Load<List<ShopItem>>(SaveKeys.Products);
+
+            EnsureDefaultItemsAreBought();
+            SyncWithCurrentCatalog();
         }
         else
-            Debug.LogError("Billing not initialized");
+        {
+            CreateItemsFromCatalog();
+            MarkDefaultItemsAsBought();
+        }
     }
-    private void SortProductsCatalog()
-    {
-        var justSkins = Billing.CatalogProducts.Where(x => x.id.Contains("skin")).ToList();
-        var justBackgrounds = Billing.CatalogProducts.Where(x => x.id.Contains("bg")).ToList();
 
-        foreach (var item in justSkins)
-            _items.Add(new ShopItem(false, item,ProductType.Skin));
-        foreach (var item in justBackgrounds)
-            _items.Add(new ShopItem(false, item,ProductType.Background));
+    private void EnsureDefaultItemsAreBought()
+    {
+        bool changed = false;
+
+        foreach (var defaultId in _defaultItemsIds)
+        {
+            var item = GetShopItemByID(defaultId);
+            if (item != null && !item.IsBought)
+            {
+                item.IsBought = true;
+                changed = true;
+
+                if (_debugMode)
+                    Debug.Log($"Marked default item as bought: {defaultId}");
+            }
+        }
+
+        if (changed)
+            DataSaver.Save(SaveKeys.Products, _items);
+    }
+
+    private void MarkDefaultItemsAsBought()
+    {
+        foreach (var item in _items)
+        {
+            if (_defaultItemsIds.Contains(item.CatalogProduct.id))
+            {
+                item.IsBought = true;
+
+                if (_debugMode)
+                    Debug.Log($"Default item marked as bought: {item.CatalogProduct.id}");
+            }
+        }
+    }
+
+    private void SetupDefaultItems()
+    {
+        if (_autoSelectDefaultItems)
+        {
+            if (!DataSaver.HasSaves(SaveKeys.SelectedSkinId) && !string.IsNullOrEmpty(_defaultSkinId))
+            {
+                var defaultSkin = GetShopItemByID(_defaultSkinId);
+                if (defaultSkin != null && defaultSkin.IsBought)
+                {
+                    _currentSelectedSkin = _defaultSkinId;
+                    DataSaver.Save(SaveKeys.SelectedSkinId, _currentSelectedSkin);
+
+                    if (_debugMode)
+                        Debug.Log($"Auto-selected default skin: {_defaultSkinId}");
+                }
+            }
+
+            if (!DataSaver.HasSaves(SaveKeys.SelectedBackgroundId) && !string.IsNullOrEmpty(_defaultBackgroundId))
+            {
+                var defaultBackground = GetShopItemByID(_defaultBackgroundId);
+                if (defaultBackground != null && defaultBackground.IsBought)
+                {
+                    _currentSelectedBackground = _defaultBackgroundId;
+                    DataSaver.Save(SaveKeys.SelectedBackgroundId, _currentSelectedBackground);
+
+                    if (_debugMode)
+                        Debug.Log($"Auto-selected default background: {_defaultBackgroundId}");
+                }
+            }
+        }
+    }
+
+    private void SyncWithCurrentCatalog()
+    {
+        var existingIds = _items.Select(x => x.CatalogProduct.id).ToHashSet();
+        var newProducts = Billing.CatalogProducts.Where(x => !existingIds.Contains(x.id));
+
+        foreach (var product in newProducts)
+        {
+            var productType = GetProductType(product.id);
+            var isDefault = _defaultItemsIds.Contains(product.id);
+            _items.Add(new ShopItem(isDefault, product, productType));
+
+            if (_debugMode && isDefault)
+                Debug.Log($"Added new default item from catalog: {product.id}");
+        }
+
+        if (newProducts.Any())
+        {
+            DataSaver.Save(SaveKeys.Products, _items);
+        }
+    }
+
+    private void CreateItemsFromCatalog()
+    {
+        _items.Clear();
+
+        foreach (var product in Billing.CatalogProducts)
+        {
+            ProductType productType = GetProductType(product.id);
+            bool isDefault = _defaultItemsIds.Contains(product.id);
+
+            if (productType != ProductType.None)
+                _items.Add(new ShopItem(isDefault, product, productType));
+
+            if (_debugMode)
+                Debug.Log($"Created item: {product.id}, Type: {productType}, IsDefault: {isDefault}");
+        }
+    }
+
+    private ProductType GetProductType(string productId)
+    {
+        if (productId.Contains("skin"))
+            return ProductType.Skin;
+        else if (productId.Contains("bg"))
+            return ProductType.Background;
+        else
+        {
+            Debug.LogWarning($"Unknown product type for {productId}, defaulting to Skin");
+            return ProductType.None;
+        }
+    }
+
+    private void LoadSelectedItems()
+    {
+        if (DataSaver.HasSaves(SaveKeys.SelectedSkinId))
+        {
+            _currentSelectedSkin = DataSaver.Load<string>(SaveKeys.SelectedSkinId);
+
+            var selectedSkin = GetShopItemByID(_currentSelectedSkin);
+            if (selectedSkin == null || !selectedSkin.IsBought)
+            {
+                if (_debugMode)
+                    Debug.LogWarning($"Selected skin {_currentSelectedSkin} is invalid, resetting to default");
+
+                ResetToDefaultSkin();
+            }
+        }
+        else
+        {
+            ResetToDefaultSkin();
+        }
+
+        if (DataSaver.HasSaves(SaveKeys.SelectedBackgroundId))
+        {
+            _currentSelectedBackground = DataSaver.Load<string>(SaveKeys.SelectedBackgroundId);
+
+            var selectedBackground = GetShopItemByID(_currentSelectedBackground);
+            if (selectedBackground == null || !selectedBackground.IsBought)
+            {
+                if (_debugMode)
+                    Debug.LogWarning($"Selected background {_currentSelectedBackground} is invalid, resetting to default");
+
+                ResetToDefaultBackground();
+            }
+        }
+        else
+        {
+            ResetToDefaultBackground();
+        }
+    }
+
+    private void ResetToDefaultSkin()
+    {
+        if (!string.IsNullOrEmpty(_defaultSkinId))
+        {
+            var defaultSkin = GetShopItemByID(_defaultSkinId);
+            if (defaultSkin != null && defaultSkin.IsBought)
+            {
+                _currentSelectedSkin = _defaultSkinId;
+                DataSaver.Save(SaveKeys.SelectedSkinId, _currentSelectedSkin);
+                OnSkinSelected?.Invoke();
+
+                if (_debugMode)
+                    Debug.Log($"Reset to default skin: {_defaultSkinId}");
+            }
+        }
+    }
+
+    private void ResetToDefaultBackground()
+    {
+        if (!string.IsNullOrEmpty(_defaultBackgroundId))
+        {
+            var defaultBackground = GetShopItemByID(_defaultBackgroundId);
+            if (defaultBackground != null && defaultBackground.IsBought)
+            {
+                _currentSelectedBackground = _defaultBackgroundId;
+                DataSaver.Save(SaveKeys.SelectedBackgroundId, _currentSelectedBackground);
+                OnBackgroundSkinChanged?.Invoke();
+
+                if (_debugMode)
+                    Debug.Log($"Reset to default background: {_defaultBackgroundId}");
+            }
+        }
+    }
+
+    // Публичные методы для управления дефолтными предметами
+    public void SetDefaultSkin(string skinId)
+    {
+        if (string.IsNullOrEmpty(skinId))
+        {
+            Debug.LogError("Cannot set empty default skin ID");
+            return;
+        }
+
+        _defaultSkinId = skinId;
+        InitializeDefaultItemsIds();
+
+        // Убеждаемся, что новый дефолтный скин отмечен как купленный
+        var skinItem = GetShopItemByID(skinId);
+        if (skinItem != null && !skinItem.IsBought)
+        {
+            skinItem.IsBought = true;
+            DataSaver.Save(SaveKeys.Products, _items);
+        }
+
+        if (_debugMode)
+            Debug.Log($"Default skin changed to: {skinId}");
+    }
+
+    public void SetDefaultBackground(string backgroundId)
+    {
+        if (string.IsNullOrEmpty(backgroundId))
+        {
+            Debug.LogError("Cannot set empty default background ID");
+            return;
+        }
+
+        _defaultBackgroundId = backgroundId;
+        InitializeDefaultItemsIds();
+
+        var backgroundItem = GetShopItemByID(backgroundId);
+        if (backgroundItem != null && !backgroundItem.IsBought)
+        {
+            backgroundItem.IsBought = true;
+            DataSaver.Save(SaveKeys.Products, _items);
+        }
+
+        if (_debugMode)
+            Debug.Log($"Default background changed to: {backgroundId}");
+    }
+
+    public bool IsDefaultItem(string itemId) => _defaultItemsIds.Contains(itemId);
+
+    public string GetDefaultSkinId() => _defaultSkinId;
+
+    public string GetDefaultBackgroundId() => _defaultBackgroundId;
+
+    // Вспомогательные методы
+    public List<ShopItem> GetItemsByType(ProductType type)
+        => _items.Where(x => x.ProductType == type).ToList();
+
+    public ShopItem GetSelectedSkin()
+        => GetShopItemByID(_currentSelectedSkin);
+
+    public ShopItem GetSelectedBackground()
+        => GetShopItemByID(_currentSelectedBackground);
+
+    public void ResetAllPurchases() // Для отладки
+    {
+        foreach (var item in _items)
+        {
+            // Не сбрасываем дефолтные предметы
+            if (!_defaultItemsIds.Contains(item.CatalogProduct.id))
+            {
+                item.IsBought = false;
+            }
+        }
+
+        DataSaver.Save(SaveKeys.Products, _items);
+        ResetToDefaultSkin();
+        ResetToDefaultBackground();
+        OnShopUpdated?.Invoke(_items);
+
+        if (_debugMode)
+            Debug.Log("All non-default purchases reset");
     }
 }
-
 public class ShopItem
 {
     private bool _isBought;
-    private CatalogProduct _catalogProduct;
-    private ProductType _productType;
+    private readonly CatalogProduct _catalogProduct;
+    private readonly ProductType _productType;
 
-    public bool IsBought { get => _isBought; set => _isBought = value; }
-    public CatalogProduct CatalogProduct { get => _catalogProduct; }
-    public ProductType ProductType { get => _productType; }
- 
+    public bool IsBought
+    {
+        get => _isBought;
+        set => _isBought = value;
+    }
 
-    public ShopItem(bool isBought, CatalogProduct catalogProduct,ProductType productType)
+    public CatalogProduct CatalogProduct => _catalogProduct;
+    public ProductType ProductType => _productType;
+
+    public ShopItem(bool isBought, CatalogProduct catalogProduct, ProductType productType)
     {
         _isBought = isBought;
         _catalogProduct = catalogProduct;
         _productType = productType;
     }
-
 }

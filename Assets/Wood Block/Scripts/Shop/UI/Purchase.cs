@@ -1,5 +1,6 @@
 using Kimicu.YandexGames.Extension;
 using KimicuUtility;
+using Lean.Localization;
 using NaughtyAttributes.Test;
 using System;
 using System.Collections;
@@ -28,13 +29,29 @@ public class Purchase : MonoBehaviour
             if (item.IsBought)
             {
                 if (DataSaver.Load<string>(SaveKeys.SelectedSkinId) == _id || DataSaver.Load<string>(SaveKeys.SelectedBackgroundId) == _id)
-                    _product.ButtonText.text = "Selected";
+                {
+                    if (LeanLocalization.GetFirstCurrentLanguage() == "Russian")
+                        _product.ButtonText.text = "Выбран";
+                    else
+                        _product.ButtonText.text = "Selected";
+                }
                 else
-                    _product.ButtonText.text = "Select";
+                {
+                    if (LeanLocalization.GetFirstCurrentLanguage() == "Russian")
+                        _product.ButtonText.text = "Выбрать";
+                    else
+                        _product.ButtonText.text = "Select";
+                }
             }
             else
-                _product.ButtonText.text = "Buy";
+            {
+                if (LeanLocalization.GetFirstCurrentLanguage() == "Russian")
+                    _product.ButtonText.text = "Купить";
+                else
+                    _product.ButtonText.text = "Buy";
+            }
 
+            Debug.Log(YandexCurrencyService.Currencies[0].sprite);
             StartCoroutine(DownloadImage(item.CatalogProduct.imageURI, _product.Image));
         }
     }
@@ -45,7 +62,7 @@ public class Purchase : MonoBehaviour
 
         var item = _shopSystem.GetShopItemByID(_id);
         _product.Button.AddListener(() => _shopSystem.BuyItem(item.CatalogProduct.id));
-        _product.CurrencySprite.sprite = YandexCurrencyService.Currencies[0].sprite;
+        //_product.CurrencySprite.sprite = YandexCurrencyService.Currencies[0].sprite;
     }
     private IEnumerator DownloadImage(string url, Image targetImage)
     {

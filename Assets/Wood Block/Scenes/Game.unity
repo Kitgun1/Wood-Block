@@ -1187,7 +1187,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 33.2
+  m_fontSize: 28.8
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2307,7 +2307,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18.15
+  m_fontSize: 13.75
   m_fontSizeBase: 12
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -5013,7 +5013,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 34.2
+  m_fontSize: 27.25
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -5255,7 +5255,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 68.42, y: -22.5}
-  m_SizeDelta: {x: 0, y: 45}
+  m_SizeDelta: {x: 136.84, y: 45}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1186559616
 MonoBehaviour:
@@ -5418,14 +5418,15 @@ MonoBehaviour:
   _offsetY: 1.4
   _cellTemplate: {fileID: 8791736025029841993, guid: e15692d389b80ca49b79cb7b192eeaaa, type: 3}
   _cellInBlockPrefab: {fileID: 3214424295054498642, guid: db1dc5e1891194e47bf7b1adceb68bd9, type: 3}
-  _mapsForPc:
-  - {fileID: 11400000, guid: 53b2a176e52832c46a98ad5e84284743, type: 2}
-  - {fileID: 11400000, guid: 80ffb27997d5d0148bb9d69c9579e93c, type: 2}
-  - {fileID: 11400000, guid: 239373fb80478a7498820e8ae7792858, type: 2}
   _mapsForMobile:
   - {fileID: 11400000, guid: 76ed7add0eea7c74fa5261ce6de01872, type: 2}
   - {fileID: 11400000, guid: 8c94b1eb080d8254b94813b39aaf076b, type: 2}
   - {fileID: 11400000, guid: 188410842d096a6449aa7eee04b21aa0, type: 2}
+  _mapsForPc:
+  - {fileID: 11400000, guid: 53b2a176e52832c46a98ad5e84284743, type: 2}
+  - {fileID: 11400000, guid: 80ffb27997d5d0148bb9d69c9579e93c, type: 2}
+  - {fileID: 11400000, guid: 239373fb80478a7498820e8ae7792858, type: 2}
+  _isQuestLevel: 0
   _scoreMultipier: 10
   _questManager: {fileID: 0}
   PointerCell: {fileID: 0}
@@ -5862,7 +5863,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 16.5
+  m_fontSize: 13.5
   m_fontSizeBase: 12
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -6369,7 +6370,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.0604, y: 0.884, z: 0}
-  m_LocalScale: {x: 1.97, y: 2.0920527, z: 1}
+  m_LocalScale: {x: 1.97, y: 2.1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -7914,7 +7915,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 16.5
+  m_fontSize: 13.5
   m_fontSizeBase: 12
   m_fontWeight: 400
   m_enableAutoSizing: 1
