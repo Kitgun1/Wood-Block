@@ -95,7 +95,7 @@ namespace WoodBlock
             {
                 foreach (TablePoint tablePoint in _tableLayout.Points)
                 {
-                    tablePoint.CreateBlock(_blockTemplates.RandomWithChance().Peek());
+                    tablePoint.CreateBlock(_blockTemplates.RandomWithChance().First());
                 }
             }
         }

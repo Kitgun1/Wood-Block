@@ -1,0 +1,18 @@
+{
+  "name": "com.blackbox.kiutility",
+  "version": "1.0.25",
+  "author": "Kimicu",
+  "displayName": "Kimicu Utility",
+  "description": "Package for fast develop game.",
+  "unity": "2019.1",
+  "changelogUrl": "https://github.com/Kitgun1/KimicuUtility/blob/main/CHANGELOG.md",
+  "dependencies": {},
+  "samples": [
+    {
+      "displayName": "Coroutines",
+      "description": "Usage examples coroutine with Kimicu Utility",
+      "path": "Sample~/Coroutines"
+    }
+  ],
+  "_fingerprint": "a2260075d6f590fde9304c68069664dfd9eaf481"
+}

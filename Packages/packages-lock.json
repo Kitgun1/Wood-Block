@@ -1,20 +1,18 @@
 {
   "dependencies": {
     "com.blackbox.kimicuyandexgames": {
-      "version": "https://github.com/TheErikSar/KimicuYandexGames.git",
+      "version": "file:com.blackbox.kimicuyandexgames",
       "depth": 0,
-      "source": "git",
+      "source": "embedded",
       "dependencies": {
         "com.unity.vectorgraphics": "2.0.0-preview.25"
-      },
-      "hash": "285152f909127d858d95c2a8bf4c10062d1e78c6"
+      }
     },
     "com.blackbox.kiutility": {
-      "version": "https://github.com/Kitgun1/KimicuUtility.git",
+      "version": "file:com.blackbox.kiutility",
       "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "a2260075d6f590fde9304c68069664dfd9eaf481"
+      "source": "embedded",
+      "dependencies": {}
     },
     "com.coffee.softmask-for-ugui": {
       "version": "https://github.com/mob-sakai/SoftMaskForUGUI.git?path=Packages/src",
