@@ -17,6 +17,8 @@ public class ShopSystem : MonoBehaviour
     [Header("Debug")]
     [SerializeField] private bool _debugMode = false;
 
+    public Shader Shader;
+
     private List<ShopItem> _items = new();
     private string _currentSelectedSkin = string.Empty;
     private string _currentSelectedBackground = string.Empty;

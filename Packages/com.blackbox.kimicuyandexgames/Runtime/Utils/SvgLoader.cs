@@ -13,17 +13,17 @@ namespace Kimicu.YandexGames.Utils
     {
         private static Material _defaultMaterial;
 
-        private const string SHADER_VECTOR_GRADIENT = "Unlit/VectorGradient";
+        private const string SHADER_VECTOR_GRADIENT = "VectorGradient";
 
-        private const string SHADER_VECTOR_DEMULTIPLY = "Hidden/VectorDemultiply";
-        private const string SHADER_VECTOR_EXPAND_EDGES = "Hidden/VectorExpandEdges";
-        private const string SHADER_VECTOR_BLEND_MAX = "Hidden/VectorBlendMax";
+        private const string SHADER_VECTOR_DEMULTIPLY = "VectorDemultiply";
+        private const string SHADER_VECTOR_EXPAND_EDGES = "VectorExpandEdges";
+        private const string SHADER_VECTOR_BLEND_MAX = "VectorBlendMax";
 
         private static Material DefaultMaterial
         {
             get
             {
-                _defaultMaterial = new Material(Shader.Find(SHADER_VECTOR_GRADIENT));
+                _defaultMaterial = new Material(Resources.Load<Shader>(SHADER_VECTOR_GRADIENT));
                 return _defaultMaterial;
             }
         }
