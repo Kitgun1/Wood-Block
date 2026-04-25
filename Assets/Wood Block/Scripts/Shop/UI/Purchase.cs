@@ -23,8 +23,8 @@ public class Purchase : MonoBehaviour
         {
             var item = _shopSystem.GetShopItemByID(_id);
 
-            _product.PriceText.text = item.CatalogProduct.priceValue;
             _product.TitleText.text = item.CatalogProduct.title;
+            _product.PriceText.text = item.CatalogProduct.priceValue;
 
             if (item.IsBought)
             {
@@ -45,13 +45,40 @@ public class Purchase : MonoBehaviour
             }
             else
             {
-                if (LeanLocalization.GetFirstCurrentLanguage() == "Russian")
-                    _product.ButtonText.text = "Купить";
-                else
-                    _product.ButtonText.text = "Buy";
+                switch (item.WaysToUnlockSkin)
+                {
+                    case WaysToUnlockSkin.BuyForLevels:
+                        if (LeanLocalization.GetFirstCurrentLanguage() == "Russian")
+                            _product.ButtonText.text = $"За левел {item.LevelToGetSkin}";
+                        else
+                            _product.ButtonText.text = $"For level {item.LevelToGetSkin}";
+                        break;
+                    case WaysToUnlockSkin.BuyForCurrencie:
+                        if (LeanLocalization.GetFirstCurrentLanguage() == "Russian")
+                            _product.ButtonText.text = "Купить";
+                        else
+                            _product.ButtonText.text = "Buy";
+                        break;
+                    case WaysToUnlockSkin.BuyForAdd:
+                        if (LeanLocalization.GetFirstCurrentLanguage() == "Russian")
+                            _product.ButtonText.text = "Получить за рекламу";
+                        else
+                            _product.ButtonText.text = "Get For Add";
+                        break;
+                }
             }
 
-            _product.CurrencySprite.sprite = YandexCurrencyService.Currencies[0].sprite;
+            if (item.WaysToUnlockSkin == WaysToUnlockSkin.BuyForCurrencie && _shopSystem.IsDefaultItem(item.CatalogProduct.id) != true)
+            {
+                _product.CurrencySprite.sprite = YandexCurrencyService.Currencies[0].sprite;
+                _product.PriceText.text = item.CatalogProduct.priceValue;
+            }
+            else
+            {
+                _product.CurrencySprite.color = new Color(0, 0, 0, 0);
+                _product.PriceText.text = "";
+            }
+
             StartCoroutine(DownloadImage(item.CatalogProduct.imageURI, _product.Image));
         }
     }

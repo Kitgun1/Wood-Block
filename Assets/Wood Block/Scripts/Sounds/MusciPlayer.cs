@@ -1,5 +1,8 @@
 using Kimicu.YandexGames;
+using System;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(AudioSource))]
 public class MusciPlayer : MonoBehaviour
@@ -7,7 +10,7 @@ public class MusciPlayer : MonoBehaviour
     private AudioSource _audioSource;
     private static MusciPlayer _instance = null;
 
-    private void Start()
+    public void Initialize()
     {
         if (_instance != null && _instance != this)
         {
@@ -19,17 +22,13 @@ public class MusciPlayer : MonoBehaviour
 
         _audioSource = GetComponent<AudioSource>();
         _audioSource.volume = DataSaver.Load<float>(SaveKeys.MusicVolume);
-        WebApplication.InAdvertChangeState += Play;
-    }
-    private void Play(bool value)
-    {
-        if(value == false)
+
         _audioSource.Play();
     }
-    public void SetVolume(float volume) 
+    public void SetVolume(float volume)
     {
-        if(_audioSource == null)
+        if (_audioSource == null)
             _audioSource = GetComponent<AudioSource>();
-        _audioSource.volume = volume; 
+        _audioSource.volume = volume;
     }
 }

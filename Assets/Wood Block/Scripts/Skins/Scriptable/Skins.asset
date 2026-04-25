@@ -95,7 +95,7 @@ MonoBehaviour:
         _button: {fileID: 1137956016, guid: 3dcc8d4a9239dec45afd89e34b11580a, type: 3}
         _buyButton: {fileID: -195570602, guid: 94a3cb2dad0339247b4fa0212b6bda67, type: 3}
         _losePanel: {fileID: 1085399997, guid: 636cd1b95be69fa43bf82c2acfc71a7d, type: 3}
-    - Key: sky_skin
+    - Key: sky_bg
       Value:
         _background: {fileID: 21300000, guid: 84b2e9c6f3013d14ebf2187fd5fcca5a, type: 3}
         _frameForCell: {fileID: 21300000, guid: e9682d808e318a6469278a3ca7c8828f, type: 3}

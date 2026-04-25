@@ -5,11 +5,10 @@ using UnityEngine;
 public class QuestGenerator : MonoBehaviour
 {
     [Header("Настройки генерации")]
-    [SerializeField] private int _startBlocks = 50;        // Начальное количество блоков
-    [SerializeField] private int _blocksIncrease = 25;     // Увеличение блоков за уровень
-    [SerializeField] private float _startTime = 60f;       // Начальное время (сек)
-    [SerializeField] private float _timeDecrease = 5f;     // Уменьшение времени за уровень
-    [SerializeField] private float _minTime = 20f;         // Минимальное время
+    [SerializeField] private int _startBlocks = 50;        
+    [SerializeField] private int _blocksIncrease = 25;     
+    [SerializeField] private float _startTime = 60f;       
+    [SerializeField] private float _timeDecrease = 5f;           
 
     [Header("Вероятности")]
     [Range(0, 100)]
@@ -52,10 +51,7 @@ public class QuestGenerator : MonoBehaviour
     // Рассчитать лимит времени
     private float CalculateTimeLimit(int level)
     {
-        float baseTime = _startTime - (level - 1) * _timeDecrease;
-        float randomVariance = UnityEngine.Random.Range(-3f, 3f);
-
-        return Mathf.Max(_minTime, baseTime + randomVariance);
+        return _startTime + (level - 1) * _timeDecrease;
     }
 
     public List<Quest> GenerateQuests(int count, int baseLevel)

@@ -2,6 +2,7 @@ using Lean.Localization;
 using System;
 using UnityEngine;
 
+[Serializable]
 public class Quest
 {
     private QuestType _type;
@@ -23,6 +24,8 @@ public class Quest
 
     public bool IsTimeOut { get => _isTimeOut; }
     public int CurrentProgress { get => _currentProgress; }
+    public int TargetBlock { get=> _targetBlocks; }
+    public float TimeLimit { get => _timeLimit; }
     public float TimeRemaining { get => _timeRemaining; }
     public QuestType QuestType { get => _type; }
     public bool IsActive { get => _isActive; }
@@ -44,6 +47,7 @@ public class Quest
             _isTimeOut = false;
         }
     }
+
 
     // Добавить прогресс
     public void AddProgress(int amount)
@@ -84,6 +88,7 @@ public class Quest
     // Активировать квест
     public void Activate()
     {
+        _isCompleted = false;
         _isActive = true;
         _currentProgress = 0;
 

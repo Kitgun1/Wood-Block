@@ -1,6 +1,7 @@
 ﻿using Kimicu.YandexGames;
 using Lean.Localization;
 using System.Collections;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ namespace WoodBlock
 	public sealed class BootInstaller : MonoBehaviour
 	{
         [SerializeField] private string _nextScene;
+        [SerializeField] private MusciPlayer _musicPlayer;
 
 		private IEnumerator Start()
 		{
@@ -42,7 +44,10 @@ namespace WoodBlock
                 DataSaver.Save(SaveKeys.SelectedBackgroundId, "base_bg");
             if (!DataSaver.HasSaves(SaveKeys.SelectedSkinId))
                 DataSaver.Save(SaveKeys.SelectedSkinId, "base_skin");
+            if (!DataSaver.HasSaves(SaveKeys.BestScore))
+                DataSaver.Save(SaveKeys.BestScore, 0);
 
+            _musicPlayer.Initialize();
 
             PlayerInput.Initialize();
 			LoadPlayerData();

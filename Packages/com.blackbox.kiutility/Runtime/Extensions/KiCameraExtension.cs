@@ -35,9 +35,11 @@ namespace KimicuUtility
         /// <param name="screenPosition">The 2D screen position to convert.</param>
         /// <param name="z">The z-coordinate of the resulting 3D world position. Defaults to Camera.nearClipPlane.</param>
         /// <returns>The resulting 3D world position.</returns>
-        public static Vector3 GetWorldSpace(this Vector2 screenPosition, float z = -1) => z == -1
-            ? Camera.ScreenToWorldPoint(new Vector3(screenPosition.x, screenPosition.y, Camera.nearClipPlane))
-            : Camera.ScreenToWorldPoint(new Vector3(screenPosition.x, screenPosition.y, z));
+        public static Vector3 GetWorldSpace(this Vector2 screenPosition, float z = -1)
+        {
+            Camera camera = Camera.main;
+            return z == -1 ? camera.ScreenToWorldPoint(new Vector3(screenPosition.x, screenPosition.y, Camera.nearClipPlane)) : camera.ScreenToWorldPoint(new Vector3(screenPosition.x, screenPosition.y, z));
+        }
 
         /// <summary> Converts a screen position to a world space position using the camera. </summary>
         /// <param name="screenPosition">The screen position to convert.</param>

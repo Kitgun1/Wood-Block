@@ -25,7 +25,12 @@ public class LevelController : MonoBehaviour
     private void UpdateLevelsButtons()
     {
         int level = DataSaver.Load<int>(SaveKeys.CurrentLevel);
-        for(int i = 0; i < level; i++)
+
+        for (int i = 0; i < level; i++)
+        {
             _buttons[i].interactable = true;
+            if (i < level - 1)
+                _buttons[i].image.color = Color.green;
+        }
     }
 }

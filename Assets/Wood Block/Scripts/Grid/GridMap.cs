@@ -1,7 +1,7 @@
 ﻿using Kimicu.YandexGames;
 using Kimicu.YandexGames.Extension;
 using NaughtyAttributes;
-using NUnit.Framework.Internal;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -41,9 +41,7 @@ namespace WoodBlock
         [SerializeField] private Cell _cellTemplate;
         [SerializeField] private CellInBlock _cellInBlockPrefab;
         [SerializeField] private List<LevelMap> _mapsForMobile = new();
-        [SerializeField] private List<LevelMap> _mapsForPc = new();
 
-        [SerializeField] private bool _isQuestLevel = true;
         [SerializeField, Min(1)] private int _scoreMultipier = 10;
         [SerializeField] private QuestManager _questManager;
 
@@ -82,7 +80,7 @@ namespace WoodBlock
         {
             DisposeGrid();
 
-            LevelMap selectedMap = _isQuestLevel ? _mapsForMobile[Random.Range(0, _mapsForMobile.Count)] : _mapsForPc[Random.Range(0,_mapsForPc.Count)];
+            LevelMap selectedMap = _mapsForMobile[Random.Range(0, _mapsForMobile.Count)];
 
             int minX = selectedMap.GetPositions().Min(v => v.x);
             int maxX = selectedMap.GetPositions().Max(v => v.x);
@@ -205,7 +203,6 @@ namespace WoodBlock
             _history.Push(new() { created = created, removed = s_removed.ToArray(), points = score });
 
 
-
             if (IsMultiplierEnabled)
             {
                 Score.Instance.Value += score * _scoreMultipier;
@@ -214,7 +211,12 @@ namespace WoodBlock
                 {
                     var quests = _questManager.GetActiveQuests();
                     foreach (var quest in quests)
-                        quest.AddProgress(score * _scoreMultipier);
+                    quest.AddProgress(score * _scoreMultipier);
+                }
+                else
+                {
+                    if (DataSaver.Load<int>(SaveKeys.BestScore) < Score.Instance.Value)
+                        DataSaver.Save(SaveKeys.BestScore, Score.Instance.Value);
                 }
             }
             else
@@ -225,7 +227,12 @@ namespace WoodBlock
                 {
                     var quests = _questManager.GetActiveQuests();
                     foreach (var quest in quests)
-                        quest.AddProgress(score);
+                    quest.AddProgress(score);
+                }
+                else
+                {
+                    if (DataSaver.Load<int>(SaveKeys.BestScore) < Score.Instance.Value)
+                        DataSaver.Save(SaveKeys.BestScore, Score.Instance.Value);
                 }
             }
 
@@ -445,6 +452,7 @@ namespace WoodBlock
                     _grid[pos.x, pos.y].SetBlock(cellInBlock);
                     updatedCells.Add(pos);
                     SetSortingLayer(cellInBlock);
+                    SetSpriteSize(cellInBlock.GetComponent<SpriteRenderer>(), 102, 104);
                 }
 
                 CheckFills(updatedCells);
@@ -453,6 +461,26 @@ namespace WoodBlock
             }
 
             return false;
+        }
+        private void SetSpriteSize(SpriteRenderer spriteRenderer, int targetWidthPixels, int targetHeightPixels)
+        {
+            if (spriteRenderer.sprite == null) return;
+
+            float originalPixelWidth = spriteRenderer.sprite.rect.width;
+            float originalPixelHeight = spriteRenderer.sprite.rect.height;
+
+            float ppu = spriteRenderer.sprite.pixelsPerUnit;
+
+            float originalWorldWidth = originalPixelWidth / ppu;
+            float originalWorldHeight = originalPixelHeight / ppu;
+
+            float targetWorldWidth = targetWidthPixels / ppu;
+            float targetWorldHeight = targetHeightPixels / ppu;
+
+            float scaleX = targetWorldWidth / originalWorldWidth;
+            float scaleY = targetWorldHeight / originalWorldHeight;
+
+            spriteRenderer.transform.localScale = new Vector3(scaleX, scaleY, 1f);
         }
         private void SetSortingLayer(CellInBlock cell)
         {

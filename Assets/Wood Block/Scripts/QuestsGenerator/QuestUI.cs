@@ -1,3 +1,4 @@
+using Kimicu.YandexGames;
 using Lean.Localization;
 using System;
 using TMPro;
@@ -6,10 +7,10 @@ using UnityEngine;
 public class QuestUI : MonoBehaviour
 {
     [SerializeField] private TMP_Text _descriptionText;
-    [SerializeField] private TMP_Text _timerText; // Для timed квестов
 
     private Quest _currentQuest;
 
+    public QuestType Type => _currentQuest.QuestType;
 
     public void Setup(Quest quest)
     {
@@ -19,9 +20,6 @@ public class QuestUI : MonoBehaviour
         quest.OnProgressChanged += UpdateUI;
         quest.OnCompleted += OnQuestCompleted;
 
-        if (quest.QuestType == QuestType.CollectTimed)
-            _timerText.gameObject.SetActive(true);
-
         UpdateUI(quest);
     }
 
@@ -29,26 +27,28 @@ public class QuestUI : MonoBehaviour
     {
         if (_currentQuest != null && _currentQuest.IsActive && _currentQuest.QuestType == QuestType.CollectTimed)
         {
-            UpdateTimerUI(_currentQuest);
+            UpdateUI(_currentQuest);
         }
     }
 
     private void UpdateUI(Quest quest)
     {
         var serparatedString = quest.GetDescription();
+        bool isRussian = YandexGamesSdk.Environment.i18n.lang == "ru";
         switch (serparatedString.Item1)
         {
             case QuestType.CollectBlocks:
-                if (LeanLocalization.GetFirstCurrentLanguage() == "Russian")
+                if (isRussian)
                     _descriptionText.text = $"Собрать {quest.CurrentProgress}/{serparatedString.Item2} очков";
                 else
                     _descriptionText.text = $"Collect {quest.CurrentProgress}/{serparatedString.Item2} points";
                 break;
             case QuestType.CollectTimed:
-                if (LeanLocalization.GetFirstCurrentLanguage() == "Russian")
-                    _descriptionText.text =  $"Собрать {quest.CurrentProgress}/{serparatedString.Item2} очков за {serparatedString.Item3} сек";
+                TimeSpan time = TimeSpan.FromSeconds(quest.TimeRemaining);
+                if (isRussian)
+                    _descriptionText.text =  $"Собрать {quest.CurrentProgress}/{serparatedString.Item2} очков за {ValidateTime(serparatedString.Item3)}  {time.Minutes:00}:{time.Seconds:00}";
                 else
-                    _descriptionText.text = $"Collect {quest.CurrentProgress}/{serparatedString.Item2} points for {serparatedString.Item3} sec";
+                    _descriptionText.text = $"Collect {quest.CurrentProgress}/{serparatedString.Item2} points for {ValidateTime(serparatedString.Item3)} {time.Minutes:00}:{time.Seconds:00}";
                 break;
             default:
                 Debug.LogError("Unknown quest");
@@ -56,10 +56,14 @@ public class QuestUI : MonoBehaviour
         }
     }
 
-    private void UpdateTimerUI(Quest quest)
+    private string ValidateTime(float? time)
     {
-        TimeSpan time = TimeSpan.FromSeconds(quest.TimeRemaining);
-        _timerText.text = $"{time.Minutes:00}:{time.Seconds:00}";
+        if(time != null)
+        {
+            TimeSpan timeSpan = TimeSpan.FromSeconds((double)time);
+            return $"{timeSpan.Minutes:00}:{timeSpan.Seconds:00}";
+        }
+        return "";
     }
 
     private void OnQuestCompleted(Quest quest)

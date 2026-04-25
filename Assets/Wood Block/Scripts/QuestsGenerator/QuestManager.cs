@@ -10,7 +10,6 @@ public class QuestManager : MonoBehaviour
 {
     [SerializeField] private QuestGenerator _questGenerator;
     [SerializeField] private int _currentLevel = 1;
-    [SerializeField] private int _maxActiveQuests = 3;
 
     [Header("Префабы UI")]
     [SerializeField] private GameObject _questPrefab;
@@ -19,7 +18,7 @@ public class QuestManager : MonoBehaviour
     [SerializeField] private Transform _questContainer;
 
     [Header("Настройки авто-обновления")]
-    [SerializeField] private bool _autoGenerateOnStart = true;   
+    [SerializeField] private bool _autoGenerateOnStart = true;
     [SerializeField] private bool _clearContainerOnStart = true;
 
 
@@ -49,7 +48,6 @@ public class QuestManager : MonoBehaviour
 
         _levelText.text = _currentLevel.ToString();
     }
-
     private void Update()
     {
         // Обновляем таймеры активных квестов
@@ -66,7 +64,7 @@ public class QuestManager : MonoBehaviour
         if (_isAlreayComplete == false && _activeQuests.All(x => x.IsCompleted))
         {
             OnAllQuestCompleted?.Invoke();
-            _isAlreayComplete=true;
+            _isAlreayComplete = true;
         }
 
     }
@@ -81,9 +79,28 @@ public class QuestManager : MonoBehaviour
     }
     private void GenerateInitialQuests()
     {
-        for (int i = 0; i < _maxActiveQuests; i++)
+        if (DataSaver.HasSaves(SaveKeys.LevelQuests))
+        {
+            var questList = DataSaver.Load<List<QuestData>>(SaveKeys.LevelQuests);
+            if (questList.Count >= _currentLevel)
+            {
+                var questData = questList[_currentLevel - 1];
+                AddQuest(new Quest(questData.QuestType,questData.TargetBlock,_currentLevel,questData.TimeLimit));
+            }
+            else
+            {
+                AddNewQuest();
+                var newQuestData = new QuestData(_activeQuests[0].TargetBlock, _activeQuests[0].QuestType, _activeQuests[0].TimeLimit);
+                questList.Add(newQuestData);
+                DataSaver.Save(SaveKeys.LevelQuests, questList);
+            }
+        }
+        else
         {
             AddNewQuest();
+            var questData = new QuestData(_activeQuests[0].TargetBlock, _activeQuests[0].QuestType, _activeQuests[0].TimeLimit);
+            var newList = new List<QuestData>() { questData };
+            DataSaver.Save(SaveKeys.LevelQuests,newList);
         }
     }
 
@@ -91,9 +108,10 @@ public class QuestManager : MonoBehaviour
     {
         if (_questPrefab == null || _questContainer == null) return null;
 
+        GameObject questObject;
 
-        // Создаем префаб
-        GameObject questObject = Instantiate(_questPrefab, _questContainer);
+        questObject = Instantiate(_questPrefab, _questContainer);
+
         questObject.name = $"Quest_{_activeQuests.Count + 1}_{quest.QuestType}";
 
         // Получаем компонент QuestUI
@@ -112,12 +130,10 @@ public class QuestManager : MonoBehaviour
     }
 
     public void SetLevelNumber(int level) => _currentLevel = level;
-    public void SetMaxQuestCount(int count) => _maxActiveQuests = count;
 
     // Добавить новый квест
     public void AddNewQuest()
     {
-        if (_activeQuests.Count >= _maxActiveQuests) return;
 
         Quest newQuest = _questGenerator.GenerateQuest(_currentLevel);
         newQuest.Activate();
@@ -138,7 +154,6 @@ public class QuestManager : MonoBehaviour
     // Добавить конкретный квест
     public void AddQuest(Quest quest)
     {
-        if (_activeQuests.Count >= _maxActiveQuests) return;
 
         quest.Activate();
         _activeQuests.Add(quest);
