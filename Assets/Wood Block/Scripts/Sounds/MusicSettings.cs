@@ -1,4 +1,3 @@
-using Kimicu.YandexGames;
 using UnityEngine;
 public class MusicSettings : MonoBehaviour
 {

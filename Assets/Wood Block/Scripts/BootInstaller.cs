@@ -1,8 +1,5 @@
-﻿using Kimicu.YandexGames;
-using Lean.Localization;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using Playgama;
+using Playgama.Modules.Platform;
 using UnityEngine;
 
 namespace WoodBlock
@@ -12,29 +9,13 @@ namespace WoodBlock
         [SerializeField] private string _nextScene;
         [SerializeField] private MusciPlayer _musicPlayer;
 
-		private IEnumerator Start()
+		private async void Start()
 		{
-			yield return YandexGamesSdk.Initialize(); // Initialize SDK.
-            Debug.Log("YandexGamesSdk инициализирован.");
 
-            yield return Cloud.Initialize(); // Initialize data.
-            Debug.Log("Cloud инициализирован.");
+            await Billings.Initialize(true);
+            Debug.Log("Billings was initialized!");
 
-            yield return Billing.Initialize(Agava.YandexGames.ProductPictureSize.svg); // Initialize purchases.
-            Debug.Log("Billing инициализирован.");
-
-            yield return YandexCurrencyService.BillingYandexCurrencySetup();
-            Debug.Log("Yandex Currency инициализирован");
-
-            Advertisement.Initialize(); // Initialize advert.
-            Debug.Log("Advertisement инициализирован.");
-
-            WebApplication.Initialize();
-            Debug.Log("WebApplication инициализирован.");
-
-            YandexGamesSdk.GameReady();
-
-            if(!DataSaver.HasSaves(SaveKeys.MusicVolume))
+            if (!DataSaver.HasSaves(SaveKeys.MusicVolume))
                 DataSaver.Save(SaveKeys.MusicVolume,1f);
             if(!DataSaver.HasSaves(SaveKeys.SoundsVolume))
                 DataSaver.Save(SaveKeys.SoundsVolume, 1f);
@@ -50,11 +31,10 @@ namespace WoodBlock
             _musicPlayer.Initialize();
 
             PlayerInput.Initialize();
-			LoadPlayerData();
+
+            Bridge.platform.SendMessage(PlatformMessage.GameReady);
 
             SceneLoader.LoadScene(_nextScene);
 		}
-
-		public void LoadPlayerData() => PlayerBag.LoadOrCreate();
 	}
 }

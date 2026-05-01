@@ -1,5 +1,5 @@
-using Kimicu.YandexGames;
 using Lean.Localization;
+using Playgama;
 using System;
 using TMPro;
 using UnityEngine;
@@ -34,7 +34,7 @@ public class QuestUI : MonoBehaviour
     private void UpdateUI(Quest quest)
     {
         var serparatedString = quest.GetDescription();
-        bool isRussian = YandexGamesSdk.Environment.i18n.lang == "ru";
+        bool isRussian = Bridge.platform.language == "ru";
         switch (serparatedString.Item1)
         {
             case QuestType.CollectBlocks:

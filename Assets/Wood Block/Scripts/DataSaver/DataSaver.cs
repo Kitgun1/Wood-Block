@@ -1,9 +1,13 @@
-using Kimicu.YandexGames;
+using Newtonsoft.Json;
+using Playgama;
+using Playgama.Modules.Storage;
+using System;
 using System.Collections.Generic;
+using System.Transactions;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class DataSaver
+public static class DataSaver
 {
     public static readonly Dictionary<SaveKeys, string> SavesKeys = new()
     {
@@ -17,72 +21,42 @@ public class DataSaver
         {SaveKeys.BestScore, "bestScore" }
     };
 
-    public static bool HasSaves(SaveKeys type) => Cloud.HasKey(SavesKeys[type]);
-    public static void Save<T>(SaveKeys type, T value)
+    public static bool HasSaves(SaveKeys type)
     {
-        string key = SavesKeys[type];
-
-        if (Cloud.HasKey(key))
-        {
-            try
-            {
-                T existingValue = Cloud.GetValue<T>(key);
-
-                if (AreValuesEqual(existingValue, value))
-                {
-                    Debug.Log($"DataSaver: Значение для ключа '{key}' не изменилось. Сохранение пропущено.");
-                    return;
-                }
-            }
-            catch (System.Exception e)
-            {
-                Debug.LogWarning($"DataSaver: Ошибка при проверке данных для ключа '{key}': {e.Message}");
-            }
-        }
-        Cloud.SetValue(SavesKeys[type], value, true, onErrorCallback: Debug.LogError);
+        bool isSeccess = false;
+        Bridge.storage.Get(SavesKeys[type], (seccess, data) => { isSeccess = seccess; });
+        return isSeccess;
     }
-    public static T Load<T>(SaveKeys type)
+
+    public static void Save<T>(SaveKeys key, T data)
     {
-        if (HasSaves(type))
-            return Cloud.GetValue<T>(SavesKeys[type]);
+        string jsonData = JsonConvert.SerializeObject(data);
+        Debug.Log($"[Save] Сохраняю {key}: {jsonData}");
+
+        Bridge.storage.Set(SavesKeys[key], jsonData, storageType: StorageType.PlatformInternal);
+    }
+
+    public static T Load<T>(SaveKeys key, T defaultValue = default(T))
+    {
+        bool isSuccess = false;
+        string jsonData = "";
+        Bridge.storage.Get(SavesKeys[key], (success, data) => { isSuccess = success;jsonData = data; }, StorageType.PlatformInternal);
+        if (isSuccess)
+        {
+            if (string.IsNullOrEmpty(jsonData))
+            {
+                Debug.Log($"[Load] Данных по ключу {key} нет. Использую значение по умолчанию.");
+                return defaultValue;
+            }
+
+            T loadedData = JsonConvert.DeserializeObject<T>(jsonData);
+            Debug.Log($"[Load] Загружено {key}: {jsonData}");
+            return loadedData;
+        }
         else
-            return default(T);
-    }
-
-
-    private static bool AreValuesEqual<T>(T value1, T value2)
-    {
-        if (value1 == null && value2 == null) return true;
-        if (value1 == null || value2 == null) return false;
-
-        if (value1 is string str1 && value2 is string str2)
-            return str1 == str2;
-
-        if (value1 is float f1 && value2 is float f2)
-            return Mathf.Approximately(f1, f2);
-
-        if (value1 is double d1 && value2 is double d2)
-            return System.Math.Abs(d1 - d2) < 0.0001;
-
-        if (value1 is bool b1 && value2 is bool b2)
-            return b1 == b2;
-
-        if (value1 is System.Collections.IList list1 && value2 is System.Collections.IList list2)
-            return AreListsEqual(list1, list2);
-
-        return value1.Equals(value2);
-    }
-
-    private static bool AreListsEqual(System.Collections.IList list1, System.Collections.IList list2)
-    {
-        if (list1.Count != list2.Count) return false;
-
-        for (int i = 0; i < list1.Count; i++)
         {
-            if (!AreValuesEqual(list1[i], list2[i]))
-                return false;
+            Debug.Log("[LOAD] Не удалось загрузить сохранение");
+            return defaultValue;
         }
-
-        return true;
     }
 }

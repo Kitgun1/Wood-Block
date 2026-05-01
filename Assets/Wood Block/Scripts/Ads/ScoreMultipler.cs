@@ -1,4 +1,5 @@
-using Kimicu.YandexGames;
+using Playgama;
+using Playgama.Modules.Advertisement;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,9 +13,17 @@ public class ScoreMultipler : MonoBehaviour
 
     private void Start() => _scoreButton = GetComponent<Button>();
 
-    public void GetMultiplier() =>
-    Advertisement.ShowVideoAd(onRewardedCallback: StartGetAwardsCorutine, onErrorCallback: (string msg) => Debug.LogError(msg));
-    private void StartGetAwardsCorutine() => StartCoroutine(GetAwards());
+    public void GetMultiplier()
+    {
+        Bridge.advertisement.rewardedStateChanged += StartGetAwardsCorutine;
+        Bridge.advertisement.ShowRewarded();
+    }
+
+    private void StartGetAwardsCorutine(RewardedState state)
+    {
+        if (state == RewardedState.Rewarded)
+            StartCoroutine(GetAwards());
+    }
     private IEnumerator GetAwards()
     {
         _score.IsMultiplierEnabled = true;
@@ -22,5 +31,6 @@ public class ScoreMultipler : MonoBehaviour
         yield return new WaitForSeconds(30);
         _score.IsMultiplierEnabled = false;
         _scoreButton.interactable = true;
+        Bridge.advertisement.rewardedStateChanged -= StartGetAwardsCorutine;
     }
 }

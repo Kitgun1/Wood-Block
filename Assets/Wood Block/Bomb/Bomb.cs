@@ -1,5 +1,6 @@
-﻿using Kimicu.YandexGames;
-using KimicuUtility;
+﻿using KimicuUtility;
+using Playgama;
+using Playgama.Modules.Advertisement;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -46,14 +47,18 @@ namespace WoodBlock
             if (GridMap.Instance.PointerCell != null)
             {
                 target = GridMap.Instance.PointerCell;
-                Advertisement.ShowVideoAd
-                (
-                    onRewardedCallback: () =>
-                    {
-                        GridMap.Instance.UseBomb(target);
-                        TableGenerator.Instance.PushBombInHistory();
-                    }
-                );
+                Bridge.advertisement.rewardedStateChanged += GetAward;
+                Bridge.advertisement.ShowRewarded();
+            }
+        }
+
+        private void GetAward(RewardedState state)
+        {
+            if(state == RewardedState.Rewarded)
+            {
+                GridMap.Instance.UseBomb(target);
+                TableGenerator.Instance.PushBombInHistory();
+                Bridge.advertisement.rewardedStateChanged -= GetAward;
             }
         }
     }

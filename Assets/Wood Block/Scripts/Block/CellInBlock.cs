@@ -1,6 +1,4 @@
-﻿using Kimicu.YandexGames;
-using Kimicu.YandexGames.Extension;
-using System;
+﻿using System;
 using System.Collections;
 using System.Linq;
 using UnityEngine;

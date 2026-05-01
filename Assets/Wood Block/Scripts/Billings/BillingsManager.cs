@@ -1,4 +1,4 @@
-using Kimicu.YandexGames;
+using Playgama;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,27 +11,38 @@ public class BillingsManager : MonoBehaviour
 
     private void Start()
     {
-        if (Billing.Initialized)
+        if (Bridge.payments.isSupported)
         {
-            Billing.GetPurchasedProducts(response =>
-            {
-                Debug.Log("Получили купленные товары, за которые мы не выдали награду:");
-                var products = response.purchasedProducts.ToArray();
+            //Bridge.payments.GetPurchases(OnPurchasesGot);
+            //{
+            //    Debug.Log("Получили купленные товары, за которые мы не выдали награду:");
+            //    //var products = response.purchasedProducts.ToArray();
 
-                foreach (var product in products)
-                {
-                    Billing.ConsumeProduct(product.purchaseToken, onSuccessCallback: () => _shopSystem.ConsumeProduct(product.productID), onErrorCallback: (string error) =>
-                    {
-                        if (error.Contains("User canceled"))
-                            Debug.Log("User canceled purchase");
-                        else
-                            Debug.LogError(error);
-                    }
-                    );
-                }
-            });
+            ////    foreach (var product in products)
+            ////    {
+            ////        //Billing.ConsumeProduct(product.purchaseToken, onSuccessCallback: () => _shopSystem.ConsumeProduct(product.productID), onErrorCallback: (string error) =>
+            ////        //{
+            ////        //    if (error.Contains("User canceled"))
+            ////        //        Debug.Log("User canceled purchase");
+            ////        //    else
+            ////        //        Debug.LogError(error);
+            ////        //}
+            ////        //);
+            ////    }
+            ////});
         }
         else
             Debug.LogError("Billing isnot initialized");
+    }
+
+    private void OnPurchasesGot(bool success, List<Dictionary<string, string>> purchases)
+    {
+        if (success)
+        {
+            foreach (var purchase in purchases)
+            {
+
+            }
+        }
     }
 }

@@ -1,5 +1,6 @@
-using Kimicu.YandexGames;
 using KimicuUtility;
+using Playgama;
+using Playgama.Modules.Advertisement;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,26 +16,34 @@ public class SecondChane : MonoBehaviour
     [SerializeField] private List<KiCanvasGroup> _panelsWithCanvasGroupToClose;
     [SerializeField] private bool _isUseKiCanvasGroup = false;
 
-    public void GetSecondChance() =>
-        Advertisement.ShowVideoAd(onRewardedCallback: GetAwards, onErrorCallback: (string msg) => Debug.LogError(msg));
-    private void GetAwards()
+    public void GetSecondChance()
     {
-        _eventToDo?.Invoke();
-
-        _gridMap?.DestroyAllBlocks();
-        _gamePause.StopPause();
-
-        if (_isUseKiCanvasGroup)
+        Bridge.advertisement.rewardedStateChanged += GetAwards;
+        Bridge.advertisement.ShowRewarded();
+    }
+    private void GetAwards(RewardedState state)
+    {
+        if(state == RewardedState.Rewarded)
         {
-            foreach (var group in _panelsWithCanvasGroupToClose)
-                group.TurnOff();
-        }
-        else
-        {
-            foreach (GameObject go in _panelsToClose)
+            _eventToDo?.Invoke();
+
+            _gridMap?.DestroyAllBlocks();
+            _gamePause.StopPause();
+
+            if (_isUseKiCanvasGroup)
             {
-                go.SetActive(false);
+                foreach (var group in _panelsWithCanvasGroupToClose)
+                    group.TurnOff();
             }
+            else
+            {
+                foreach (GameObject go in _panelsToClose)
+                {
+                    go.SetActive(false);
+                }
+            }
+
+            Bridge.advertisement.rewardedStateChanged -= GetAwards;
         }
     }
 }

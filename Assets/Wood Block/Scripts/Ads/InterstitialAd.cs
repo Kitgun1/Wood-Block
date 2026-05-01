@@ -1,7 +1,7 @@
-using Kimicu.YandexGames;
+using Playgama;
 using UnityEngine;
 
 public class InterstitialAd : MonoBehaviour
 {
-    public void ShowAdd() => Advertisement.ShowInterstitialAd();
+    public void ShowAdd() => Bridge.advertisement.ShowInterstitial();
 }

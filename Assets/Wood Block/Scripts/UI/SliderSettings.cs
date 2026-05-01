@@ -1,4 +1,3 @@
-using Kimicu.YandexGames;
 using NaughtyAttributes;
 using System;
 using UnityEngine;

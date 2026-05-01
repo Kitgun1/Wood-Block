@@ -42,7 +42,7 @@ public class GUIDrawer : MonoBehaviour
         for (int i = 0; i < sortedList.Count; i++)
         {
             GameObject purchaseObj = Instantiate(_purchasePrefab, _rootSpawnPurchases);
-            purchaseObj.GetComponent<Purchase>().Initialize(sortedList[i].CatalogProduct.id,_shopSystem);
+            purchaseObj.GetComponent<Purchase>().Initialize(sortedList[i].CatalogProduct.ID,_shopSystem);
             _products.Add(purchaseObj);
         }
     }

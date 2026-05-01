@@ -1,0 +1,134 @@
+{
+    "$schema": "https://bridge.playgama.com/v1/stable/schema.json",
+    "advertisement": {
+        "interstitial": {
+            "preloadOnStart": true
+        },
+        "rewarded": {
+            "preloadOnStart": true
+        },
+        "useBuiltInErrorPopup": true,
+        "backfillId": ""
+    },
+    "device": {
+        "supportedOrientations": [
+            "landscape",
+            "portrait"
+        ]
+    },
+    "forciblySetPlatformId": "playgama",
+    "payments": [
+        {
+            "id": "base_bg",
+            "playgama": {
+                "amount": 4
+            }
+        },
+        {
+            "id": "base_skin",
+            "playgama": {
+                "amount": 4
+            }
+        },
+        {
+            "id": "beach_bg",
+            "playgama": {
+                "amount": 4
+            }
+        },
+        {
+            "id": "beach_skin",
+            "playgama": {
+                "amount": 4
+            }
+        },
+        {
+            "id": "space_bg",
+            "playgama": {
+                "amount": 4
+            }
+        },
+        {
+            "id": "space_skin",
+            "playgama": {
+                "amount": 4
+            }
+        },
+        {
+            "id": "sea_bg",
+            "playgama": {
+                "amount": 4
+            }
+        },
+        {
+            "id": "sea_skin",
+            "playgama": {
+                "amount": 4
+            }
+        },
+        {
+            "id": "wildwest_bg",
+            "playgama": {
+                "amount": 4
+            }
+        },
+        {
+            "id": "wildwest_skin",
+            "playgama": {
+                "amount": 4
+            }
+        },
+        {
+            "id": "nightmare_bg",
+            "playgama": {
+                "amount": 4
+            }
+        },
+        {
+            "id": "nightmare_skin",
+            "playgama": {
+                "amount": 4
+            }
+        },
+        {
+            "id": "north_bg",
+            "playgama": {
+                "amount": 4
+            }
+        },
+        {
+            "id": "north_skin",
+            "playgama": {
+                "amount": 4
+            }
+        },
+        {
+            "id": "industrial_bg",
+            "playgama": {
+                "amount": 4
+            }
+        },
+        {
+            "id": "industrial_skin",
+            "playgama": {
+                "amount": 4
+            }
+        },
+        {
+            "id": "sky_bg",
+            "playgama": {
+                "amount": 4
+            }
+        },
+        {
+            "id": "sky_skin",
+            "playgama": {
+                "amount": 4
+            }
+        }
+
+
+    ],
+    "leaderboards": [],
+    "sendAnalyticsEvents": true
+}

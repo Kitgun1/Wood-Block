@@ -1,4 +1,3 @@
-using Kimicu.YandexGames.Extension;
 using KimicuUtility;
 using Lean.Localization;
 using NaughtyAttributes.Test;
@@ -23,8 +22,8 @@ public class Purchase : MonoBehaviour
         {
             var item = _shopSystem.GetShopItemByID(_id);
 
-            _product.TitleText.text = item.CatalogProduct.title;
-            _product.PriceText.text = item.CatalogProduct.priceValue;
+            _product.TitleText.text = item.CatalogProduct.Name;
+            _product.PriceText.text = item.CatalogProduct.Price;
 
             if (item.IsBought)
             {
@@ -68,10 +67,9 @@ public class Purchase : MonoBehaviour
                 }
             }
 
-            if (item.WaysToUnlockSkin == WaysToUnlockSkin.BuyForCurrencie && _shopSystem.IsDefaultItem(item.CatalogProduct.id) != true)
+            if (item.WaysToUnlockSkin == WaysToUnlockSkin.BuyForCurrencie && _shopSystem.IsDefaultItem(item.CatalogProduct.ID) != true)
             {
-                _product.CurrencySprite.sprite = YandexCurrencyService.Currencies[0].sprite;
-                _product.PriceText.text = item.CatalogProduct.priceValue;
+                _product.PriceText.text = item.CatalogProduct.Price;
             }
             else
             {
@@ -79,7 +77,7 @@ public class Purchase : MonoBehaviour
                 _product.PriceText.text = "";
             }
 
-            StartCoroutine(DownloadImage(item.CatalogProduct.imageURI, _product.Image));
+            _product.Image.sprite = item.CatalogProduct.Image;
         }
     }
     public void Initialize(string id, ShopSystem system)
@@ -88,18 +86,9 @@ public class Purchase : MonoBehaviour
         _shopSystem = system;
 
         var item = _shopSystem.GetShopItemByID(_id);
-        _product.Button.AddListener(() => _shopSystem.BuyItem(item.CatalogProduct.id));
-        //_product.CurrencySprite.sprite = YandexCurrencyService.Currencies[0].sprite;
+        _product.Button.AddListener(() => _shopSystem.BuyItem(item.CatalogProduct.ID));
     }
-    private IEnumerator DownloadImage(string url, Image targetImage)
-    {
-        yield return PictureExtension.GetPicture(url, texture =>
-        {
-            Rect rect = new Rect(0, 0, texture.width, texture.height);
-            Sprite sprite = Sprite.Create(texture, rect, new Vector2(0.5f, 0.5f));
-            targetImage.sprite = sprite;
-        });
-    }
+
 }
 
 [Serializable]

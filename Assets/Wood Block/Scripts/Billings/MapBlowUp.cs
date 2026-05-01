@@ -1,8 +1,5 @@
-using Agava.YandexGames;
-using Kimicu.YandexGames;
 using UnityEngine;
 using WoodBlock;
-using Billing = Kimicu.YandexGames.Billing;
 
 public class MapBlowUp : MonoBehaviour
 {
@@ -10,13 +7,10 @@ public class MapBlowUp : MonoBehaviour
 
     public void BlowUp(string itemID)
     {
-        if (Billing.Initialized)
-            Billing.PurchaseProduct(itemID, ConsumePayment, Debug.LogError);
-        else
-            Debug.LogError("Billing not initialized");
+        Billings.PurchaseProduct(itemID, ConsumePayment, Debug.LogError);
     }
-    private void ConsumePayment(PurchaseProductResponse response)
+    private void ConsumePayment(string id)
     {
-        Billing.ConsumeProduct(response.purchaseData.purchaseToken, () => _gridMap?.DestroyAllBlocks());
+        Billings.ConsumeProduct(id,() => _gridMap?.DestroyAllBlocks());
     }
 }

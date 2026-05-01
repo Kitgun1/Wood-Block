@@ -1,12 +1,9 @@
-using Agava.YandexGames;
 using AYellowpaper.SerializedCollections;
-using Kimicu.YandexGames;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Schema;
 using UnityEngine;
-using Billing = Kimicu.YandexGames.Billing;
 
 [RequireComponent(typeof(GUIDrawer))]
 public class ShopSystem : MonoBehaviour
@@ -57,7 +54,7 @@ public class ShopSystem : MonoBehaviour
             switch (shopItem.WaysToUnlockSkin)
             {
                 case WaysToUnlockSkin.BuyForCurrencie:
-                    Billing.PurchaseProduct(itemID, OnPurchaseSuccess, OnPurchaseError);
+                    Billings.PurchaseProduct(itemID, OnPurchaseSuccess, OnPurchaseError);
                     break;
                 case WaysToUnlockSkin.BuyForAdd:
                     GetSkinForAdd(shopItem);
@@ -69,16 +66,16 @@ public class ShopSystem : MonoBehaviour
     }
     private void GetSkinForAdd(ShopItem shopItem)
     {
-        Advertisement.ShowVideoAd(onRewardedCallback: () =>
+        Advertisement.ShowAwardedAdd(() =>
         {
             shopItem.IsBought = true;
             DataSaver.Save(SaveKeys.Products, _items);
-            OnProductConsumed(shopItem.CatalogProduct.id);
+            OnProductConsumed(shopItem.CatalogProduct.ID);
         });
     }
 
     public ShopItem GetShopItemByID(string itemID)
-        => _items.FirstOrDefault(x => x.CatalogProduct.id == itemID);
+        => _items.FirstOrDefault(x => x.CatalogProduct.ID == itemID);
 
     public void ConsumeProduct(string productID)
     {
@@ -128,9 +125,9 @@ public class ShopSystem : MonoBehaviour
         OnShopUpdated?.Invoke(_items);
     }
 
-    private void OnPurchaseSuccess(PurchaseProductResponse response)
+    private void OnPurchaseSuccess(string response)
     {
-        string productID = response.purchaseData.productID;
+        string productID = response;
         var shopItem = GetShopItemByID(productID);
 
         if (shopItem == null)
@@ -142,7 +139,7 @@ public class ShopSystem : MonoBehaviour
         shopItem.IsBought = true;
         DataSaver.Save(SaveKeys.Products, _items);
 
-        Billing.ConsumeProduct(response.purchaseData.purchaseToken,
+        Billings.ConsumeProduct(productID,
             () => OnProductConsumed(productID),
             error => Debug.LogError($"Consume error: {error}"));
     }
@@ -176,7 +173,7 @@ public class ShopSystem : MonoBehaviour
             DataSaver.Save(SaveKeys.Products, _items);
 
             foreach (ShopItem item in resutlItems)
-                OnProductConsumed(item.CatalogProduct.id);
+                OnProductConsumed(item.CatalogProduct.ID);
         }
     }
 
@@ -185,7 +182,7 @@ public class ShopSystem : MonoBehaviour
 
     private void Initialize()
     {
-        if (!Billing.Initialized)
+        if (!Billings.IsInitialized)
         {
             Debug.LogError("Billing not initialized");
             return;
@@ -254,12 +251,12 @@ public class ShopSystem : MonoBehaviour
     {
         foreach (var item in _items)
         {
-            if (_defaultItemsIds.Contains(item.CatalogProduct.id))
+            if (_defaultItemsIds.Contains(item.CatalogProduct.ID))
             {
                 item.IsBought = true;
 
                 if (_debugMode)
-                    Debug.Log($"Default item marked as bought: {item.CatalogProduct.id}");
+                    Debug.Log($"Default item marked as bought: {item.CatalogProduct.ID}");
             }
         }
     }
@@ -300,27 +297,27 @@ public class ShopSystem : MonoBehaviour
     {
         foreach(var item in _items)
         {
-            var way = GetWayToUnlockSkin(item.CatalogProduct.id);
+            var way = GetWayToUnlockSkin(item.CatalogProduct.ID);
             item.WaysToUnlockSkin = way;
-            item.LevelToGetSkin = _skinIdThatGetForLevels.GetValueOrDefault(item.CatalogProduct.id);
+            item.LevelToGetSkin = _skinIdThatGetForLevels.GetValueOrDefault(item.CatalogProduct.ID);
         }
         DataSaver.Save(SaveKeys.Products, _items);
     }
     private void SyncWithCurrentCatalog()
     {
-        var existingIds = _items.Select(x => x.CatalogProduct.id).ToHashSet();
-        var newProducts = Billing.CatalogProducts.Where(x => !existingIds.Contains(x.id));
+        var existingIds = _items.Select(x => x.CatalogProduct.ID).ToHashSet();
+        var newProducts = Billings.CatalogProducts.Where(x => !existingIds.Contains(x.ID));
 
         foreach (var product in newProducts)
         {
-            var productType = GetProductType(product.id);
-            WaysToUnlockSkin way = GetWayToUnlockSkin(product.id);
-            var isDefault = _defaultItemsIds.Contains(product.id);
+            var productType = GetProductType(product.ID);
+            WaysToUnlockSkin way = GetWayToUnlockSkin(product.ID);
+            var isDefault = _defaultItemsIds.Contains(product.ID);
 
-            _items.Add(new ShopItem(isDefault, product, productType, way, _skinIdThatGetForLevels.GetValueOrDefault(product.id)));
+            _items.Add(new ShopItem(isDefault, product, productType, way, _skinIdThatGetForLevels.GetValueOrDefault(product.ID)));
 
             if (_debugMode && isDefault)
-                Debug.Log($"Added new default item from catalog: {product.id}");
+                Debug.Log($"Added new default item from catalog: {product.ID}");
         }
 
         if (newProducts.Any())
@@ -332,7 +329,7 @@ public class ShopSystem : MonoBehaviour
     private void CreateItemsFromCatalog()
     {
         _items.Clear();
-        var Items = Billing.CatalogProducts.ToList();
+        var Items = Billings.CatalogProducts.ToList();
         AddItemsToList(Items);
     }
 
@@ -340,17 +337,17 @@ public class ShopSystem : MonoBehaviour
     {
         foreach (var product in catalogProduts)
         {
-            ProductType productType = GetProductType(product.id);
-            WaysToUnlockSkin way = GetWayToUnlockSkin(product.id);
-            bool isDefault = _defaultItemsIds.Contains(product.id);
+            ProductType productType = GetProductType(product.ID);
+            WaysToUnlockSkin way = GetWayToUnlockSkin(product.ID);
+            bool isDefault = _defaultItemsIds.Contains(product.ID);
 
             if (productType != ProductType.None)
             {
-                _items.Add(new ShopItem(isDefault, product, productType, way, _skinIdThatGetForLevels.GetValueOrDefault(product.id)));
+                _items.Add(new ShopItem(isDefault, product, productType, way, _skinIdThatGetForLevels.GetValueOrDefault(product.ID)));
             }
 
             if (_debugMode)
-                Debug.Log($"Created item: {product.id}, Type: {productType}, IsDefault: {isDefault}, Way: {way}");
+                Debug.Log($"Created item: {product.ID}, Type: {productType}, IsDefault: {isDefault}, Way: {way}");
         }
     }
 
@@ -516,7 +513,7 @@ public class ShopSystem : MonoBehaviour
         foreach (var item in _items)
         {
             // Не сбрасываем дефолтные предметы
-            if (!_defaultItemsIds.Contains(item.CatalogProduct.id))
+            if (!_defaultItemsIds.Contains(item.CatalogProduct.ID))
             {
                 item.IsBought = false;
             }
@@ -534,10 +531,10 @@ public class ShopSystem : MonoBehaviour
 [Serializable]
 public class ShopItem
 {
-    [SerializeField]private bool _isBought;
-    [SerializeField] private CatalogProduct _catalogProduct;
-    [SerializeField] private ProductType _productType;
-    [SerializeField] private WaysToUnlockSkin _waysToUnlockSkin;
+    private bool _isBought;
+    private CatalogProduct _catalogProduct;
+    private ProductType _productType;
+    private WaysToUnlockSkin _waysToUnlockSkin;
     private int _levelToGetSkin = 0;
 
     public bool IsBought

@@ -1,5 +1,3 @@
-using Kimicu.YandexGames;
-using Unity.VectorGraphics;
 using UnityEngine;
 using WoodBlock;
 

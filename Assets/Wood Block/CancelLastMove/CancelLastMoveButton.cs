@@ -1,4 +1,5 @@
-using Kimicu.YandexGames;
+using Playgama;
+using Playgama.Modules.Advertisement;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,13 +20,20 @@ namespace WoodBlock
         public void Cancel()
         {
             if (GridMap.Instance.CanUndo())
-                Advertisement.ShowVideoAd(onRewardedCallback: Undo);
+            {
+                Bridge.advertisement.rewardedStateChanged += Undo;
+                Bridge.advertisement.ShowRewarded();
+            }
         }
 
-        private static void Undo()
+        private static void Undo(RewardedState state)
         {
-            GridMap.Instance.Undo();
-            TableGenerator.Instance.Undo();
+            if(state == RewardedState.Rewarded)
+            {
+                GridMap.Instance.Undo();
+                TableGenerator.Instance.Undo();
+                Bridge.advertisement.rewardedStateChanged -= Undo;
+            }
         }
     }
 }
