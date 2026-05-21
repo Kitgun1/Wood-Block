@@ -39,4 +39,14 @@
     "priceCurrencyPicture": "//yastatic.net/s3/games-static/static-data/images/payments/sdk/rub/currency-icon-m.svg",
     "title": "Скин камня"
   },
+  {
+    "description": "Скин камня",
+    "id": "mapBlowUp",
+    "imageURI": "https://avatars.mds.yandex.net/get-games/17955142/2a0000019c1b204ff76415a1929c4d5350c4//default87x87",
+    "price": "25 YAN",
+    "priceCurrencyCode": "YAN",
+    "priceValue": "25",
+    "priceCurrencyPicture": "//yastatic.net/s3/games-static/static-data/images/payments/sdk/rub/currency-icon-m.svg",
+    "title": "Скин камня"
+  },
 ]

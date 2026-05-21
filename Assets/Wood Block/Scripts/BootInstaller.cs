@@ -30,9 +30,8 @@ namespace WoodBlock
             Debug.Log("Advertisement инициализирован.");
 
             WebApplication.Initialize();
-            Debug.Log("WebApplication инициализирован.");
 
-            YandexGamesSdk.GameReady();
+            Debug.Log("WebApplication инициализирован.");
 
             if(!DataSaver.HasSaves(SaveKeys.MusicVolume))
                 DataSaver.Save(SaveKeys.MusicVolume,1f);
@@ -46,6 +45,9 @@ namespace WoodBlock
                 DataSaver.Save(SaveKeys.SelectedSkinId, "base_skin");
             if (!DataSaver.HasSaves(SaveKeys.BestScore))
                 DataSaver.Save(SaveKeys.BestScore, 0);
+
+            YandexGamesSdk.GameReady();
+
 
             _musicPlayer.Initialize();
 

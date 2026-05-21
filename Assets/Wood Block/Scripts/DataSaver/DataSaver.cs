@@ -1,7 +1,6 @@
 using Kimicu.YandexGames;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class DataSaver
 {
@@ -20,25 +19,25 @@ public class DataSaver
     public static bool HasSaves(SaveKeys type) => Cloud.HasKey(SavesKeys[type]);
     public static void Save<T>(SaveKeys type, T value)
     {
-        string key = SavesKeys[type];
+        //string key = SavesKeys[type];
 
-        if (Cloud.HasKey(key))
-        {
-            try
-            {
-                T existingValue = Cloud.GetValue<T>(key);
+        //if (Cloud.HasKey(key))
+        //{
+        //    try
+        //    {
+        //        T existingValue = Cloud.GetValue<T>(key);
 
-                if (AreValuesEqual(existingValue, value))
-                {
-                    Debug.Log($"DataSaver: Значение для ключа '{key}' не изменилось. Сохранение пропущено.");
-                    return;
-                }
-            }
-            catch (System.Exception e)
-            {
-                Debug.LogWarning($"DataSaver: Ошибка при проверке данных для ключа '{key}': {e.Message}");
-            }
-        }
+        //        if (AreValuesEqual(existingValue, value))
+        //        {
+        //            Debug.Log($"DataSaver: Значение для ключа '{key}' не изменилось. Сохранение пропущено.");
+        //            return;
+        //        }
+        //    }
+        //    catch (System.Exception e)
+        //    {
+        //        Debug.LogWarning($"DataSaver: Ошибка при проверке данных для ключа '{key}': {e.Message}");
+        //    }
+        //}
         Cloud.SetValue(SavesKeys[type], value, true, onErrorCallback: Debug.LogError);
     }
     public static T Load<T>(SaveKeys type)
