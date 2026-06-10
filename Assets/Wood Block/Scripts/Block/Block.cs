@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using DG.Tweening;
 using KimicuUtility;
@@ -69,10 +69,22 @@ namespace WoodBlock
 
         private void OnDestroy()
         {
-            foreach ((Vector2 _, CellInBlock block) in _blocks)
+            if (_blocks != null)
             {
-                block.OnClick -= OnClick;
+                foreach ((Vector2 _, CellInBlock block) in _blocks)
+                {
+                    if (block != null)
+                        block.OnClick -= OnClick;
+                }
             }
+            PlayerInput.PlayerActions.MousePosition.performed -= MousePositionChanged;
+            PlayerInput.PlayerActions.Touch.canceled -= TouchCanceled;
+        }
+
+        private void OnDisable()
+        {
+            PlayerInput.PlayerActions.MousePosition.performed -= MousePositionChanged;
+            PlayerInput.PlayerActions.Touch.canceled -= TouchCanceled;
         }
 
         private void OnClick(CellInBlock cell)
@@ -88,7 +100,21 @@ namespace WoodBlock
 
         private void MousePositionChanged(InputAction.CallbackContext ctx)
         {
-            _targetPosition = ctx.ReadValue<Vector2>().GetWorldSpace(0.5f) - _offsetPosition;
+            Camera cam = Camera.main;
+            if (cam == null) return;
+
+            try
+            {
+                Vector2 screenPos = ctx.ReadValue<Vector2>();
+                // Convert screen position to world position using the active main camera
+                Vector3 worldPos = cam.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, cam.nearClipPlane + 0.5f));
+                _targetPosition = worldPos - _offsetPosition;
+            }
+            catch (Exception ex)
+            {
+                // Gracefully catch any destroyed camera exceptions during scene transitions
+                Debug.LogWarning($"[Block] Camera main error in MousePositionChanged: {ex.Message}");
+            }
         }
 
         private void TouchCanceled(InputAction.CallbackContext ctx)

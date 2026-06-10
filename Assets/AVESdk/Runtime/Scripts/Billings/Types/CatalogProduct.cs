@@ -8,8 +8,10 @@ using UnityEngine;
 public class CatalogProduct
 {
     public string ID { get; private set; }
-    public string Price { get; private set; }
+    public string Price { get; set; }
     public string Name { get; private set; }
+
+    [Newtonsoft.Json.JsonIgnore]
     public Sprite Image { get; private set; }
 
     public CatalogProduct(string id, string price, string name, Sprite image)

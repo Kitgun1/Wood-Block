@@ -1,62 +1,150 @@
+using System;
 using Newtonsoft.Json;
 using Playgama;
 using Playgama.Modules.Storage;
-using System;
+using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
-using System.Transactions;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 using UnityEngine;
-using UnityEngine.InputSystem;
+
 
 public static class DataSaver
 {
-    public static readonly Dictionary<SaveKeys, string> SavesKeys = new()
+    public static readonly Dictionary<SaveKeys, IDefualtSave> SavesKeys = new()
     {
-        {SaveKeys.Products,"items" },
-        {SaveKeys.SelectedBackgroundId,"selectedBGId" },
-        {SaveKeys.SelectedSkinId,"selectedSkinId" },
-        {SaveKeys.MusicVolume,"musicVolume" },
-        {SaveKeys.SoundsVolume,"soundsVolume" },
-        {SaveKeys.CurrentLevel, "levels" },
-        {SaveKeys.LevelQuests, "levelQuests" },
-        {SaveKeys.BestScore, "bestScore" }
+        {SaveKeys.Products, new DefualtSave<List<string>>("items", new List<string>()) },
+        {SaveKeys.SelectedBackgroundId, new DefualtSave<string>("selectedBGId", "base_bg") },
+        {SaveKeys.SelectedSkinId, new DefualtSave<string>("selectedSkinId", "base_skin") },
+        {SaveKeys.MusicVolume, new DefualtSave<float>("musicVolume", 1f) },
+        {SaveKeys.SoundsVolume, new DefualtSave<float>("soundsVolume", 1f) },
+        {SaveKeys.CurrentLevel, new DefualtSave<int>("levels", 1) },
+        {SaveKeys.LevelQuests, new DefualtSave<List<QuestData>>("levelQuests", new List<QuestData>()) },
+        {SaveKeys.BestScore, new DefualtSave<int>("bestScore", 0) }
     };
 
-    public static bool HasSaves(SaveKeys type)
-    {
-        bool isSeccess = false;
-        Bridge.storage.Get(SavesKeys[type], (seccess, data) => { isSeccess = seccess; });
-        return isSeccess;
-    }
+    private static bool _isInitialized;
 
+    public static async UniTask Initialize()
+    {
+        foreach(var value in SavesKeys)
+        {
+            if (!PlayerPrefs.HasKey(value.Value.Key))
+            {
+                string json = JsonConvert.SerializeObject(value.Value.DefualtSavesValue);
+                PlayerPrefs.SetString(value.Value.Key, json);
+                PlayerPrefs.Save();
+            }
+        }
+
+        _isInitialized = true;
+    }
     public static void Save<T>(SaveKeys key, T data)
     {
-        string jsonData = JsonConvert.SerializeObject(data);
-        Debug.Log($"[Save] Сохраняю {key}: {jsonData}");
-
-        Bridge.storage.Set(SavesKeys[key], jsonData, storageType: StorageType.PlatformInternal);
+        if (_isInitialized)
+        {
+            string json = JsonConvert.SerializeObject(data);
+            PlayerPrefs.SetString(SavesKeys[key].Key, json);
+            PlayerPrefs.Save();
+            
+          
+                try 
+                {
+#if UNITY_WEBGL
+                    Bridge.storage?.Set(SavesKeys[key].Key, json);
+#else
+                    // Playgama Storage is skipped locally.
+#endif
+                } 
+                catch(Exception e)
+                {
+                    Debug.LogWarning("Playgama storage set error: " + e.Message);
+                }
+            
+        }
+        else
+            Debug.LogError("DataSaver isnt initilized!");
     }
 
-    public static T Load<T>(SaveKeys key, T defaultValue = default(T))
+    public static T Load<T>(SaveKeys key)
     {
-        bool isSuccess = false;
-        string jsonData = "";
-        Bridge.storage.Get(SavesKeys[key], (success, data) => { isSuccess = success;jsonData = data; }, StorageType.PlatformInternal);
-        if (isSuccess)
+        if (_isInitialized)
         {
-            if (string.IsNullOrEmpty(jsonData))
-            {
-                Debug.Log($"[Load] Данных по ключу {key} нет. Использую значение по умолчанию.");
-                return defaultValue;
-            }
+            string json = PlayerPrefs.GetString(SavesKeys[key].Key);
 
-            T loadedData = JsonConvert.DeserializeObject<T>(jsonData);
-            Debug.Log($"[Load] Загружено {key}: {jsonData}");
-            return loadedData;
+            if (string.IsNullOrEmpty(json))
+                return default(T);
+
+            return JsonConvert.DeserializeObject<T>(json);
         }
         else
         {
-            Debug.Log("[LOAD] Не удалось загрузить сохранение");
-            return defaultValue;
+            Debug.LogError("DataSaver isnt initilized!");
+            return default(T);
         }
+    }
+
+    public static bool HasSaves(SaveKeys key)
+    {
+        if (_isInitialized)
+            return PlayerPrefs.HasKey(SavesKeys[key].Key);
+        else
+        {
+            Debug.LogError("DataSaver isnt initilized!");
+            return false;
+        }
+    }
+
+    public static void Clear()
+    {
+        try
+        {
+
+            foreach (var pair in SavesKeys)
+            {
+                Bridge.storage.Set(pair.Value.Key, "", storageType: StorageType.PlatformInternal);
+                PlayerPrefs.DeleteKey(pair.Value.Key);
+            }
+            Debug.Log("[DataSaver] Все сохранения были очищены через PlaygamaBridge!");
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"[DataSaver] Не удалось очистить сохранения: {ex.Message}");
+        }
+    }
+    
+    
+#if UNITY_EDITOR
+     [MenuItem("Tools/Clear All Saves")]
+    public static void ClearAllSaves()
+    {
+        if (!EditorApplication.isPlaying)
+        {
+            EditorUtility.DisplayDialog("Clear Saves", "Пожалуйста, запустите игру (Play Mode) перед очисткой сохранений, чтобы PlaygamaBridge SDK был активен.", "OK");
+            return;
+        }
+        Clear();
+        EditorUtility.DisplayDialog("Clear Saves", "Все сохранения были успешно сброшены через PlaygamaBridge!", "OK");
+    }
+#endif
+}
+
+public interface IDefualtSave
+{
+    public string Key { get; }
+    public object DefualtSavesValue { get; }
+}
+public class DefualtSave<T>:IDefualtSave
+{
+    public string Key { get; private set; }
+    private T DefualtValue { get; set; }
+
+    public object DefualtSavesValue => DefualtValue;
+
+    public DefualtSave(string key, T value)
+    {
+        Key = key;
+        DefualtValue = value;
     }
 }

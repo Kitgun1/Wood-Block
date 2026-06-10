@@ -15,18 +15,46 @@ public class SkinsData : ScriptableObject
 
     public SkinBackground GetBackgroundSkin(string name)
     {
-        if (_backgroundSkins.TryGetValue(name, out var skin))
+        if (string.IsNullOrEmpty(name))
+        {
+            name = "base_bg";
+        }
+
+        if (_backgroundSkins.TryGetValue(name, out var skin) && skin != null)
             return skin;
-        else
-            return null;
+
+        if (name != "base_bg" && _backgroundSkins.TryGetValue("base_bg", out var defaultSkin) && defaultSkin != null)
+            return defaultSkin;
+
+        foreach (var pair in _backgroundSkins)
+        {
+            if (pair.Value != null)
+                return pair.Value;
+        }
+
+        return null;
     }
 
     public Skin GetSkin(string name)
     {
-        if (_skins.TryGetValue(name, out var skin))
+        if (string.IsNullOrEmpty(name))
+        {
+            name = "base_skin";
+        }
+
+        if (_skins.TryGetValue(name, out var skin) && skin != null)
             return skin;
-        else
-            return null;
+
+        if (name != "base_skin" && _skins.TryGetValue("base_skin", out var defaultSkin) && defaultSkin != null)
+            return defaultSkin;
+
+        foreach (var pair in _skins)
+        {
+            if (pair.Value != null)
+                return pair.Value;
+        }
+
+        return null;
     }
 }
 [Serializable]

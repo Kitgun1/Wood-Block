@@ -35,12 +35,26 @@ public class SkinAplayer : MonoBehaviour
                 if (DataSaver.HasSaves(SaveKeys.SelectedBackgroundId))
                 {
                     SkinBackground skin = _skinsData.GetBackgroundSkin(DataSaver.Load<string>(SaveKeys.SelectedBackgroundId));
-                    ShoesSkin(skin);
+                    if (skin != null)
+                    {
+                        ShoesSkin(skin);
+                    }
+                    else
+                    {
+                        Debug.LogError($"SkinBackground for SelectedBackgroundId '{DataSaver.Load<string>(SaveKeys.SelectedBackgroundId)}' is null.");
+                    }
                 }
                 else
                 {
                     SkinBackground skin = _skinsData.GetBackgroundSkin("base_bg");
-                    ShoesSkin(skin);
+                    if (skin != null)
+                    {
+                        ShoesSkin(skin);
+                    }
+                    else
+                    {
+                        Debug.LogError("Default SkinBackground 'base_bg' is null.");
+                    }
                 }
                 break;
         }
@@ -49,6 +63,11 @@ public class SkinAplayer : MonoBehaviour
 
     private void ShoesSkin(SkinBackground skin)
     {
+        if (skin == null)
+        {
+            Debug.LogError("SkinBackground is null! Cannot apply skin.");
+            return;
+        }
         switch (_type)
         {
             case SkinType.Background:

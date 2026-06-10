@@ -5,7 +5,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 
 public static class Billings
 {
@@ -22,28 +21,79 @@ public static class Billings
 
         try
         {
-            _settings = await Addressables.LoadAssetAsync<BillingsSettings>("BillingsSettings");
+            _settings = Resources.Load<BillingsSettings>("BillingSettings");
         }
         catch(Exception ex)
         {
             Debug.LogException(ex);
         }
 
-        _settings.GetAllCatalog((dictionary) => { InitializeCatlogProducts(dictionary, Debug.LogError);}, Debug.LogError);
+        if (_settings == null)
+        {
+            Debug.LogError("[Billings] BillingsSettings failed to load! Skipping catalog initialization to prevent hang.");
+            _products = new List<CatalogProduct>();
+            CatalogProducts = _products;
+            IsInitialized = true;
+            return;
+        }
 
-        IsInitialized = true;
+        var utcs = new UniTaskCompletionSource();
+
+        _settings.GetAllCatalog(
+            (dictionary) => 
+            { 
+                InitializeCatlogProducts(dictionary, 
+                    () => 
+                    {
+                        IsInitialized = true;
+                        utcs.TrySetResult();
+                    }, 
+                    (error) => 
+                    {
+                        Debug.LogError(error);
+                        utcs.TrySetResult();
+                    });
+            }, 
+            (error) => 
+            {
+                Debug.LogError(error);
+                utcs.TrySetResult();
+            }
+        );
+
+        // Enforce a timeout of 3000ms to prevent game boot hanging if the platform SDK fails to respond
+        var timeoutTask = UniTask.Delay(3000);
+        var completedTaskIndex = await UniTask.WhenAny(utcs.Task, timeoutTask);
+
+        if (completedTaskIndex == 1)
+        {
+            Debug.LogWarning("[Billings] Initialization timed out! Falling back to local settings.");
+            _settings.GetAllCatalog(
+                (dictionary) => InitializeFromLocalSettings(dictionary),
+                (error) => { _products = new List<CatalogProduct>(); CatalogProducts = _products; }
+            );
+            IsInitialized = true;
+        }
     }
     public static void PurchaseProduct(string id,Action<string> onSeccessCallback,Action<string> onErrorCallback = null)
     {
         if (IsInitialized)
         {
-            bool success = false;
-            Bridge.payments.Purchase(id,(isSuccess, result) => { success = isSuccess; });
-
-            if (success)
-                onSeccessCallback?.Invoke(id);
+            if (Bridge.payments.isSupported)
+            {
+                Bridge.payments.Purchase(id, (isSuccess, result) => 
+                {
+                    if (isSuccess)
+                        onSeccessCallback?.Invoke(id);
+                    else
+                        onErrorCallback?.Invoke("The purchase was unsuccessful");
+                });
+            }
             else
-                onErrorCallback?.Invoke("The purchase was unsuccessful");
+            {
+                Debug.Log($"[Mock/Editor] Purchase product succeeded for ID: {id}");
+                onSeccessCallback?.Invoke(id);
+            }
         }
         else
         {
@@ -54,13 +104,21 @@ public static class Billings
     {
         if (IsInitialized)
         {
-            bool success = false;
-            Bridge.payments.ConsumePurchase(id, (isSuccess, result) => { success = isSuccess; });
-
-            if (success)
-                onSeccessCallback?.Invoke();
+            if (Bridge.payments.isSupported)
+            {
+                Bridge.payments.ConsumePurchase(id, (isSuccess, result) => 
+                {
+                    if (isSuccess)
+                        onSeccessCallback?.Invoke();
+                    else
+                        onErrorCallback?.Invoke("The purchase confirmation was unsuccessful");
+                });
+            }
             else
-                onErrorCallback?.Invoke("The purchase confirmation was unsuccessful");
+            {
+                Debug.Log($"[Mock/Editor] Consume product succeeded for ID: {id}");
+                onSeccessCallback?.Invoke();
+            }
         }
         else
         {
@@ -68,41 +126,87 @@ public static class Billings
         }
     }
 
-    private static void InitializeCatlogProducts(SerializedDictionary<string,ProductSetting> products,Action<string> onErrorCallback)
+    private static void InitializeCatlogProducts(
+        SerializedDictionary<string, ProductSetting> products,
+        Action onSuccessCallback,
+        Action<string> onErrorCallback)
     {
-        List<Dictionary<string, string>> catalog = null;
-        bool success = false;
-        int successfullyAddedItemsCount = 0;
+        // 1. Always load all products from local settings as the baseline
+        InitializeFromLocalSettings(products);
 
         if (Bridge.payments.isSupported)
         {
-            Bridge.payments.GetCatalog((isSuccess, loadedCatalog) => { success = isSuccess; catalog = loadedCatalog; });
-
-            if (success)
+            Bridge.payments.GetCatalog((isSuccess, loadedCatalog) =>
             {
-                foreach (var item in catalog)
-            {
-                if (products.TryGetValue(item["id"], out var product))
+                if (isSuccess && loadedCatalog != null)
                 {
-                    if (Bridge.platform.language == "ru")
-                    {
-                        _products.Add(new CatalogProduct(item["id"], item["price"], product.RuTitle, product.Image));
-                    }
-                    else
-                    {
-                        _products.Add(new CatalogProduct(item["id"], item["price"], product.EnTitle, product.Image));
-                    }
-                    successfullyAddedItemsCount++;
-                }
-            }
+                    int updatedItemsCount = 0;
 
-            if (_debugMode)
-                Debug.Log($"Products catalog was initialized! Successfully was added {successfullyAddedItemsCount} items!");
+                    foreach (var item in loadedCatalog)
+                    {
+                        if (item.TryGetValue("id", out string id))
+                        {
+                            string price = "";
+                            if (item.TryGetValue("price", out string pVal) && !string.IsNullOrEmpty(pVal))
+                            {
+                                price = pVal;
+                            }
+                            else if (item.TryGetValue("priceValue", out string pvVal) && !string.IsNullOrEmpty(pvVal))
+                            {
+                                price = pvVal;
+                            }
+                            else if (item.TryGetValue("price_value", out string pv_Val) && !string.IsNullOrEmpty(pv_Val))
+                            {
+                                price = pv_Val;
+                            }
+                            else if (item.TryGetValue("amount", out string aVal) && !string.IsNullOrEmpty(aVal))
+                            {
+                                price = aVal;
+                            }
+
+                            // Update price for the existing catalog product if it exists
+                            var existingProduct = _products.Find(x => x.ID == id);
+                            if (existingProduct != null)
+                            {
+                                existingProduct.Price = price;
+                                updatedItemsCount++;
+                            }
+                        }
+                    }
+
+                    if (_debugMode)
+                        Debug.Log($"Products catalog prices updated from platform! Updated {updatedItemsCount} items!");
+                }
+
+                onSuccessCallback?.Invoke();
+            });
         }
         else
-            onErrorCallback?.Invoke("Cant to load catalog from sdk");
+        {
+            onSuccessCallback?.Invoke();
+        }
     }
-        else
-            onErrorCallback?.Invoke("Payments doesnt supported");
+
+    private static void InitializeFromLocalSettings(SerializedDictionary<string, ProductSetting> products)
+    {
+        _products = new List<CatalogProduct>();
+        int successfullyAddedItemsCount = 0;
+
+        foreach (var pair in products)
+        {
+            string id = pair.Key;
+            var product = pair.Value;
+            if (product != null)
+            {
+                string title = (Bridge.platform.language == "ru") ? product.RuTitle : product.EnTitle;
+                _products.Add(new CatalogProduct(id, "100", title, product.Image));
+                successfullyAddedItemsCount++;
+            }
+        }
+
+        CatalogProducts = _products;
+
+        if (_debugMode)
+            Debug.Log($"[Mock/Editor] Products catalog was initialized from local settings! Successfully added {successfullyAddedItemsCount} items!");
     }
 }

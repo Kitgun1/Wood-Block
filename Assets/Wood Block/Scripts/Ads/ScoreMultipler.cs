@@ -15,15 +15,12 @@ public class ScoreMultipler : MonoBehaviour
 
     public void GetMultiplier()
     {
-        Bridge.advertisement.rewardedStateChanged += StartGetAwardsCorutine;
-        Bridge.advertisement.ShowRewarded();
+        Advertisement.ShowAwardedAdd(() =>
+        {
+            StartCoroutine(GetAwards());
+        });
     }
 
-    private void StartGetAwardsCorutine(RewardedState state)
-    {
-        if (state == RewardedState.Rewarded)
-            StartCoroutine(GetAwards());
-    }
     private IEnumerator GetAwards()
     {
         _score.IsMultiplierEnabled = true;
@@ -31,6 +28,5 @@ public class ScoreMultipler : MonoBehaviour
         yield return new WaitForSeconds(30);
         _score.IsMultiplierEnabled = false;
         _scoreButton.interactable = true;
-        Bridge.advertisement.rewardedStateChanged -= StartGetAwardsCorutine;
     }
 }

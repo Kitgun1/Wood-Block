@@ -81,7 +81,7 @@ public class QuestManager : MonoBehaviour
         if (DataSaver.HasSaves(SaveKeys.LevelQuests))
         {
             var questList = DataSaver.Load<List<QuestData>>(SaveKeys.LevelQuests);
-            if (questList.Count >= _currentLevel)
+            if (questList != null && questList.Count >= _currentLevel)
             {
                 var questData = questList[_currentLevel - 1];
                 AddQuest(new Quest(questData.QuestType,questData.TargetBlock,_currentLevel,questData.TimeLimit));
@@ -90,6 +90,10 @@ public class QuestManager : MonoBehaviour
             {
                 AddNewQuest();
                 var newQuestData = new QuestData(_activeQuests[0].TargetBlock, _activeQuests[0].QuestType, _activeQuests[0].TimeLimit);
+                if (questList == null)
+                {
+                    questList = new List<QuestData>();
+                }
                 questList.Add(newQuestData);
                 DataSaver.Save(SaveKeys.LevelQuests, questList);
             }

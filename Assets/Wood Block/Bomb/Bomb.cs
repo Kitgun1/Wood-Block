@@ -1,4 +1,4 @@
-﻿using KimicuUtility;
+using KimicuUtility;
 using Playgama;
 using Playgama.Modules.Advertisement;
 using UnityEngine;
@@ -21,14 +21,30 @@ namespace WoodBlock
         {
             if (grabbed)
             {
-                var newPos = Vector3.Lerp
-                (
-                    transform.position,
-                    PlayerInput.PlayerActions.MousePosition.ReadValue<Vector2>().GetWorldSpace(0),
-                    Time.deltaTime * speed
-                );
-                newPos.z = z;
-                transform.position = newPos;
+                try
+                {
+                    if (Camera.main == null) return;
+
+                    // Исправляем баг утилиты: если кэшированная камера была уничтожена, обновляем её
+                    if (KiCameraExtension.Camera == null)
+                    {
+                        KiCameraExtension.Camera = Camera.main;
+                    }
+
+                    var newPos = Vector3.Lerp
+                    (
+                        transform.position,
+                        PlayerInput.PlayerActions.MousePosition.ReadValue<Vector2>().GetWorldSpace(0),
+                        Time.deltaTime * speed
+                    );
+                    newPos.z = z;
+                    transform.position = newPos;
+                }
+                catch (System.Exception ex)
+                {
+                    // Игнорируем ошибки отсутствия камеры при выходе из игры или смене сцены
+                    Debug.LogWarning($"[Bomb] Camera position reading exception: {ex.Message}");
+                }
             }
         }
 
@@ -47,18 +63,11 @@ namespace WoodBlock
             if (GridMap.Instance.PointerCell != null)
             {
                 target = GridMap.Instance.PointerCell;
-                Bridge.advertisement.rewardedStateChanged += GetAward;
-                Bridge.advertisement.ShowRewarded();
-            }
-        }
-
-        private void GetAward(RewardedState state)
-        {
-            if(state == RewardedState.Rewarded)
-            {
-                GridMap.Instance.UseBomb(target);
-                TableGenerator.Instance.PushBombInHistory();
-                Bridge.advertisement.rewardedStateChanged -= GetAward;
+                Advertisement.ShowAwardedAdd(() =>
+                {
+                    GridMap.Instance.UseBomb(target);
+                    TableGenerator.Instance.PushBombInHistory();
+                });
             }
         }
     }

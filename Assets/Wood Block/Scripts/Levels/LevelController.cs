@@ -29,7 +29,7 @@ public class LevelController : MonoBehaviour
         for (int i = 0; i < level; i++)
         {
             _buttons[i].interactable = true;
-            if (i < level - 1)
+            if (i < level-1)
                 _buttons[i].image.color = Color.green;
         }
     }

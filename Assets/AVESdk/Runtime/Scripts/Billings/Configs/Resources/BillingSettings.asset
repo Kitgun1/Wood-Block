@@ -41,7 +41,7 @@ MonoBehaviour:
         <Image>k__BackingField: {fileID: -378212198, guid: c7fd8de5c9a2ed1478293ca422034812, type: 3}
     - Key: space_bg
       Value:
-        <RuTitle>k__BackingField: "\u041A\u043E\u0441\u043C\u043E\u0441"
+        <RuTitle>k__BackingField: "\u041A\u043E\u043A\u043E\u0441"
         <EnTitle>k__BackingField: Space
         <Image>k__BackingField: {fileID: -378212198, guid: c7fd8de5c9a2ed1478293ca422034812, type: 3}
     - Key: sea_skin
@@ -106,3 +106,8 @@ MonoBehaviour:
         <RuTitle>k__BackingField: "\u041D\u0435\u0431\u043E"
         <EnTitle>k__BackingField: Sky
         <Image>k__BackingField: {fileID: -1250312824, guid: 974ad40bb9e7b9b438541e79523c1b94, type: 3}
+    - Key: mapBlowUp
+      Value:
+        <RuTitle>k__BackingField: "\u0412\u0437\u0440\u044B\u0432 \u043A\u0430\u0440\u0442\u044B"
+        <EnTitle>k__BackingField: Map Blow Up
+        <Image>k__BackingField: {fileID: 0}

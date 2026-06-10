@@ -26,7 +26,7 @@ namespace WoodBlock
             if (Instance == null)
                 Instance = this;
             else
-                Debug.Log("Обнаружен дубликат LifeTime", this);
+                Debug.Log("Обнаружен дубликат Score", this);
         }
 
         private void OnDisable()

@@ -1,8 +1,6 @@
 using KimicuUtility;
 using Lean.Localization;
-using NaughtyAttributes.Test;
 using System;
-using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -67,13 +65,17 @@ public class Purchase : MonoBehaviour
                 }
             }
 
-            if (item.WaysToUnlockSkin == WaysToUnlockSkin.BuyForCurrencie && _shopSystem.IsDefaultItem(item.CatalogProduct.ID) != true)
+            // No need currency sprite for default items or buy for add/levels
+            _product.CurrencySprite.enabled = false;
+
+            if (item.WaysToUnlockSkin == WaysToUnlockSkin.BuyForCurrencie && 
+            _shopSystem.IsDefaultItem(item.CatalogProduct.ID) != true)
             {
                 _product.PriceText.text = item.CatalogProduct.Price;
+                _product.CurrencySprite.color = Color.white;
             }
             else
-            {
-                _product.CurrencySprite.color = new Color(0, 0, 0, 0);
+            {  
                 _product.PriceText.text = "";
             }
 

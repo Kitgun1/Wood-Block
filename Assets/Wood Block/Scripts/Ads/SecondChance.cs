@@ -18,12 +18,7 @@ public class SecondChane : MonoBehaviour
 
     public void GetSecondChance()
     {
-        Bridge.advertisement.rewardedStateChanged += GetAwards;
-        Bridge.advertisement.ShowRewarded();
-    }
-    private void GetAwards(RewardedState state)
-    {
-        if(state == RewardedState.Rewarded)
+        Advertisement.ShowAwardedAdd(() =>
         {
             _eventToDo?.Invoke();
 
@@ -42,8 +37,6 @@ public class SecondChane : MonoBehaviour
                     go.SetActive(false);
                 }
             }
-
-            Bridge.advertisement.rewardedStateChanged -= GetAwards;
-        }
+        });
     }
 }

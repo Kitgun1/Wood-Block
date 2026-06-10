@@ -21,18 +21,11 @@ namespace WoodBlock
         {
             if (GridMap.Instance.CanUndo())
             {
-                Bridge.advertisement.rewardedStateChanged += Undo;
-                Bridge.advertisement.ShowRewarded();
-            }
-        }
-
-        private static void Undo(RewardedState state)
-        {
-            if(state == RewardedState.Rewarded)
-            {
-                GridMap.Instance.Undo();
-                TableGenerator.Instance.Undo();
-                Bridge.advertisement.rewardedStateChanged -= Undo;
+                Advertisement.ShowAwardedAdd(() =>
+                {
+                    GridMap.Instance.Undo();
+                    TableGenerator.Instance.Undo();
+                });
             }
         }
     }

@@ -75,7 +75,11 @@ public class ShopSystem : MonoBehaviour
     }
 
     public ShopItem GetShopItemByID(string itemID)
-        => _items.FirstOrDefault(x => x.CatalogProduct.ID == itemID);
+    {
+        if (_items == null)
+            return null;
+        return _items.FirstOrDefault(x => x != null && x.CatalogProduct != null && x.CatalogProduct.ID == itemID);
+    }
 
     public void ConsumeProduct(string productID)
     {
@@ -215,6 +219,11 @@ public class ShopSystem : MonoBehaviour
         if (DataSaver.HasSaves(SaveKeys.Products))
         {
             _items = DataSaver.Load<List<ShopItem>>(SaveKeys.Products);
+            if (_items == null)
+            {
+                _items = new List<ShopItem>();
+            }
+            RestoreCatalogProductReferences();
             EnsureDefaultItemsAreBought();
             SyncWithCurrentCatalog();
             SetWayToGet();
@@ -223,6 +232,23 @@ public class ShopSystem : MonoBehaviour
         {
             CreateItemsFromCatalog();
             MarkDefaultItemsAsBought();
+        }
+    }
+
+    private void RestoreCatalogProductReferences()
+    {
+        if (_items == null) return;
+
+        foreach (var item in _items)
+        {
+            if (item != null && item.CatalogProduct != null)
+            {
+                var catalogProduct = Billings.CatalogProducts.FirstOrDefault(x => x.ID == item.CatalogProduct.ID);
+                if (catalogProduct != null)
+                {
+                    item.UpdateCatalogProduct(catalogProduct);
+                }
+            }
         }
     }
 
@@ -555,5 +581,10 @@ public class ShopItem
         _productType = productType;
         _waysToUnlockSkin = wayToUnlockSkin;
         _levelToGetSkin = levelToGetSkin;
+    }
+
+    public void UpdateCatalogProduct(CatalogProduct catalogProduct)
+    {
+        _catalogProduct = catalogProduct;
     }
 }

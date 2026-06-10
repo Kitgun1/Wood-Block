@@ -4,19 +4,19 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(AudioSource))]
-public class MusciPlayer : MonoBehaviour
+public class MusicPlayer : MonoBehaviour
 {
     private AudioSource _audioSource;
-    private static MusciPlayer _instance = null;
+    public static MusicPlayer Instance { get; private set; }
 
     public void Initialize()
     {
-        if (_instance != null && _instance != this)
+        if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
             return;
         }
-        _instance = this;
+        Instance = this;
         DontDestroyOnLoad(gameObject);
 
         _audioSource = GetComponent<AudioSource>();

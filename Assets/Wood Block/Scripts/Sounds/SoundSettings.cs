@@ -1,5 +1,4 @@
 using UnityEngine;
-using WoodBlock;
 
 [RequireComponent(typeof(AudioSource))]
 public class SoundSettings : MonoBehaviour
@@ -36,12 +35,16 @@ public class SoundSettings : MonoBehaviour
         if (_audioSource == null)
             _audioSource = GetComponent<AudioSource>();
         _audioSource.volume = volume;
-        _slider.SetValue(volume);
+        if (_slider is not null)
+            _slider.SetValue(volume);
         DataSaver.Save(SaveKeys.SoundsVolume,volume);
     }
     private void Initialize()
     {
         _audioSource = GetComponent<AudioSource>();
         _audioSource.volume = DataSaver.Load<float>(SaveKeys.SoundsVolume);
+        if (_slider is not null)
+            _slider.SetValue(_audioSource.volume);
+        
     }
 }

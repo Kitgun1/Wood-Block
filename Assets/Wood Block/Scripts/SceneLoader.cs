@@ -30,8 +30,9 @@ namespace WoodBlock
             {
                 SceneManager.LoadScene(index);
             }
-            catch
+            catch (System.Exception ex)
             {
+                Debug.LogWarning($"[SceneLoader] Failed to load next scene at index {index}, loading scene 1: {ex.Message}");
                 SceneManager.LoadScene(1);
             }
         }

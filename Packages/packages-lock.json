@@ -42,7 +42,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "b18f83dad5530ff68060542f124ce96e5a592cfc"
+      "hash": "6f88bc39a5a295a7b5da7fe0f129deb10b4aec7c"
     },
     "com.unity.2d.animation": {
       "version": "9.2.0",
@@ -137,20 +137,6 @@
         "com.unity.2d.tilemap": "1.0.0",
         "com.unity.modules.tilemap": "1.0.0",
         "com.unity.modules.jsonserialize": "1.0.0"
-      },
-      "url": "https://packages.unity.com"
-    },
-    "com.unity.addressables": {
-      "version": "1.22.3",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {
-        "com.unity.modules.assetbundle": "1.0.0",
-        "com.unity.modules.jsonserialize": "1.0.0",
-        "com.unity.modules.imageconversion": "1.0.0",
-        "com.unity.modules.unitywebrequest": "1.0.0",
-        "com.unity.scriptablebuildpipeline": "1.21.25",
-        "com.unity.modules.unitywebrequestassetbundle": "1.0.0"
       },
       "url": "https://packages.unity.com"
     },
@@ -274,13 +260,6 @@
     },
     "com.unity.performance.profile-analyzer": {
       "version": "1.2.3",
-      "depth": 1,
-      "source": "registry",
-      "dependencies": {},
-      "url": "https://packages.unity.com"
-    },
-    "com.unity.scriptablebuildpipeline": {
-      "version": "1.21.25",
       "depth": 1,
       "source": "registry",
       "dependencies": {},
