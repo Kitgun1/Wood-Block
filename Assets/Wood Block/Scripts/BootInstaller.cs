@@ -6,7 +6,6 @@ namespace WoodBlock
 	{
         public enum PlatformProviderType
         {
-            Playgama,
             MockEditor
         }
 
@@ -36,9 +35,6 @@ namespace WoodBlock
         {
             switch (_providerType)
             {
-                case PlatformProviderType.Playgama:
-                    PlatformSDK.InitializeProvider(new PlaygamaPlatformProvider());
-                    break;
                 case PlatformProviderType.MockEditor:
                     PlatformSDK.InitializeProvider(new MockPlatformProvider());
                     break;
