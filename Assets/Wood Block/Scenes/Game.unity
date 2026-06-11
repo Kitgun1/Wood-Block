@@ -879,110 +879,6 @@ Transform:
   - {fileID: 1509993781}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &134526267
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 134526268}
-  - component: {fileID: 134526269}
-  m_Layer: 0
-  m_Name: Pause
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &134526268
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 134526267}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6196231289841484344}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &134526269
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 134526267}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb15fa0e7301ff849bf4d6dcede7c12b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  data: 0
-  entries:
-  - Language: English
-    Text: Pause
-    Object: {fileID: 0}
-  - Language: Russian
-    Text: "\u041F\u0430\u0443\u0437\u0430"
-    Object: {fileID: 0}
---- !u!1 &142051082
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 142051083}
-  - component: {fileID: 142051084}
-  m_Layer: 0
-  m_Name: All
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &142051083
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 142051082}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6196231289841484344}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &142051084
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 142051082}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb15fa0e7301ff849bf4d6dcede7c12b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  data: 0
-  entries:
-  - Language: English
-    Text: All
-    Object: {fileID: 0}
-  - Language: Russian
-    Text: "\u0412\u0441\u0451"
-    Object: {fileID: 0}
 --- !u!1 &203818658
 GameObject:
   m_ObjectHideFlags: 0
@@ -2573,58 +2469,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   translationName: ForAdd
   FallbackText: For Add
---- !u!1 &698538159
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 698538160}
-  - component: {fileID: 698538161}
-  m_Layer: 0
-  m_Name: ScoreMultiPlayer
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &698538160
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 698538159}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6196231289841484344}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &698538161
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 698538159}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb15fa0e7301ff849bf4d6dcede7c12b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  data: 0
-  entries:
-  - Language: English
-    Text: X10 POINTS
-    Object: {fileID: 0}
-  - Language: Russian
-    Text: "X10 \u041E\u0427\u041A\u0418"
-    Object: {fileID: 0}
 --- !u!1 &728980104
 GameObject:
   m_ObjectHideFlags: 0
@@ -3684,58 +3528,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!1 &942110579
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 942110580}
-  - component: {fileID: 942110581}
-  m_Layer: 0
-  m_Name: YouLose
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &942110580
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 942110579}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6196231289841484344}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &942110581
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 942110579}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb15fa0e7301ff849bf4d6dcede7c12b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  data: 0
-  entries:
-  - Language: English
-    Text: You lose!
-    Object: {fileID: 0}
-  - Language: Russian
-    Text: "\u041F\u0440\u043E\u0438\u0433\u0440\u044B\u0448!"
-    Object: {fileID: 0}
 --- !u!1 &947167731
 GameObject:
   m_ObjectHideFlags: 0
@@ -4579,58 +4371,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 140, y: 44}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &1025829114
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1025829115}
-  - component: {fileID: 1025829116}
-  m_Layer: 0
-  m_Name: ForAdd
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1025829115
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1025829114}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6196231289841484344}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1025829116
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1025829114}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb15fa0e7301ff849bf4d6dcede7c12b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  data: 0
-  entries:
-  - Language: English
-    Text: FOR ADD
-    Object: {fileID: 0}
-  - Language: Russian
-    Text: "\u0420\u0415\u041A\u041B\u0410\u041C\u0410"
-    Object: {fileID: 0}
 --- !u!1 &1051871803
 GameObject:
   m_ObjectHideFlags: 0
@@ -10547,14 +10287,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 956145271212469466, guid: 9ff16dfefa51b1a4eb16bf004a85e42b, type: 3}
-      propertyPath: detectLanguage
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 956145271212469466, guid: 9ff16dfefa51b1a4eb16bf004a85e42b, type: 3}
-      propertyPath: currentLanguage
-      value: Russian
-      objectReference: {fileID: 0}
     - target: {fileID: 2132324892187728796, guid: 9ff16dfefa51b1a4eb16bf004a85e42b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -10601,52 +10333,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 2132324892187728796, guid: 9ff16dfefa51b1a4eb16bf004a85e42b, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1025829115}
-    - targetCorrespondingSourceObject: {fileID: 2132324892187728796, guid: 9ff16dfefa51b1a4eb16bf004a85e42b, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 142051083}
-    - targetCorrespondingSourceObject: {fileID: 2132324892187728796, guid: 9ff16dfefa51b1a4eb16bf004a85e42b, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 942110580}
-    - targetCorrespondingSourceObject: {fileID: 2132324892187728796, guid: 9ff16dfefa51b1a4eb16bf004a85e42b, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 698538160}
-    - targetCorrespondingSourceObject: {fileID: 2132324892187728796, guid: 9ff16dfefa51b1a4eb16bf004a85e42b, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 134526268}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3662522768725395604, guid: 9ff16dfefa51b1a4eb16bf004a85e42b, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 6196231289841484345}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ff16dfefa51b1a4eb16bf004a85e42b, type: 3}
---- !u!1 &6196231289841484342 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3662522768725395604, guid: 9ff16dfefa51b1a4eb16bf004a85e42b, type: 3}
-  m_PrefabInstance: {fileID: 6196231289841484341}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &6196231289841484344 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2132324892187728796, guid: 9ff16dfefa51b1a4eb16bf004a85e42b, type: 3}
-  m_PrefabInstance: {fileID: 6196231289841484341}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &6196231289841484345
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6196231289841484342}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a27528f451dbd74fa943de4b3ad9089, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _eventsAfterBoot:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &7059915952639469705
 MonoBehaviour:
   m_ObjectHideFlags: 0

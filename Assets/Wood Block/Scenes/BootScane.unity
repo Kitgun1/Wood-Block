@@ -166,9 +166,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee38029c17ab49a5ba16a71548674574, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _providerType: 0
   _nextScene: Main Menu
   _musicPlayer: {fileID: 1118176163}
-  _questGenerator: {fileID: 0}
 --- !u!1 &843210432
 GameObject:
   m_ObjectHideFlags: 0

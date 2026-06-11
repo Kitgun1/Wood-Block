@@ -1,7 +1,5 @@
 using System;
 using Newtonsoft.Json;
-using Playgama;
-using Playgama.Modules.Storage;
 using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 #if UNITY_EDITOR
@@ -48,20 +46,14 @@ public static class DataSaver
             PlayerPrefs.SetString(SavesKeys[key].Key, json);
             PlayerPrefs.Save();
             
-          
-                try 
-                {
-#if UNITY_WEBGL
-                    Bridge.storage?.Set(SavesKeys[key].Key, json);
-#else
-                    // Playgama Storage is skipped locally.
-#endif
-                } 
-                catch(Exception e)
-                {
-                    Debug.LogWarning("Playgama storage set error: " + e.Message);
-                }
-            
+            try 
+            {
+                PlatformSDK.Storage?.Set(SavesKeys[key].Key, json);
+            } 
+            catch(Exception e)
+            {
+                Debug.LogWarning("Platform storage set error: " + e.Message);
+            }
         }
         else
             Debug.LogError("DataSaver isnt initilized!");
@@ -100,32 +92,31 @@ public static class DataSaver
     {
         try
         {
-
             foreach (var pair in SavesKeys)
             {
-                Bridge.storage.Set(pair.Value.Key, "", storageType: StorageType.PlatformInternal);
+                PlatformSDK.Storage?.Delete(pair.Value.Key);
                 PlayerPrefs.DeleteKey(pair.Value.Key);
             }
-            Debug.Log("[DataSaver] Все сохранения были очищены через PlaygamaBridge!");
+            Debug.Log("[DataSaver] Все сохранения были очищены через PlatformSDK!");
         }
         catch (Exception ex)
         {
-            Debug.LogError($"[DataSaver] Не удалось очистить сохранения: {ex.Message}");
+            Debug.LogError($"[DataSaver] Ошибка при очистке сохранений: {ex.Message}");
         }
     }
     
     
 #if UNITY_EDITOR
-     [MenuItem("Tools/Clear All Saves")]
+    [MenuItem("Tools/Clear All Saves")]
     public static void ClearAllSaves()
     {
         if (!EditorApplication.isPlaying)
         {
-            EditorUtility.DisplayDialog("Clear Saves", "Пожалуйста, запустите игру (Play Mode) перед очисткой сохранений, чтобы PlaygamaBridge SDK был активен.", "OK");
+            EditorUtility.DisplayDialog("Clear Saves", "Пожалуйста, запустите игру (Play Mode) перед очисткой сохранений, чтобы PlatformSDK был активен.", "OK");
             return;
         }
         Clear();
-        EditorUtility.DisplayDialog("Clear Saves", "Все сохранения были успешно сброшены через PlaygamaBridge!", "OK");
+        EditorUtility.DisplayDialog("Clear Saves", "Все сохранения были успешно сброшены через PlatformSDK!", "OK");
     }
 #endif
 }

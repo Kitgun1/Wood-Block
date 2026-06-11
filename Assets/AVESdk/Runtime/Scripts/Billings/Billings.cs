@@ -1,8 +1,6 @@
 using AYellowpaper.SerializedCollections;
 using Cysharp.Threading.Tasks;
-using Playgama;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -42,7 +40,7 @@ public static class Billings
         _settings.GetAllCatalog(
             (dictionary) => 
             { 
-                InitializeCatlogProducts(dictionary, 
+                InitializeCatalogProducts(dictionary, 
                     () => 
                     {
                         IsInitialized = true;
@@ -75,16 +73,16 @@ public static class Billings
             IsInitialized = true;
         }
     }
-    public static void PurchaseProduct(string id,Action<string> onSeccessCallback,Action<string> onErrorCallback = null)
+    public static void PurchaseProduct(string id,Action<string> onSuccessCallback,Action<string> onErrorCallback = null)
     {
         if (IsInitialized)
         {
-            if (Bridge.payments.isSupported)
+            if (PlatformSDK.Payments != null && PlatformSDK.Payments.IsSupported)
             {
-                Bridge.payments.Purchase(id, (isSuccess, result) => 
+                PlatformSDK.Payments.Purchase(id, isSuccess => 
                 {
                     if (isSuccess)
-                        onSeccessCallback?.Invoke(id);
+                        onSuccessCallback?.Invoke(id);
                     else
                         onErrorCallback?.Invoke("The purchase was unsuccessful");
                 });
@@ -92,24 +90,24 @@ public static class Billings
             else
             {
                 Debug.Log($"[Mock/Editor] Purchase product succeeded for ID: {id}");
-                onSeccessCallback?.Invoke(id);
+                onSuccessCallback?.Invoke(id);
             }
         }
         else
         {
-            onErrorCallback?.Invoke("Billings wasnt initialized!");
+            onErrorCallback?.Invoke("Billings wasn't initialized!");
         }
     }
-    public static void ConsumeProduct(string id,Action onSeccessCallback,Action<string> onErrorCallback = null)
+    public static void ConsumeProduct(string id,Action onSuccessCallback,Action<string> onErrorCallback = null)
     {
         if (IsInitialized)
         {
-            if (Bridge.payments.isSupported)
+            if (PlatformSDK.Payments != null && PlatformSDK.Payments.IsSupported)
             {
-                Bridge.payments.ConsumePurchase(id, (isSuccess, result) => 
+                PlatformSDK.Payments.Consume(id, isSuccess => 
                 {
                     if (isSuccess)
-                        onSeccessCallback?.Invoke();
+                        onSuccessCallback?.Invoke();
                     else
                         onErrorCallback?.Invoke("The purchase confirmation was unsuccessful");
                 });
@@ -117,16 +115,16 @@ public static class Billings
             else
             {
                 Debug.Log($"[Mock/Editor] Consume product succeeded for ID: {id}");
-                onSeccessCallback?.Invoke();
+                onSuccessCallback?.Invoke();
             }
         }
         else
         {
-            onErrorCallback?.Invoke("Billings wasnt initialized!");
+            onErrorCallback?.Invoke("Billings wasn't initialized!");
         }
     }
 
-    private static void InitializeCatlogProducts(
+    private static void InitializeCatalogProducts(
         SerializedDictionary<string, ProductSetting> products,
         Action onSuccessCallback,
         Action<string> onErrorCallback)
@@ -134,9 +132,9 @@ public static class Billings
         // 1. Always load all products from local settings as the baseline
         InitializeFromLocalSettings(products);
 
-        if (Bridge.payments.isSupported)
+        if (PlatformSDK.Payments != null && PlatformSDK.Payments.IsSupported)
         {
-            Bridge.payments.GetCatalog((isSuccess, loadedCatalog) =>
+            PlatformSDK.Payments.GetCatalog((isSuccess, loadedCatalog) =>
             {
                 if (isSuccess && loadedCatalog != null)
                 {
@@ -198,8 +196,7 @@ public static class Billings
             var product = pair.Value;
             if (product != null)
             {
-                string title = (Bridge.platform.language == "ru") ? product.RuTitle : product.EnTitle;
-                _products.Add(new CatalogProduct(id, "100", title, product.Image));
+                _products.Add(new CatalogProduct(id, "100", product.RuTitle, product.EnTitle, product.Image, product.TitleLocalizationKey));
                 successfullyAddedItemsCount++;
             }
         }

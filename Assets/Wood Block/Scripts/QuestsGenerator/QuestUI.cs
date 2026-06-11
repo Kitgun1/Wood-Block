@@ -1,8 +1,7 @@
-using Lean.Localization;
-using Playgama;
 using System;
 using TMPro;
 using UnityEngine;
+using Lean.Localization;
 
 public class QuestUI : MonoBehaviour
 {
@@ -16,7 +15,6 @@ public class QuestUI : MonoBehaviour
     {
         _currentQuest = quest;
 
-        // Подписываемся на события
         quest.OnProgressChanged += UpdateUI;
         quest.OnCompleted += OnQuestCompleted;
 
@@ -33,20 +31,22 @@ public class QuestUI : MonoBehaviour
 
     private void UpdateUI(Quest quest)
     {
+        if (quest == null) return;
+
         var serparatedString = quest.GetDescription();
-        bool isRussian = Bridge.platform.language == "ru";
+        bool isRussian = LeanLocalization.GetFirstCurrentLanguage() == "Russian";
         switch (serparatedString.Item1)
         {
             case QuestType.CollectBlocks:
                 if (isRussian)
-                    _descriptionText.text = $"Собрать {quest.CurrentProgress}/{serparatedString.Item2} очков";
+                    _descriptionText.text = $"Соберите {quest.CurrentProgress}/{serparatedString.Item2} очков";
                 else
                     _descriptionText.text = $"Collect {quest.CurrentProgress}/{serparatedString.Item2} points";
                 break;
             case QuestType.CollectTimed:
                 TimeSpan time = TimeSpan.FromSeconds(quest.TimeRemaining);
                 if (isRussian)
-                    _descriptionText.text =  $"Собрать {quest.CurrentProgress}/{serparatedString.Item2} очков за {ValidateTime(serparatedString.Item3)}  {time.Minutes:00}:{time.Seconds:00}";
+                    _descriptionText.text =  $"Соберите {quest.CurrentProgress}/{serparatedString.Item2} очков за {ValidateTime(serparatedString.Item3)}  {time.Minutes:00}:{time.Seconds:00}";
                 else
                     _descriptionText.text = $"Collect {quest.CurrentProgress}/{serparatedString.Item2} points for {ValidateTime(serparatedString.Item3)} {time.Minutes:00}:{time.Seconds:00}";
                 break;
@@ -68,9 +68,26 @@ public class QuestUI : MonoBehaviour
 
     private void OnQuestCompleted(Quest quest)
     {
-        // Отписываемся от событий
         quest.OnProgressChanged -= UpdateUI;
         quest.OnCompleted -= OnQuestCompleted;
+    }
+
+    private void OnEnable()
+    {
+        LeanLocalization.OnLocalizationChanged += OnLocalizationChanged;
+    }
+
+    private void OnDisable()
+    {
+        LeanLocalization.OnLocalizationChanged -= OnLocalizationChanged;
+    }
+
+    private void OnLocalizationChanged()
+    {
+        if (_currentQuest != null)
+        {
+            UpdateUI(_currentQuest);
+        }
     }
 
     private void OnDestroy()

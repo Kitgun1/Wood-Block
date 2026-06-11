@@ -1,5 +1,3 @@
-using Playgama;
-using Playgama.Modules.Advertisement;
 using System;
 using UnityEngine;
 using UnityEngine.UI;

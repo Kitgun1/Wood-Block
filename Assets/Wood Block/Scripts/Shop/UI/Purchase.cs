@@ -27,61 +27,65 @@ public class Purchase : MonoBehaviour
             {
                 if (DataSaver.Load<string>(SaveKeys.SelectedSkinId) == _id || DataSaver.Load<string>(SaveKeys.SelectedBackgroundId) == _id)
                 {
-                    if (LeanLocalization.GetFirstCurrentLanguage() == "Russian")
-                        _product.ButtonText.text = "Выбран";
-                    else
-                        _product.ButtonText.text = "Selected";
+                    _product.ButtonText.text = LeanLocalization.GetTranslationText("Selected", "Selected");
                 }
                 else
                 {
-                    if (LeanLocalization.GetFirstCurrentLanguage() == "Russian")
-                        _product.ButtonText.text = "Выбрать";
-                    else
-                        _product.ButtonText.text = "Select";
+                    _product.ButtonText.text = LeanLocalization.GetTranslationText("Select", "Select");
                 }
+
+ // No need currency sprite for default items or buy for add/levels
+                _product.CurrencySprite.enabled = false;
+                _product.PriceText.enabled = false;
+                _product.PriceText.text = string.Empty;
             }
             else
             {
+                    // No need currency sprite for default items or buy for add/levels
+                    _product.CurrencySprite.enabled = false;
+
                 switch (item.WaysToUnlockSkin)
                 {
                     case WaysToUnlockSkin.BuyForLevels:
-                        if (LeanLocalization.GetFirstCurrentLanguage() == "Russian")
-                            _product.ButtonText.text = $"За левел {item.LevelToGetSkin}";
-                        else
-                            _product.ButtonText.text = $"For level {item.LevelToGetSkin}";
+                    {
+                        string localizedFormat = LeanLocalization.GetTranslationText("ForLevel", "For level {0}");
+                        _product.ButtonText.text = string.Format(localizedFormat, item.LevelToGetSkin);
+                        _product.PriceText.enabled = false;
+                        _product.PriceText.text = string.Empty;
                         break;
+                    }
+
                     case WaysToUnlockSkin.BuyForCurrencie:
-                        if (LeanLocalization.GetFirstCurrentLanguage() == "Russian")
-                            _product.ButtonText.text = "Купить";
+                    {
+                        _product.ButtonText.text = LeanLocalization.GetTranslationText("Buy", "Buy");
+
+                        if (_shopSystem.IsDefaultItem(item.CatalogProduct.ID) != true)
+                        {
+                            _product.PriceText.enabled = true;
+                            _product.PriceText.text = item.CatalogProduct.Price;
+                            _product.CurrencySprite.color = Color.white;
+                        }
                         else
-                            _product.ButtonText.text = "Buy";
+                        {
+                            _product.PriceText.enabled = false;
+                            _product.PriceText.text = string.Empty;
+                        }
+
                         break;
+                    }
                     case WaysToUnlockSkin.BuyForAdd:
-                        if (LeanLocalization.GetFirstCurrentLanguage() == "Russian")
-                            _product.ButtonText.text = "Получить за рекламу";
-                        else
-                            _product.ButtonText.text = "Get For Add";
+                    {
+                        _product.PriceText.enabled = false;
+                        _product.PriceText.text = string.Empty;
+                        _product.ButtonText.text = LeanLocalization.GetTranslationText("GetForAd", "Get For Add");
                         break;
+                    }
                 }
             }
-
-            // No need currency sprite for default items or buy for add/levels
-            _product.CurrencySprite.enabled = false;
-
-            if (item.WaysToUnlockSkin == WaysToUnlockSkin.BuyForCurrencie && 
-            _shopSystem.IsDefaultItem(item.CatalogProduct.ID) != true)
-            {
-                _product.PriceText.text = item.CatalogProduct.Price;
-                _product.CurrencySprite.color = Color.white;
-            }
-            else
-            {  
-                _product.PriceText.text = "";
-            }
-
             _product.Image.sprite = item.CatalogProduct.Image;
         }
     }
+
     public void Initialize(string id, ShopSystem system)
     {
         _id = id;
@@ -90,6 +94,17 @@ public class Purchase : MonoBehaviour
         var item = _shopSystem.GetShopItemByID(_id);
         _product.Button.AddListener(() => _shopSystem.BuyItem(item.CatalogProduct.ID));
     }
+
+    private void OnEnable()
+    {
+        LeanLocalization.OnLocalizationChanged += UpdatePurchase;
+    }
+
+    private void OnDisable()
+    {
+        LeanLocalization.OnLocalizationChanged -= UpdatePurchase;
+    }
+
 
 }
 

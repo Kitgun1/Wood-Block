@@ -1,10 +1,7 @@
 using KimicuUtility;
-using Playgama;
-using Playgama.Modules.Advertisement;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using static UnityEngine.GraphicsBuffer;
 
 namespace WoodBlock
 {
@@ -42,7 +39,6 @@ namespace WoodBlock
                 }
                 catch (System.Exception ex)
                 {
-                    // Игнорируем ошибки отсутствия камеры при выходе из игры или смене сцены
                     Debug.LogWarning($"[Bomb] Camera position reading exception: {ex.Message}");
                 }
             }

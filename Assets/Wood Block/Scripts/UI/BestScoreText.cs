@@ -9,10 +9,20 @@ public class BestScoreText : MonoBehaviour
     [SerializeField] private TMP_Text _scoreText;
     public void Boot()
     {
-        if (LeanLocalization.GetFirstCurrentLanguage() == "Russian")
-            _scoreText.text = $"Лучший счёт: {DataSaver.Load<int>(SaveKeys.BestScore)}";
-        else
-            _scoreText.text = $"Best score: {DataSaver.Load<int>(SaveKeys.BestScore)}";
+        _scoreText.text = LeanLocalization.GetTranslationText("BestScore", "Best Score: ");
+        _scoreText.text += DataSaver.Load<int>(SaveKeys.BestScore).ToString();
+
     }
+    
+    private void OnEnable()
+    {
+        LeanLocalization.OnLocalizationChanged += Boot;
+    }
+
+    private void OnDisable()
+    {
+        LeanLocalization.OnLocalizationChanged -= Boot;
+    }
+
 
 }

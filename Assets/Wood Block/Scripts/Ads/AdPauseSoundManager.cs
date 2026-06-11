@@ -1,7 +1,5 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Playgama;
-using Playgama.Modules.Advertisement;
 
 namespace WoodBlock
 {
@@ -24,19 +22,10 @@ namespace WoodBlock
 
         private void Start()
         {
-            // Subscribe to platform pause and audio events
-            if (Bridge.platform != null)
-            {
-                Bridge.platform.pauseStateChanged += OnPauseStateChanged;
-                Bridge.platform.audioStateChanged += OnAudioStateChanged;
-            }
-
-            // Subscribe to advertisement events
-            if (Bridge.advertisement != null)
-            {
-                Bridge.advertisement.interstitialStateChanged += OnInterstitialStateChanged;
-                Bridge.advertisement.rewardedStateChanged += OnRewardedStateChanged;
-            }
+            PlatformSDK.OnPauseStateChanged += OnPauseStateChanged;
+            PlatformSDK.OnAudioStateChanged += OnAudioStateChanged;
+            PlatformSDK.OnAdStarted += OnAdStarted;
+            PlatformSDK.OnAdCompleted += OnAdCompleted;
 
             UpdateGameState();
         }
@@ -55,30 +44,15 @@ namespace WoodBlock
         {
             try
             {
-                if (Bridge.platform != null)
-                {
-                    Bridge.platform.pauseStateChanged -= OnPauseStateChanged;
-                    Bridge.platform.audioStateChanged -= OnAudioStateChanged;
-                }
+                PlatformSDK.OnPauseStateChanged -= OnPauseStateChanged;
+                PlatformSDK.OnAudioStateChanged -= OnAudioStateChanged;
+                PlatformSDK.OnAdStarted -= OnAdStarted;
+                PlatformSDK.OnAdCompleted -= OnAdCompleted;
             }
             catch (System.Exception ex)
             {
                 // Игнорируем исключения при закрытии приложения, так как ресурсы Bridge уже могут быть очищены
                 Debug.LogWarning($"[AdPauseSoundManager] Ignored exception during platform unsubscribe: {ex.Message}");
-            }
-
-            try
-            {
-                if (Bridge.advertisement != null)
-                {
-                    Bridge.advertisement.interstitialStateChanged -= OnInterstitialStateChanged;
-                    Bridge.advertisement.rewardedStateChanged -= OnRewardedStateChanged;
-                }
-            }
-            catch (System.Exception ex)
-            {
-                // Игнорируем исключения при закрытии приложения
-                Debug.LogWarning($"[AdPauseSoundManager] Ignored exception during ad unsubscribe: {ex.Message}");
             }
         }
 
@@ -100,29 +74,15 @@ namespace WoodBlock
             UpdateGameState();
         }
 
-        private void OnInterstitialStateChanged(InterstitialState state)
+        private void OnAdStarted()
         {
-            if (state == InterstitialState.Opened)
-            {
-                _isAdPlaying = true;
-            }
-            else if (state == InterstitialState.Closed || state == InterstitialState.Failed)
-            {
-                _isAdPlaying = false;
-            }
+            _isAdPlaying = true;
             UpdateGameState();
         }
 
-        private void OnRewardedStateChanged(RewardedState state)
+        private void OnAdCompleted()
         {
-            if (state == RewardedState.Opened)
-            {
-                _isAdPlaying = true;
-            }
-            else if (state == RewardedState.Closed || state == RewardedState.Failed || state == RewardedState.Rewarded)
-            {
-                _isAdPlaying = false;
-            }
+            _isAdPlaying = false;
             UpdateGameState();
         }
 
