@@ -828,10 +828,10 @@ MonoBehaviour:
   data: 0
   entries:
   - Language: English
-    Text: For level
+    Text: For level {0}
     Object: {fileID: 0}
   - Language: Russian
-    Text: "\u0417\u0430 \u043B\u0435\u0432\u0435\u043B"
+    Text: "\u0417\u0430 \u043B\u0435\u0432\u0435\u043B {0}"
     Object: {fileID: 0}
 --- !u!1 &3253217956157120268
 GameObject:
