@@ -1,0 +1,10 @@
+<linker>
+    <assembly fullname="Assembly-CSharp" preserve="all"/>
+    <assembly fullname="Newtonsoft.Json" preserve="all"/>
+    <assembly fullname="Agava.YandexGames" preserve="all"/>
+    <assembly fullname="Kimicu.YandexGames" preserve="all"/>
+    <assembly fullname="KimicuUtility" preserve="all"/>
+    <assembly fullname="UniTask" preserve="all"/>
+    <assembly fullname="LeanLocalization" preserve="all"/>
+    <assembly fullname="AYellowpaper.SerializedCollections" preserve="all"/>
+</linker>

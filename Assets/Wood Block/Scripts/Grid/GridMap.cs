@@ -1,4 +1,4 @@
-﻿using NaughtyAttributes;
+using NaughtyAttributes;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
@@ -397,8 +397,26 @@ namespace WoodBlock
             TryRemoveBlockAt(x + 1, y + 1);
             TryRemoveBlockAt(x + 1, y - 1);
 
-            _history.Push(new() { created = createdEmpty, removed = removed.ToArray(), points = removed.Length });
-            Score.Instance.Value += removed.Length;
+            int score = removed.Length;
+            if (IsMultiplierEnabled)
+            {
+                score *= _scoreMultipier;
+            }
+
+            _history.Push(new() { created = createdEmpty, removed = removed.ToArray(), points = score });
+            Score.Instance.Value += score;
+
+            if (_questManager != null)
+            {
+                var quests = _questManager.GetActiveQuests();
+                foreach (var quest in quests)
+                    quest.AddProgress(score);
+            }
+            else
+            {
+                if (DataSaver.Load<int>(SaveKeys.BestScore) < Score.Instance.Value)
+                    DataSaver.Save(SaveKeys.BestScore, Score.Instance.Value);
+            }
 
             bool TryRemoveBlockAt(int x, int y)
             {

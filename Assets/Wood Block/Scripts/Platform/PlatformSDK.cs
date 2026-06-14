@@ -7,7 +7,29 @@ public static class PlatformSDK
 
     public static void InitializeProvider(IPlatformProvider provider)
     {
+        if (_provider != null)
+        {
+            _provider.OnPauseStateChanged -= ForwardPauseStateChanged;
+            _provider.OnAudioStateChanged -= ForwardAudioStateChanged;
+            if (_provider.Ads != null)
+            {
+                _provider.Ads.OnAdStarted -= ForwardAdStarted;
+                _provider.Ads.OnAdCompleted -= ForwardAdCompleted;
+            }
+        }
+
         _provider = provider;
+
+        if (_provider != null)
+        {
+            _provider.OnPauseStateChanged += ForwardPauseStateChanged;
+            _provider.OnAudioStateChanged += ForwardAudioStateChanged;
+            if (_provider.Ads != null)
+            {
+                _provider.Ads.OnAdStarted += ForwardAdStarted;
+                _provider.Ads.OnAdCompleted += ForwardAdCompleted;
+            }
+        }
     }
 
     public static IPlatformProvider Provider => _provider;
@@ -16,17 +38,8 @@ public static class PlatformSDK
     public static void SendGameReady() => _provider?.SendGameReady();
     public static string Language => _provider?.Language ?? "en";
 
-    public static event Action<bool> OnPauseStateChanged
-    {
-        add { if (_provider != null) _provider.OnPauseStateChanged += value; }
-        remove { if (_provider != null) _provider.OnPauseStateChanged -= value; }
-    }
-
-    public static event Action<bool> OnAudioStateChanged
-    {
-        add { if (_provider != null) _provider.OnAudioStateChanged += value; }
-        remove { if (_provider != null) _provider.OnAudioStateChanged -= value; }
-    }
+    public static event Action<bool> OnPauseStateChanged;
+    public static event Action<bool> OnAudioStateChanged;
 
     public static void ShowInterstitial() => _provider?.Ads?.ShowInterstitial();
     
@@ -35,17 +48,13 @@ public static class PlatformSDK
         _provider?.Ads?.ShowRewarded(onRewarded, onClosedOrFailed);
     }
 
-    public static event Action OnAdStarted
-    {
-        add { if (_provider?.Ads != null) _provider.Ads.OnAdStarted += value; }
-        remove { if (_provider?.Ads != null) _provider.Ads.OnAdStarted -= value; }
-    }
+    public static event Action OnAdStarted;
+    public static event Action OnAdCompleted;
 
-    public static event Action OnAdCompleted
-    {
-        add { if (_provider?.Ads != null) _provider.Ads.OnAdCompleted += value; }
-        remove { if (_provider?.Ads != null) _provider.Ads.OnAdCompleted -= value; }
-    }
+    private static void ForwardPauseStateChanged(bool isPaused) => OnPauseStateChanged?.Invoke(isPaused);
+    private static void ForwardAudioStateChanged(bool isAudioEnabled) => OnAudioStateChanged?.Invoke(isAudioEnabled);
+    private static void ForwardAdStarted() => OnAdStarted?.Invoke();
+    private static void ForwardAdCompleted() => OnAdCompleted?.Invoke();
 
     public static IStorageProvider Storage => _provider?.Storage;
     public static IPaymentsProvider Payments => _provider?.Payments;

@@ -6,6 +6,7 @@ namespace WoodBlock
 	{
         public enum PlatformProviderType
         {
+            Yandex,
             MockEditor
         }
 
@@ -35,6 +36,9 @@ namespace WoodBlock
         {
             switch (_providerType)
             {
+                case PlatformProviderType.Yandex:
+                    PlatformSDK.InitializeProvider(new KimicuYandexGamesProvider());
+                    break;
                 case PlatformProviderType.MockEditor:
                     PlatformSDK.InitializeProvider(new MockPlatformProvider());
                     break;

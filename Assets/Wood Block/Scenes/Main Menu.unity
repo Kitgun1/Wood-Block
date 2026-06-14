@@ -12719,6 +12719,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1799151484033480152, guid: 9ff16dfefa51b1a4eb16bf004a85e42b, type: 3}
+      propertyPath: entries.Array.data[0].Text
+      value: For level {0}
+      objectReference: {fileID: 0}
+    - target: {fileID: 1799151484033480152, guid: 9ff16dfefa51b1a4eb16bf004a85e42b, type: 3}
+      propertyPath: entries.Array.data[1].Text
+      value: "\u0417\u0430 \u043B\u0435\u0432\u0435\u043B {0}"
+      objectReference: {fileID: 0}
     - target: {fileID: 2132324892187728796, guid: 9ff16dfefa51b1a4eb16bf004a85e42b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

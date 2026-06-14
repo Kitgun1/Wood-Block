@@ -28,7 +28,7 @@ public static class DataSaver
     {
         foreach(var value in SavesKeys)
         {
-            if (!PlayerPrefs.HasKey(value.Value.Key))
+            if (!PlayerPrefs.HasKey(value.Value.Key) || PlayerPrefs.GetString(value.Value.Key) == "null" || PlayerPrefs.GetString(value.Value.Key) == "\"\"")
             {
                 string json = JsonConvert.SerializeObject(value.Value.DefualtSavesValue);
                 PlayerPrefs.SetString(value.Value.Key, json);
@@ -65,10 +65,18 @@ public static class DataSaver
         {
             string json = PlayerPrefs.GetString(SavesKeys[key].Key);
 
-            if (string.IsNullOrEmpty(json))
+            if (string.IsNullOrEmpty(json) || json == "null" || json == "\"\"")
                 return default(T);
 
-            return JsonConvert.DeserializeObject<T>(json);
+            try
+            {
+                return JsonConvert.DeserializeObject<T>(json);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError("[DataSaver] Failed to deserialize key " + SavesKeys[key].Key + " with value '" + json + "': " + ex.Message);
+                return default(T);
+            }
         }
         else
         {

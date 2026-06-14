@@ -1,42 +1,192 @@
 [
   {
-    "description": "Скин травы",
+    "description": "Скин Жёлудь",
+    "id": "base_skin",
+    "imageURI": "https://avatars.mds.yandex.net/get-games/17955142/2a0000019c1b204ff76415a1929c4d5350c4//default87x87",
+    "price": "0 YAN",
+    "priceCurrencyCode": "YAN",
+    "priceValue": "0",
+    "priceCurrencyPicture": "//yastatic.net/s3/games-static/static-data/images/payments/sdk/rub/currency-icon-m.svg",
+    "title": "Жёлудь"
+  },
+  {
+    "description": "Фон Лес",
+    "id": "base_bg",
+    "imageURI": "https://avatars.mds.yandex.net/get-games/17955142/2a0000019c1b204ff76415a1929c4d5350c4//default87x87",
+    "price": "0 YAN",
+    "priceCurrencyCode": "YAN",
+    "priceValue": "0",
+    "priceCurrencyPicture": "//yastatic.net/s3/games-static/static-data/images/payments/sdk/rub/currency-icon-m.svg",
+    "title": "Лес"
+  },
+  {
+    "description": "Скин Кокос",
+    "id": "beach_skin",
+    "imageURI": "https://avatars.mds.yandex.net/get-games/17955142/2a0000019c1b204ff76415a1929c4d5350c4//default87x87",
+    "price": "25 YAN",
+    "priceCurrencyCode": "YAN",
+    "priceValue": "25",
+    "priceCurrencyPicture": "//yastatic.net/s3/games-static/static-data/images/payments/sdk/rub/currency-icon-m.svg",
+    "title": "Кокос"
+  },
+  {
+    "description": "Фон Пляж",
+    "id": "beach_bg",
+    "imageURI": "https://avatars.mds.yandex.net/get-games/17955142/2a0000019c1b204ff76415a1929c4d5350c4//default87x87",
+    "price": "25 YAN",
+    "priceCurrencyCode": "YAN",
+    "priceValue": "25",
+    "priceCurrencyPicture": "//yastatic.net/s3/games-static/static-data/images/payments/sdk/rub/currency-icon-m.svg",
+    "title": "Пляж"
+  },
+  {
+    "description": "Скин Планета",
+    "id": "space_skin",
+    "imageURI": "https://avatars.mds.yandex.net/get-games/17955142/2a0000019c1b204ff76415a1929c4d5350c4//default87x87",
+    "price": "25 YAN",
+    "priceCurrencyCode": "YAN",
+    "priceValue": "25",
+    "priceCurrencyPicture": "//yastatic.net/s3/games-static/static-data/images/payments/sdk/rub/currency-icon-m.svg",
+    "title": "Планета"
+  },
+  {
+    "description": "Фон Космос",
+    "id": "space_bg",
+    "imageURI": "https://avatars.mds.yandex.net/get-games/17955142/2a0000019c1b204ff76415a1929c4d5350c4//default87x87",
+    "price": "25 YAN",
+    "priceCurrencyCode": "YAN",
+    "priceValue": "25",
+    "priceCurrencyPicture": "//yastatic.net/s3/games-static/static-data/images/payments/sdk/rub/currency-icon-m.svg",
+    "title": "Космос"
+  },
+  {
+    "description": "Скин Водяной шар",
+    "id": "sea_skin",
+    "imageURI": "https://avatars.mds.yandex.net/get-games/17955142/2a0000019c1b204ff76415a1929c4d5350c4//default87x87",
+    "price": "25 YAN",
+    "priceCurrencyCode": "YAN",
+    "priceValue": "25",
+    "priceCurrencyPicture": "//yastatic.net/s3/games-static/static-data/images/payments/sdk/rub/currency-icon-m.svg",
+    "title": "Водяной шар"
+  },
+  {
+    "description": "Фон Море",
+    "id": "sea_bg",
+    "imageURI": "https://avatars.mds.yandex.net/get-games/17955142/2a0000019c1b204ff76415a1929c4d5350c4//default87x87",
+    "price": "25 YAN",
+    "priceCurrencyCode": "YAN",
+    "priceValue": "25",
+    "priceCurrencyPicture": "//yastatic.net/s3/games-static/static-data/images/payments/sdk/rub/currency-icon-m.svg",
+    "title": "Море"
+  },
+  {
+    "description": "Скин Подкова",
+    "id": "wildwest_skin",
+    "imageURI": "https://avatars.mds.yandex.net/get-games/17955142/2a0000019c1b204ff76415a1929c4d5350c4//default87x87",
+    "price": "25 YAN",
+    "priceCurrencyCode": "YAN",
+    "priceValue": "25",
+    "priceCurrencyPicture": "//yastatic.net/s3/games-static/static-data/images/payments/sdk/rub/currency-icon-m.svg",
+    "title": "Подкова"
+  },
+  {
+    "description": "Фон Дикий Запад",
+    "id": "wildwest_bg",
+    "imageURI": "https://avatars.mds.yandex.net/get-games/17955142/2a0000019c1b204ff76415a1929c4d5350c4//default87x87",
+    "price": "25 YAN",
+    "priceCurrencyCode": "YAN",
+    "priceValue": "25",
+    "priceCurrencyPicture": "//yastatic.net/s3/games-static/static-data/images/payments/sdk/rub/currency-icon-m.svg",
+    "title": "Дикий Запад"
+  },
+  {
+    "description": "Скин Могила",
+    "id": "nightmare_skin",
+    "imageURI": "https://avatars.mds.yandex.net/get-games/17955142/2a0000019c1b204ff76415a1929c4d5350c4//default87x87",
+    "price": "25 YAN",
+    "priceCurrencyCode": "YAN",
+    "priceValue": "25",
+    "priceCurrencyPicture": "//yastatic.net/s3/games-static/static-data/images/payments/sdk/rub/currency-icon-m.svg",
+    "title": "Могила"
+  },
+  {
+    "description": "Фон Страшное подземелье",
+    "id": "nightmare_bg",
+    "imageURI": "https://avatars.mds.yandex.net/get-games/17955142/2a0000019c1b204ff76415a1929c4d5350c4//default87x87",
+    "price": "25 YAN",
+    "priceCurrencyCode": "YAN",
+    "priceValue": "25",
+    "priceCurrencyPicture": "//yastatic.net/s3/games-static/static-data/images/payments/sdk/rub/currency-icon-m.svg",
+    "title": "Страшное подземелье"
+  },
+  {
+    "description": "Скин Снежок",
+    "id": "north_skin",
+    "imageURI": "https://avatars.mds.yandex.net/get-games/17955142/2a0000019c1b204ff76415a1929c4d5350c4//default87x87",
+    "price": "25 YAN",
+    "priceCurrencyCode": "YAN",
+    "priceValue": "25",
+    "priceCurrencyPicture": "//yastatic.net/s3/games-static/static-data/images/payments/sdk/rub/currency-icon-m.svg",
+    "title": "Снежок"
+  },
+  {
+    "description": "Фон Северный полюс",
+    "id": "north_bg",
+    "imageURI": "https://avatars.mds.yandex.net/get-games/17955142/2a0000019c1b204ff76415a1929c4d5350c4//default87x87",
+    "price": "25 YAN",
+    "priceCurrencyCode": "YAN",
+    "priceValue": "25",
+    "priceCurrencyPicture": "//yastatic.net/s3/games-static/static-data/images/payments/sdk/rub/currency-icon-m.svg",
+    "title": "Северный полюс"
+  },
+  {
+    "description": "Скин Шестерня",
     "id": "industrial_skin",
     "imageURI": "https://avatars.mds.yandex.net/get-games/17955142/2a0000019c1b204ff76415a1929c4d5350c4//default87x87",
     "price": "25 YAN",
     "priceCurrencyCode": "YAN",
     "priceValue": "25",
     "priceCurrencyPicture": "//yastatic.net/s3/games-static/static-data/images/payments/sdk/rub/currency-icon-m.svg",
-    "title": "Скин травы"
+    "title": "Шестерня"
   },
   {
-    "description": "Скин дерева",
-    "id": "wood_skin",
+    "description": "Фон Завод",
+    "id": "industrial_bg",
     "imageURI": "https://avatars.mds.yandex.net/get-games/17955142/2a0000019c1b204ff76415a1929c4d5350c4//default87x87",
     "price": "25 YAN",
     "priceCurrencyCode": "YAN",
     "priceValue": "25",
     "priceCurrencyPicture": "//yastatic.net/s3/games-static/static-data/images/payments/sdk/rub/currency-icon-m.svg",
-    "title": "Скин дерева"
+    "title": "Завод"
   },
   {
-    "description": "Скин леса",
-    "id": "forest_skin",
+    "description": "Скин Облачко",
+    "id": "sky_skin",
     "imageURI": "https://avatars.mds.yandex.net/get-games/17955142/2a0000019c1b204ff76415a1929c4d5350c4//default87x87",
     "price": "25 YAN",
     "priceCurrencyCode": "YAN",
     "priceValue": "25",
     "priceCurrencyPicture": "//yastatic.net/s3/games-static/static-data/images/payments/sdk/rub/currency-icon-m.svg",
-    "title": "Скин леса"
+    "title": "Облачко"
   },
   {
-    "description": "Скин камня",
-    "id": "cablestone_skin",
+    "description": "Фон Небо",
+    "id": "sky_bg",
     "imageURI": "https://avatars.mds.yandex.net/get-games/17955142/2a0000019c1b204ff76415a1929c4d5350c4//default87x87",
     "price": "25 YAN",
     "priceCurrencyCode": "YAN",
     "priceValue": "25",
     "priceCurrencyPicture": "//yastatic.net/s3/games-static/static-data/images/payments/sdk/rub/currency-icon-m.svg",
-    "title": "Скин камня"
+    "title": "Небо"
   },
+  {
+    "description": "Скин Взрыв карты",
+    "id": "mapBlowUp",
+    "imageURI": "https://avatars.mds.yandex.net/get-games/17955142/2a0000019c1b204ff76415a1929c4d5350c4//default87x87",
+    "price": "25 YAN",
+    "priceCurrencyCode": "YAN",
+    "priceValue": "25",
+    "priceCurrencyPicture": "//yastatic.net/s3/games-static/static-data/images/payments/sdk/rub/currency-icon-m.svg",
+    "title": "Взрыв карты"
+  }
 ]
