@@ -1,5 +1,6 @@
 using System;
 using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 public static class PlatformSDK
 {
@@ -41,7 +42,19 @@ public static class PlatformSDK
     public static event Action<bool> OnPauseStateChanged;
     public static event Action<bool> OnAudioStateChanged;
 
-    public static void ShowInterstitial() => _provider?.Ads?.ShowInterstitial();
+    public static void ShowInterstitial()
+    {
+        long lastAdTime = DataSaver.Load<long>(SaveKeys.LastAdShowTime);
+        long currentTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        if (currentTime - lastAdTime < 60)
+        {
+            Debug.Log($"[PlatformSDK] Interstitial ad request blocked. Cooldown: {60 - (currentTime - lastAdTime)}s remaining.");
+            return;
+        }
+
+        DataSaver.Save(SaveKeys.LastAdShowTime, currentTime);
+        _provider?.Ads?.ShowInterstitial();
+    }
     
     public static void ShowRewarded(Action onRewarded, Action onClosedOrFailed)
     {
