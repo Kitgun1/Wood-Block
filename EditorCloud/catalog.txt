@@ -180,7 +180,7 @@
     "title": "Небо"
   },
   {
-    "description": "Скин Взрыв карты",
+    "description": "Взрыв карты",
     "id": "mapBlowUp",
     "imageURI": "https://avatars.mds.yandex.net/get-games/17955142/2a0000019c1b204ff76415a1929c4d5350c4//default87x87",
     "price": "25 YAN",

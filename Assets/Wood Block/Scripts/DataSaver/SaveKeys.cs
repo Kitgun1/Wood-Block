@@ -7,5 +7,6 @@ public enum SaveKeys
     SoundsVolume,
     CurrentLevel,
     LevelQuests,
-    BestScore
+    BestScore,
+    LastAdShowTime
 }

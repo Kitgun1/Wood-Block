@@ -19,7 +19,8 @@ public static class DataSaver
         {SaveKeys.SoundsVolume, new DefualtSave<float>("soundsVolume", 1f) },
         {SaveKeys.CurrentLevel, new DefualtSave<int>("levels", 1) },
         {SaveKeys.LevelQuests, new DefualtSave<List<QuestData>>("levelQuests", new List<QuestData>()) },
-        {SaveKeys.BestScore, new DefualtSave<int>("bestScore", 0) }
+        {SaveKeys.BestScore, new DefualtSave<int>("bestScore", 0) },
+        {SaveKeys.LastAdShowTime, new DefualtSave<long>("lastAdShowTime", 0) }
     };
 
     private static bool _isInitialized;
