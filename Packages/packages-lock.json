@@ -7,7 +7,7 @@
       "dependencies": {
         "com.unity.vectorgraphics": "2.0.0-preview.25"
       },
-      "hash": "61bb86d79a6c2629971c62366fb25f15d97496a9"
+      "hash": "df379fd361455a5326fac7800835450327794bd4"
     },
     "com.blackbox.kiutility": {
       "version": "https://github.com/Kitgun1/KimicuUtility.git",

@@ -47,7 +47,7 @@ MonoBehaviour:
   data: 0
   entries:
   - Language: English
-    Text: FOR ADD
+    Text: FOR AD
     Object: {fileID: 0}
   - Language: Russian
     Text: "\u0420\u0415\u041A\u041B\u0410\u041C\u0410"
@@ -828,10 +828,10 @@ MonoBehaviour:
   data: 0
   entries:
   - Language: English
-    Text: For level
+    Text: For level {0}
     Object: {fileID: 0}
   - Language: Russian
-    Text: "\u0417\u0430 \u043B\u0435\u0432\u0435\u043B"
+    Text: "\u0417\u0430 \u043B\u0435\u0432\u0435\u043B {0}"
     Object: {fileID: 0}
 --- !u!1 &3253217956157120268
 GameObject:
@@ -1945,7 +1945,7 @@ MonoBehaviour:
   data: 0
   entries:
   - Language: English
-    Text: Get For Add
+    Text: Get For Ad
     Object: {fileID: 0}
   - Language: Russian
     Text: "\u041F\u043E\u043B\u0443\u0447\u0438\u0442\u044C \u0437\u0430 \u0440\u0435\u043A\u043B\u0430\u043C\u0443"

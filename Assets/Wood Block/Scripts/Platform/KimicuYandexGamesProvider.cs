@@ -51,13 +51,25 @@ public class KimicuYandexGamesProvider : IPlatformProvider, IAdsProvider, IStora
         });
 
         // 3. Initialize Cloud Save
+        // NOTE: Kimicu's OnGetCloudErrorCallback does NOT set Cloud.Initialized = true,
+        // so if cloud data is corrupted/missing the coroutine hangs forever.
+        // We guard with a timeout so the game can always continue with local PlayerPrefs.
         var cloudTcs = new UniTaskCompletionSource();
         Coroutines.StartRoutine(Kimicu.YandexGames.Cloud.Initialize(() => {
             Debug.Log("[KimicuYandexGamesProvider] Cloud Save initialized!");
             SyncCloudToPlayerPrefs();
             cloudTcs.TrySetResult();
         }));
-        await cloudTcs.Task;
+
+        var cloudResult = await UniTask.WhenAny(
+            cloudTcs.Task,
+            UniTask.Delay(System.TimeSpan.FromSeconds(5))
+        );
+
+        if (cloudResult != 0)
+        {
+            Debug.LogWarning("[KimicuYandexGamesProvider] Cloud Save timed out or failed — continuing with local PlayerPrefs.");
+        }
 
         // 4. Initialize Billing
         var billingTcs = new UniTaskCompletionSource();
