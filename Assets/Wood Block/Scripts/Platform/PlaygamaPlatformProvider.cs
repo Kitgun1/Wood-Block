@@ -108,7 +108,7 @@ public class PlaygamaPlatformProvider : IPlatformProvider, IAdsProvider, IStorag
     public void Delete(string key)
     {
 #if UNITY_WEBGL && !UNITY_EDITOR
-        Bridge.storage?.Set(key, "", storageType: StorageType.PlatformInternal);
+        Bridge.storage?.Delete(key);
 #endif
     }
 

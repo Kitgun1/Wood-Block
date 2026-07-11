@@ -8297,6 +8297,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6945269255862413157, guid: 8a94e4378a7268544bdedb5c49fbcce4, type: 3}
+      propertyPath: m_text
+      value: "\u042F\u0417\u042B\u041A"
+      objectReference: {fileID: 0}
+    - target: {fileID: 6945269255862413157, guid: 8a94e4378a7268544bdedb5c49fbcce4, type: 3}
       propertyPath: m_HorizontalAlignment
       value: 2
       objectReference: {fileID: 0}
@@ -12048,7 +12052,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u041F\u0410\u0417\u0417\u041B \u0418\u0417 \u0411\u041B\u041E\u041A\u041E\u0412"
+  m_text: Wood Block Pazzle
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ab051a72c7340154fa498e3540b7f45b, type: 2}
   m_sharedMaterial: {fileID: -8685960194695035821, guid: ab051a72c7340154fa498e3540b7f45b, type: 2}
@@ -12132,7 +12136,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 711730971}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f9195c76e11297a4a9196553b20edc88, type: 3}
   m_Name: 
@@ -12744,14 +12748,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1799151484033480152, guid: 9ff16dfefa51b1a4eb16bf004a85e42b, type: 3}
-      propertyPath: entries.Array.data[0].Text
-      value: For level {0}
-      objectReference: {fileID: 0}
-    - target: {fileID: 1799151484033480152, guid: 9ff16dfefa51b1a4eb16bf004a85e42b, type: 3}
-      propertyPath: entries.Array.data[1].Text
-      value: "\u0417\u0430 \u043B\u0435\u0432\u0435\u043B {0}"
-      objectReference: {fileID: 0}
     - target: {fileID: 2132324892187728796, guid: 9ff16dfefa51b1a4eb16bf004a85e42b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
